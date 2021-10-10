@@ -272,9 +272,10 @@ td {
           let current = combotable.get();
           let xhr = new XMLHttpRequest();
           xhr.addEventListener("load", function(){
+            console.log(current);
             let html = "<p>検索結果</p>";
             let json = JSON.parse(this.response);
-            for(let item of json){
+            for(let p=0; p<json.length&&p<current.len; p++){
               sdif = "";
               combo = 0;
               let cb = item.combination.split("");
