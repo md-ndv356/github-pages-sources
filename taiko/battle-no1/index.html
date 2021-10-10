@@ -112,6 +112,7 @@ td {
     </div>
     <div class="combo-search hide">
       対象コンボ数：<input type="number" id="input-combo-max" value="765"><br>
+      表示開始位置：<input type="number" id="input-combo-bgn" value="0"><br>
       最大表示数：<input type="number" id="input-combo-len" value="50">
     </div>
     <div class="point-search hide">
@@ -171,17 +172,19 @@ td {
     const combotable = {
       from: {
         cb: document.getElementById("input-combo-max"),
-        len: document.getElementById("input-combo-len")
+        len: document.getElementById("input-combo-len"),
+        bgn: document.getElementById("input-combo-bgn")
       },
       get: function(){
         let cb = combotable.from.cb.valueAsNumber;
         let len = combotable.from.len.valueAsNumber;
+        let bgn = combotable.from.bgn.valueAsNumber;
         let valid = true;
-        if(!(cb && len)){
+        if(!(cb && len && bgn)){
           output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
           valid = false;
         }
-        return {cb, len, valid};
+        return {cb, bgn, len, valid};
       }
     };
     for(let i=0; i<13; i++){
@@ -275,22 +278,18 @@ td {
             console.log(current);
             let html = "<p>検索結果</p>";
             let json = JSON.parse(this.response);
-            for(let p=0; p<json.length&&p<current.len; p++){
+            for(let p=current.bgn; p<json.length+current.bgn&&p<current.len+current.bgn; p++){
               sdif = "";
-              combo = 0;
+              combo = 3;
               let cb = item.combination.split("");
-              for(let i=0; i<13; i++){
-                let t = directtable.current[i];
-                combo += bunki.combo[i][t];
-                sdif += diffs[cb[i]];
-              }
+              for(let i=0; i<13; i++) sdif += diffs[cb[i]];
               html += `    <div class="res">
         <div class="type-number">Type No.${item.number+1}</div>
         <div class="prev-dif">
           ${sdif}
         </div>
         <div class="res-info">
-          <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
+          <div class="res-combo">${current.cb}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
         </div>
         <div style="visibility: hidden;">0123456789日本語</div>
       </div>`;
