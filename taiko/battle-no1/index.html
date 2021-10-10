@@ -106,6 +106,7 @@ td {
       <input type="radio" name="stype-radio" id="searchtype-1" checked><label for="searchtype-1">直接指定</label>
       <input type="radio" name="stype-radio" id="searchtype-2"><label for="searchtype-2">コンボ数指定</label>
       <input type="radio" name="stype-radio" id="searchtype-3"><label for="searchtype-3">全良点数指定</label>
+      <input type="radio" name="stype-radio" id="searchtype-4"><label for="searchtype-4">タイプ番号指定</label>
     </div>
     <div class="direct-search">
       <table border="1"><tr class="direct-table"></tr></table>
@@ -116,6 +117,15 @@ td {
       最大表示数：<input type="number" id="input-combo-len" value="50">
     </div>
     <div class="point-search hide">
+      <select id="point-minmax">
+        <option value="0">上限</option>
+        <option value="1">下限</option>
+      </select>：<input type="number" id="input-point-minmax" value="1000000">点<br>
+      表示開始位置：<input type="number" id="input-point-bgn" value="0"><br>
+      最大表示数：<input type="number" id="input-point-len" value="50">
+    </div>
+    <div class="typenum-search hide">
+      target: <input type="number" id="input-typenum" value="1594323">
     </div>
     <button class="search-submit">検索</button>
   </div>
@@ -147,14 +157,16 @@ td {
       from: {
         direct: document.getElementById("searchtype-1"),
         combo: document.getElementById("searchtype-2"),
-        point: document.getElementById("searchtype-3")
+        point: document.getElementById("searchtype-3"),
+        number: document.getElementById("searchtype-4")
       },
       to: {
         direct: document.getElementsByClassName("direct-search")[0],
         combo: document.getElementsByClassName("combo-search")[0],
-        point: document.getElementsByClassName("point-search")[0]
+        point: document.getElementsByClassName("point-search")[0],
+        number: document.getElementsByClassName("typenum-search")[0]
       },
-      list: ["direct", "combo", "point"],
+      list: ["direct", "combo", "point", "number"],
       current: 0
     };
     const directtable = {
@@ -185,6 +197,109 @@ td {
           valid = false;
         }
         return {cb, bgn, len, valid};
+      }
+    };
+    const pointtable = {
+      from: {
+        type: document.getElementById("point-minmax"),
+        pt: document.getElementById("input-point-minmax"),
+        bgn: document.getElementById("input-point-bgn"),
+        ln: document.getElementById("input-point-len")
+      },
+      load: {
+        data: {},
+        list: ["70-80.json", "80-85.json", "85-89.json", "89.json"],
+        wait: true,
+        ended: false,
+        temp: {},
+        check: function(){
+          if(pointtable.load.wait){
+            pointtable.load.wait = true;
+            output.innerHTML = "<p>全データを読み込み中... （0/"+pointtable.load.list.length+"）</p>";
+            let xhr1 = new XMLHttpRequest();
+            let xhr2 = new XMLHttpRequest();
+            let xhr3 = new XMLHttpRequest();
+            let xhr4 = new XMLHttpRequest();
+            xhr1.addEventListener("load", pointtable.load.load);
+            xhr2.addEventListener("load", pointtable.load.load);
+            xhr3.addEventListener("load", pointtable.load.load);
+            xhr4.addEventListener("load", pointtable.load.load);
+            xhr1.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/70-80.json");
+            xhr2.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/80-85.json");
+            xhr3.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/85-89.json");
+            xhr4.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/89.json");
+            xhr1.target = "70-80.json";
+            xhr2.target = "80-85.json";
+            xhr3.target = "85-89.json";
+            xhr4.target = "89.json";
+            xhr1.send();
+            xhr2.send();
+            xhr3.send();
+            xhr4.send();
+          }
+          if(pointtable.load.ended){
+            pointtable.load.search();
+          }
+        },
+        load: function(){
+          pointtable.load.data[this.target] = JSON.parse(this.response);
+          let o = 0;
+          for(let i of pointtable.load.list){
+            o += pointtable.load.data.hasOwnProperty(i);
+          }
+          output.innerHTML = "<p>全データを読み込み中... （"+o+"/"+pointtable.load.list.length+"）</p>";
+          if(o === pointtable.load.list.length){
+            pointtable.load.ended = true;
+            requestAnimationFrame(pointtable.load.search);
+          }
+        },
+        concatenate: function(){
+          let json = [];
+          for(let i of pointtable.load.list){
+            json = json.concat(pointtable.load.data[i]);
+          }
+          return json;
+        },
+        search: function(){
+          let html = "<p>検索結果</p>";
+          let sdif = "";
+          let diffs = [
+            '<div class="sdif-f"></div>',
+            '<div class="sdif-k"></div>',
+            '<div class="sdif-t"></div>'
+          ];
+          let json = pointtable.load.concatenate().filter(item=>item.max<pointtable.load.temp.pt).sort((a,b)=>b.max-a.max).slice(pointtable.load.temp.bgn,pointtable.load.temp.ln+pointtable.load.temp.bgn);
+          for(let p=0; p<json.length; p++){
+            let item = json[p];
+            sdif = "";
+            let cb = item.combination.split("");
+            for(let i=0; i<13; i++) sdif += diffs[cb[i]];
+            html += `    <div class="res">
+      <div class="type-number">Type No.${item.number+1}</div>
+      <div class="prev-dif">
+        ${sdif}
+      </div>
+      <div class="res-info">
+        <div class="res-combo">${item.combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
+      </div>
+      <div style="visibility: hidden;">0123456789日本語</div>
+    </div>`;
+          }
+          output.innerHTML = html;
+        }
+      },
+      get: function(){
+        let type = pointtable.from.type.value;
+        let pt = pointtable.from.pt.valueAsNumber;
+        let bgn = pointtable.from.bgn.valueAsNumber;
+        let ln = pointtable.from.ln.valueAsNumber;
+        let isMax = type === "0";
+        let valid = true;
+        if(!(pt && pointtable.from.bgn.value && ln)){
+          output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
+          valid = false;
+        }
+        return {type, pt, bgn, ln, valid};
       }
     };
     for(let i=0; i<13; i++){
@@ -247,6 +362,7 @@ td {
         '<div class="sdif-k"></div>',
         '<div class="sdif-t"></div>'
       ];
+      let current;
       switch (search_type.current) {
         case 0:
           let renda = 0;
@@ -272,13 +388,17 @@ td {
           output.innerHTML = html;
           break;
         case 1:
-          let current = combotable.get();
+          current = combotable.get();
+          if(!current.valid) break;
           let xhr = new XMLHttpRequest();
+          xhr.addEventListener("progress", function(){
+            output.innerHTML = "<p>検索中... ("+event.loaded+"バイト読み込み済)</p>";
+          });
           xhr.addEventListener("load", function(){
-            console.log(current);
-            let html = "<p>検索結果</p>";
             let json = JSON.parse(this.response);
-            for(let p=current.bgn; p<json.length+current.bgn&&p<current.len+current.bgn; p++){
+            let html = "<p>検索結果（"+json.length+"通り）</p>";
+            for(let p=current.bgn; p<json.length&&p<current.len+current.bgn; p++){
+              let item = json[p];
               sdif = "";
               combo = 3;
               let cb = item.combination.split("");
@@ -299,12 +419,16 @@ td {
           xhr.addEventListener("error", function(){
             output.innerHTML = "<p>対象が見つからなかったようです...</p>";
           });
-          xhr.open("GET", "./combo/"+current.cb+".json");
+          xhr.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/combo/"+current.cb+".json");
           xhr.send();
           output.innerHTML = "<p>検索中...</p>";
           break;
         case 2:
-
+          current = pointtable.get();
+          if(!current.valid) break;
+          pointtable.load.temp = current;
+          output.innerHTML = "<p>検索中...</p>";
+          requestAnimationFrame(pointtable.load.check);
           break;
       }
     });
