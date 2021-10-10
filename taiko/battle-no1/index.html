@@ -192,7 +192,7 @@ td {
         let len = combotable.from.len.valueAsNumber;
         let bgn = combotable.from.bgn.valueAsNumber;
         let valid = true;
-        if(!(cb && len && bgn)){
+        if(!(cb && pointtable.from.bgn.value && len)){
           output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
           valid = false;
         }
@@ -395,6 +395,10 @@ td {
             output.innerHTML = "<p>検索中... ("+event.loaded+"バイト読み込み済)</p>";
           });
           xhr.addEventListener("load", function(){
+            if(this.status === 404){
+              output.innerHTML = "<p>対象が見つからなかったようです...</p>";
+              return;
+            }
             let json = JSON.parse(this.response);
             let html = "<p>検索結果（"+json.length+"通り）</p>";
             for(let p=current.bgn; p<json.length&&p<current.len+current.bgn; p++){
