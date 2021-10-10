@@ -110,10 +110,11 @@ td {
     <div class="direct-search">
       <table border="1"><tr class="direct-table"></tr></table>
     </div>
-    <div class="combo-search">
-
+    <div class="combo-search hide">
+      対象コンボ数：<input type="number" id="input-combo-max" value="765"><br>
+      最大表示数：<input type="number" id="input-combo-len" value="50">
     </div>
-    <div class="point-search">
+    <div class="point-search hide">
     </div>
     <button class="search-submit">検索</button>
   </div>
@@ -121,6 +122,7 @@ td {
     <p>検索結果はここに表示されます</p>
   </div>
   <script>
+    const output = document.getElementById("results");
     const bunki = {
       combo: [
         [43, 47, 64],
@@ -164,6 +166,22 @@ td {
         }
         target.classList.add("btn-"+target.diffType);
         directtable.current[target.targetIndex] = target.myType;
+      }
+    };
+    const combotable = {
+      from: {
+        cb: document.getElementById("input-combo-max"),
+        len: document.getElementById("input-combo-len")
+      },
+      get: function(){
+        let cb = combotable.from.cb.valueAsNumber;
+        let len = combotable.from.len.valueAsNumber;
+        let valid = true;
+        if(!(cb && len)){
+          output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
+          valid = false;
+        }
+        return {cb, len, valid};
       }
     };
     for(let i=0; i<13; i++){
@@ -218,8 +236,9 @@ td {
     }
 
     document.querySelector(".search-submit").addEventListener("click", function(){
-      const output = document.getElementById("results");
       let html = "<p>検索結果</p>";
+      let combo = 3;
+      let sdif = "";
       let diffs = [
         '<div class="sdif-f"></div>',
         '<div class="sdif-k"></div>',
@@ -227,10 +246,8 @@ td {
       ];
       switch (search_type.current) {
         case 0:
-          let combo = 3;
-          let num = 0;
           let renda = 0;
-          let sdif = "";
+          let num = 0;
           for(let i=0; i<13; i++){
             let t = directtable.current[i];
             combo += bunki.combo[i][t];
@@ -252,7 +269,39 @@ td {
           output.innerHTML = html;
           break;
         case 1:
-
+          let current = combotable.get();
+          let xhr = new XMLHttpRequest();
+          xhr.addEventListener("load", function(){
+            let html = "<p>検索結果</p>";
+            let json = JSON.parse(this.response);
+            for(let item of json){
+              sdif = "";
+              combo = 0;
+              let cb = item.combination.split("");
+              for(let i=0; i<13; i++){
+                let t = directtable.current[i];
+                combo += bunki.combo[i][t];
+                sdif += diffs[cb[i]];
+              }
+              html += `    <div class="res">
+        <div class="type-number">Type No.${item.number+1}</div>
+        <div class="prev-dif">
+          ${sdif}
+        </div>
+        <div class="res-info">
+          <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
+        </div>
+        <div style="visibility: hidden;">0123456789日本語</div>
+      </div>`;
+            }
+            output.innerHTML = html;
+          });
+          xhr.addEventListener("error", function(){
+            output.innerHTML = "<p>対象が見つからなかったようです...</p>";
+          });
+          xhr.open("GET", "./combo/"+current.cb+".json");
+          xhr.send();
+          output.innerHTML = "<p>検索中...</p>";
           break;
         case 2:
 
