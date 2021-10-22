@@ -1,410 +1,280 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>【太鼓の達人】 BATTLE NO.1 譜面分岐検索</title>
-<style>
-body {
-  font-family: sans-serif;
-}
-h1 { text-align: center; }
-p { margin: 5px; }
-.search {
-  border: solid 2px #777;
-  margin: 0 auto;
-  text-align: center;
-  background: #f2da99;
-  width: 90vw;
-  padding: 7px;
-}
-.direct-search * {
-  margin: 0 auto;
-}
-.search .hide {
-  display: none;
-}
-table, td {
-  border: 1px solid #595959;
-  border-collapse: collapse;
-}
-td {
-  padding: 1px 3px;
-  font-size: 8px;
-}
-.search button {
-  background-color: #333;
-  color: #fff;
-}
-.search .btn-futsu {
-  background-color: #ccc;
-  color: #333;
-}
-.search .btn-kuroto {
-  background-color: #86c4e3;
-  color: #333;
-}
-.search .btn-tatsujin {
-  background-color: #d171d1;
-  color: #333;
-}
-.search .search-submit {
-  margin-top: 7px;
-}
-.results {
-  width: calc(100% - 18px);
-  margin: 12px 7px;
-  border: solid 2px #019;
-}
-.res {
-  width: calc(100% - 20px);
-  margin: 8px 5px;
-  padding: 4px;
-  border: solid 1px #888;
-}
-.type-number {
-  margin: 2px 5px;
-  font-family: sans;
-}
-.prev-dif {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.sdif-f, .sdif-k, .sdif-t {
-  width: 25px;
-  height: 18px;
-  margin: 0 1px;
-}
-.sdif-f {
-  background-color: #666;
-}
-.sdif-k {
-  background-color: #86c4e3;
-}
-.sdif-t {
-  background-color: #d171d1;
-}
-.res-info {
-  position: relative;
-}
-.res-combo {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.res-mpt {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-</style>
-</head>
-<body>
-  <h1>BATTLE NO.1 譜面分岐検索</h1>
-  <div class="search">
-    <p>分岐検索</p>
-    <div class="search-types">
-      <input type="radio" name="stype-radio" id="searchtype-1" checked><label for="searchtype-1">直接指定</label>
-      <input type="radio" name="stype-radio" id="searchtype-2"><label for="searchtype-2">コンボ数指定</label>
-      <input type="radio" name="stype-radio" id="searchtype-3"><label for="searchtype-3">全良点数指定</label>
-      <input type="radio" name="stype-radio" id="searchtype-4"><label for="searchtype-4">タイプ番号指定</label>
-    </div>
-    <div class="direct-search">
-      <table border="1"><tr class="direct-table"></tr></table>
-    </div>
-    <div class="combo-search hide">
-      対象コンボ数：<input type="number" id="input-combo-max" value="765"><br>
-      表示開始位置：<input type="number" id="input-combo-bgn" value="0"><br>
-      最大表示数：<input type="number" id="input-combo-len" value="50">
-    </div>
-    <div class="point-search hide">
-      <select id="point-minmax">
-        <option value="0">上限</option>
-        <option value="1">下限</option>
-      </select>：<input type="number" id="input-point-minmax" value="1000000">点<br>
-      表示開始位置：<input type="number" id="input-point-bgn" value="0"><br>
-      最大表示数：<input type="number" id="input-point-len" value="50">
-    </div>
-    <div class="typenum-search hide">
-      target: <input type="number" id="input-typenum" value="1594323">
-    </div>
-    <button class="search-submit">検索</button>
-  </div>
-  <div class="results" id="results">
-    <p>検索結果はここに表示されます</p>
-  </div>
-  <script>
-    const output = document.getElementById("results");
-    const bunki = {
-      combo: [
-        [43, 47, 64],
-        [45, 59, 67],
-        [66, 74, 81],
-        [53, 57, 73],
-        [62, 69, 75],
-        [61, 73, 80],
-        [51, 53, 66],
-        [47, 50, 83],
-        [57, 62, 75],
-        [58, 88, 97],
-        [61, 68, 77],
-        [49, 59, 64],
-        [50, 72, 80]
-      ],
-      point: 1020,
-      renda: 100
-    };
-    const search_type = {
-      from: {
-        direct: document.getElementById("searchtype-1"),
-        combo: document.getElementById("searchtype-2"),
-        point: document.getElementById("searchtype-3"),
-        number: document.getElementById("searchtype-4")
-      },
-      to: {
-        direct: document.getElementsByClassName("direct-search")[0],
-        combo: document.getElementsByClassName("combo-search")[0],
-        point: document.getElementsByClassName("point-search")[0],
-        number: document.getElementsByClassName("typenum-search")[0]
-      },
-      list: ["direct", "combo", "point", "number"],
-      current: 0
-    };
-    const directtable = {
-      from: document.getElementsByClassName("direct-table")[0],
-      current: [],
-      click: function(){
-        let target = event.target;
-        for(let button of target.whole){
-          button.className = "";
-        }
-        target.classList.add("btn-"+target.diffType);
-        directtable.current[target.targetIndex] = target.myType;
+  <head>
+    <title>【太鼓の達人】 BATTLE NO.1 譜面分岐検索</title>
+    <meta name="description" content="楽曲「BATTLE NO.1」を太鼓の達人でもっと楽しく遊べるように、譜面分岐検索機能などを備えたサイトです！是非ご利用ください。">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: sans-serif;
       }
-    };
-    const combotable = {
-      from: {
-        cb: document.getElementById("input-combo-max"),
-        len: document.getElementById("input-combo-len"),
-        bgn: document.getElementById("input-combo-bgn")
-      },
-      get: function(){
-        let cb = combotable.from.cb.valueAsNumber;
-        let len = combotable.from.len.valueAsNumber;
-        let bgn = combotable.from.bgn.valueAsNumber;
-        let valid = true;
-        if(!(cb && pointtable.from.bgn.value && len)){
-          output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
-          valid = false;
-        }
-        return {cb, bgn, len, valid};
+      h1 { text-align: center; }
+      p { margin: 5px; }
+      .search {
+        border: solid 2px #777;
+        margin: 0 auto;
+        text-align: center;
+        background: #f2da99;
+        width: 90vw;
+        padding: 7px;
       }
-    };
-    const pointtable = {
-      from: {
-        type: document.getElementById("point-minmax"),
-        pt: document.getElementById("input-point-minmax"),
-        bgn: document.getElementById("input-point-bgn"),
-        ln: document.getElementById("input-point-len")
-      },
-      load: {
-        data: {},
-        list: ["70-80.json", "80-85.json", "85-89.json", "89.json"],
-        wait: true,
-        ended: false,
-        temp: {},
-        check: function(){
-          if(pointtable.load.wait){
-            pointtable.load.wait = true;
-            output.innerHTML = "<p>全データを読み込み中... （0/"+pointtable.load.list.length+"）</p>";
-            let xhr1 = new XMLHttpRequest();
-            let xhr2 = new XMLHttpRequest();
-            let xhr3 = new XMLHttpRequest();
-            let xhr4 = new XMLHttpRequest();
-            xhr1.addEventListener("load", pointtable.load.load);
-            xhr2.addEventListener("load", pointtable.load.load);
-            xhr3.addEventListener("load", pointtable.load.load);
-            xhr4.addEventListener("load", pointtable.load.load);
-            xhr1.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/70-80.json");
-            xhr2.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/80-85.json");
-            xhr3.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/85-89.json");
-            xhr4.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/89.json");
-            xhr1.target = "70-80.json";
-            xhr2.target = "80-85.json";
-            xhr3.target = "85-89.json";
-            xhr4.target = "89.json";
-            xhr1.send();
-            xhr2.send();
-            xhr3.send();
-            xhr4.send();
-          }
-          if(pointtable.load.ended){
-            pointtable.load.search();
-          }
+      .direct-search * {
+        margin: 0 auto;
+      }
+      .search .hide {
+        display: none;
+      }
+      table, td {
+        border: 1px solid #595959;
+        border-collapse: collapse;
+      }
+      td {
+        padding: 1px 3px;
+        font-size: 8px;
+      }
+      .search button {
+        background-color: #333;
+        color: #fff;
+      }
+      .search .btn-futsu {
+        background-color: #ccc;
+        color: #333;
+      }
+      .search .btn-kuroto {
+        background-color: #86c4e3;
+        color: #333;
+      }
+      .search .btn-tatsujin {
+        background-color: #d171d1;
+        color: #333;
+      }
+      .search .search-submit {
+        margin-top: 7px;
+      }
+      .results {
+        width: calc(100% - 18px);
+        margin: 12px 7px;
+        border: solid 2px #019;
+      }
+      .res {
+        width: calc(100% - 20px);
+        margin: 8px 5px;
+        padding: 4px;
+        border: solid 1px #888;
+      }
+      .type-number {
+        margin: 2px 5px;
+        font-family: sans;
+      }
+      .prev-dif {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      .sdif-f, .sdif-k, .sdif-t {
+        width: 25px;
+        height: 18px;
+        margin: 0 1px;
+      }
+      .sdif-f {
+        background-color: #666;
+      }
+      .sdif-k {
+        background-color: #86c4e3;
+      }
+      .sdif-t {
+        background-color: #d171d1;
+      }
+      .res-info {
+        position: relative;
+      }
+      .res-combo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .res-mpt {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>BATTLE NO.1 譜面分岐検索</h1>
+    <div class="search">
+      <p>分岐検索</p>
+      <div class="search-types">
+        <input type="radio" name="stype-radio" id="searchtype-1" checked><label for="searchtype-1">直接指定</label>
+        <input type="radio" name="stype-radio" id="searchtype-2"><label for="searchtype-2">コンボ数指定</label>
+        <input type="radio" name="stype-radio" id="searchtype-3"><label for="searchtype-3">全良点数指定</label>
+        <input type="radio" name="stype-radio" id="searchtype-4"><label for="searchtype-4">タイプ番号指定</label>
+      </div>
+      <div class="direct-search">
+        <table border="1"><tr class="direct-table"></tr></table>
+      </div>
+      <div class="combo-search hide">
+        対象コンボ数：<input type="number" id="input-combo-max" value="765"><br>
+        表示開始位置：<input type="number" id="input-combo-bgn" value="0"><br>
+        最大表示数：<input type="number" id="input-combo-len" value="50">
+      </div>
+      <div class="point-search hide">
+        <select id="point-minmax">
+          <option value="0">上限</option>
+          <option value="1">下限</option>
+        </select>：<input type="number" id="input-point-minmax" value="1000000">点<br>
+        表示開始位置：<input type="number" id="input-point-bgn" value="0"><br>
+        最大表示数：<input type="number" id="input-point-len" value="50">
+      </div>
+      <div class="typenum-search hide">
+        target: <input type="number" id="input-typenum" value="1594323">
+      </div>
+      <button class="search-submit">検索</button>
+    </div>
+    <div class="results" id="results">
+      <p>検索結果はここに表示されます</p>
+    </div>
+    <script>
+      const output = document.getElementById("results");
+      const bunki = {
+        combo: [
+          [43, 47, 64],
+          [45, 59, 67],
+          [66, 74, 81],
+          [53, 57, 73],
+          [62, 69, 75],
+          [61, 73, 80],
+          [51, 53, 66],
+          [47, 50, 83],
+          [57, 62, 75],
+          [58, 88, 97],
+          [61, 68, 77],
+          [49, 59, 64],
+          [50, 72, 80]
+        ],
+        point: 1020,
+        renda: 100
+      };
+      const search_type = {
+        from: {
+          direct: document.getElementById("searchtype-1"),
+          combo: document.getElementById("searchtype-2"),
+          point: document.getElementById("searchtype-3"),
+          number: document.getElementById("searchtype-4")
         },
-        load: function(){
-          pointtable.load.data[this.target] = JSON.parse(this.response);
-          let o = 0;
-          for(let i of pointtable.load.list){
-            o += pointtable.load.data.hasOwnProperty(i);
-          }
-          output.innerHTML = "<p>全データを読み込み中... （"+o+"/"+pointtable.load.list.length+"）</p>";
-          if(o === pointtable.load.list.length){
-            pointtable.load.ended = true;
-            requestAnimationFrame(pointtable.load.search);
-          }
+        to: {
+          direct: document.getElementsByClassName("direct-search")[0],
+          combo: document.getElementsByClassName("combo-search")[0],
+          point: document.getElementsByClassName("point-search")[0],
+          number: document.getElementsByClassName("typenum-search")[0]
         },
-        concatenate: function(){
-          let json = [];
-          for(let i of pointtable.load.list){
-            json = json.concat(pointtable.load.data[i]);
+        list: ["direct", "combo", "point", "number"],
+        current: 0
+      };
+      const directtable = {
+        from: document.getElementsByClassName("direct-table")[0],
+        current: [],
+        click: function(){
+          let target = event.target;
+          for(let button of target.whole){
+            button.className = "";
           }
-          return json;
+          target.classList.add("btn-"+target.diffType);
+          directtable.current[target.targetIndex] = target.myType;
+        }
+      };
+      const combotable = {
+        from: {
+          cb: document.getElementById("input-combo-max"),
+          len: document.getElementById("input-combo-len"),
+          bgn: document.getElementById("input-combo-bgn")
         },
-        search: function(){
-          let html = "<p>検索結果</p>";
-          let sdif = "";
-          let diffs = [
-            '<div class="sdif-f"></div>',
-            '<div class="sdif-k"></div>',
-            '<div class="sdif-t"></div>'
-          ];
-          let json = pointtable.load.concatenate().filter(item=>item.max<pointtable.load.temp.pt).sort((a,b)=>b.max-a.max).slice(pointtable.load.temp.bgn,pointtable.load.temp.ln+pointtable.load.temp.bgn);
-          for(let p=0; p<json.length; p++){
-            let item = json[p];
-            sdif = "";
-            let cb = item.combination.split("");
-            for(let i=0; i<13; i++) sdif += diffs[cb[i]];
-            html += `    <div class="res">
-      <div class="type-number">Type No.${item.number+1}</div>
-      <div class="prev-dif">
-        ${sdif}
-      </div>
-      <div class="res-info">
-        <div class="res-combo">${item.combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
-      </div>
-      <div style="visibility: hidden;">0123456789日本語</div>
-    </div>`;
+        get: function(){
+          let cb = combotable.from.cb.valueAsNumber;
+          let len = combotable.from.len.valueAsNumber;
+          let bgn = combotable.from.bgn.valueAsNumber;
+          let valid = true;
+          if(!(cb && pointtable.from.bgn.value && len)){
+            output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
+            valid = false;
           }
-          output.innerHTML = html;
+          return {cb, bgn, len, valid};
         }
-      },
-      get: function(){
-        let type = pointtable.from.type.value;
-        let pt = pointtable.from.pt.valueAsNumber;
-        let bgn = pointtable.from.bgn.valueAsNumber;
-        let ln = pointtable.from.ln.valueAsNumber;
-        let isMax = type === "0";
-        let valid = true;
-        if(!(pt && pointtable.from.bgn.value && ln)){
-          output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
-          valid = false;
-        }
-        return {type, pt, bgn, ln, valid};
-      }
-    };
-    for(let i=0; i<13; i++){
-      let df1 = document.createElement("button");
-      let df2 = document.createElement("button");
-      let df3 = document.createElement("button");
-      let td = document.createElement("td");
-      let whole = [df1, df2, df3];
-      df1.classList.add("btn-futsu");
-      // df2.classList.add("btn-kuroto");
-      // df3.classList.add("btn-tatsujin");
-      // df1.classList.add("");
-      df1.addEventListener("click", directtable.click);
-      df2.addEventListener("click", directtable.click);
-      df3.addEventListener("click", directtable.click);
-      df1.targetIndex = i;
-      df2.targetIndex = i;
-      df3.targetIndex = i;
-      df1.myType = 0;
-      df2.myType = 1;
-      df3.myType = 2;
-      df1.textContent = "普通譜面";
-      df2.textContent = "玄人譜面";
-      df3.textContent = "達人譜面";
-      df1.diffType = "futsu";
-      df2.diffType = "kuroto";
-      df3.diffType = "tatsujin";
-      df1.whole = whole;
-      df2.whole = whole;
-      df3.whole = whole;
-      td.appendChild(df1);
-      td.appendChild(df2);
-      td.appendChild(df3);
-      directtable.from.appendChild(td);
-      directtable.current.push(0);
-    }
-
-    const typechanged = function(){
-      let target = event.target;
-      if(target.checked){
-        for(let type of search_type.list) search_type.to[type].classList.add("hide");
-        search_type.current = target.num;
-        target.viewingTo.classList.remove("hide");
-      }
-    };
-    for(let m=search_type.list, i=0, l=m.length, type=m[0]; i<l; i++, type=m[i]){
-      let target = search_type.from[type];
-      target.queryText = type;
-      target.num = i;
-      target.viewingTo = search_type.to[type];
-      target.addEventListener("change", typechanged);
-    }
-
-    document.querySelector(".search-submit").addEventListener("click", function(){
-      let html = "<p>検索結果</p>";
-      let combo = 3;
-      let sdif = "";
-      let diffs = [
-        '<div class="sdif-f"></div>',
-        '<div class="sdif-k"></div>',
-        '<div class="sdif-t"></div>'
-      ];
-      let current;
-      switch (search_type.current) {
-        case 0:
-          let renda = 0;
-          let num = 0;
-          for(let i=0; i<13; i++){
-            let t = directtable.current[i];
-            combo += bunki.combo[i][t];
-            num *= 3;
-            num += t;
-            renda += t;
-            sdif += diffs[t];
-          }
-          html += `    <div class="res">
-      <div class="type-number">Type No.${num+1}</div>
-      <div class="prev-dif">
-        ${sdif}
-      </div>
-      <div class="res-info">
-        <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${combo*1020+renda*100}点＋自由連打</div>
-      </div>
-      <div style="visibility: hidden;">0123456789日本語</div>
-    </div>`
-          output.innerHTML = html;
-          break;
-        case 1:
-          current = combotable.get();
-          if(!current.valid) break;
-          let xhr = new XMLHttpRequest();
-          xhr.addEventListener("progress", function(){
-            output.innerHTML = "<p>検索中... ("+event.loaded+"バイト読み込み済)</p>";
-          });
-          xhr.addEventListener("load", function(){
-            if(this.status === 404){
-              output.innerHTML = "<p>対象が見つからなかったようです...</p>";
-              return;
+      };
+      const pointtable = {
+        from: {
+          type: document.getElementById("point-minmax"),
+          pt: document.getElementById("input-point-minmax"),
+          bgn: document.getElementById("input-point-bgn"),
+          ln: document.getElementById("input-point-len")
+        },
+        load: {
+          data: {},
+          list: ["70-80.json", "80-85.json", "85-89.json", "89.json"],
+          wait: true,
+          ended: false,
+          temp: {},
+          check: function(){
+            if(pointtable.load.wait){
+              pointtable.load.wait = true;
+              output.innerHTML = "<p>全データを読み込み中... （0/"+pointtable.load.list.length+"）</p>";
+              let xhr1 = new XMLHttpRequest();
+              let xhr2 = new XMLHttpRequest();
+              let xhr3 = new XMLHttpRequest();
+              let xhr4 = new XMLHttpRequest();
+              xhr1.addEventListener("load", pointtable.load.load);
+              xhr2.addEventListener("load", pointtable.load.load);
+              xhr3.addEventListener("load", pointtable.load.load);
+              xhr4.addEventListener("load", pointtable.load.load);
+              xhr1.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/70-80.json");
+              xhr2.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/80-85.json");
+              xhr3.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/85-89.json");
+              xhr4.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/point/89.json");
+              xhr1.target = "70-80.json";
+              xhr2.target = "80-85.json";
+              xhr3.target = "85-89.json";
+              xhr4.target = "89.json";
+              xhr1.send();
+              xhr2.send();
+              xhr3.send();
+              xhr4.send();
             }
-            let json = JSON.parse(this.response);
-            let html = "<p>検索結果（"+json.length+"通り）</p>";
-            for(let p=current.bgn; p<json.length&&p<current.len+current.bgn; p++){
+            if(pointtable.load.ended){
+              pointtable.load.search();
+            }
+          },
+          load: function(){
+            pointtable.load.data[this.target] = JSON.parse(this.response);
+            let o = 0;
+            for(let i of pointtable.load.list){
+              o += pointtable.load.data.hasOwnProperty(i);
+            }
+            output.innerHTML = "<p>全データを読み込み中... （"+o+"/"+pointtable.load.list.length+"）</p>";
+            if(o === pointtable.load.list.length){
+              pointtable.load.ended = true;
+              requestAnimationFrame(pointtable.load.search);
+            }
+          },
+          concatenate: function(){
+            let json = [];
+            for(let i of pointtable.load.list){
+              json = json.concat(pointtable.load.data[i]);
+            }
+            return json;
+          },
+          search: function(){
+            let html = "<p>検索結果</p>";
+            let sdif = "";
+            let diffs = [
+              '<div class="sdif-f"></div>',
+              '<div class="sdif-k"></div>',
+              '<div class="sdif-t"></div>'
+            ];
+            let json = pointtable.load.concatenate().filter(item=>item.max<pointtable.load.temp.pt).sort((a,b)=>b.max-a.max).slice(pointtable.load.temp.bgn,pointtable.load.temp.ln+pointtable.load.temp.bgn);
+            for(let p=0; p<json.length; p++){
               let item = json[p];
               sdif = "";
-              combo = 3;
               let cb = item.combination.split("");
               for(let i=0; i<13; i++) sdif += diffs[cb[i]];
               html += `    <div class="res">
@@ -413,29 +283,162 @@ td {
           ${sdif}
         </div>
         <div class="res-info">
-          <div class="res-combo">${current.cb}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
+          <div class="res-combo">${item.combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
         </div>
         <div style="visibility: hidden;">0123456789日本語</div>
       </div>`;
             }
             output.innerHTML = html;
-          });
-          xhr.addEventListener("error", function(){
-            output.innerHTML = "<p>対象が見つからなかったようです...</p>";
-          });
-          xhr.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/combo/"+current.cb+".json");
-          xhr.send();
-          output.innerHTML = "<p>検索中...</p>";
-          break;
-        case 2:
-          current = pointtable.get();
-          if(!current.valid) break;
-          pointtable.load.temp = current;
-          output.innerHTML = "<p>検索中...</p>";
-          requestAnimationFrame(pointtable.load.check);
-          break;
+          }
+        },
+        get: function(){
+          let type = pointtable.from.type.value;
+          let pt = pointtable.from.pt.valueAsNumber;
+          let bgn = pointtable.from.bgn.valueAsNumber;
+          let ln = pointtable.from.ln.valueAsNumber;
+          let isMax = type === "0";
+          let valid = true;
+          if(!(pt && pointtable.from.bgn.value && ln)){
+            output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
+            valid = false;
+          }
+          return {type, pt, bgn, ln, valid};
+        }
+      };
+      for(let i=0; i<13; i++){
+        let df1 = document.createElement("button");
+        let df2 = document.createElement("button");
+        let df3 = document.createElement("button");
+        let td = document.createElement("td");
+        let whole = [df1, df2, df3];
+        df1.classList.add("btn-futsu");
+        // df2.classList.add("btn-kuroto");
+        // df3.classList.add("btn-tatsujin");
+        // df1.classList.add("");
+        df1.addEventListener("click", directtable.click);
+        df2.addEventListener("click", directtable.click);
+        df3.addEventListener("click", directtable.click);
+        df1.targetIndex = i;
+        df2.targetIndex = i;
+        df3.targetIndex = i;
+        df1.myType = 0;
+        df2.myType = 1;
+        df3.myType = 2;
+        df1.textContent = "普通譜面";
+        df2.textContent = "玄人譜面";
+        df3.textContent = "達人譜面";
+        df1.diffType = "futsu";
+        df2.diffType = "kuroto";
+        df3.diffType = "tatsujin";
+        df1.whole = whole;
+        df2.whole = whole;
+        df3.whole = whole;
+        td.appendChild(df1);
+        td.appendChild(df2);
+        td.appendChild(df3);
+        directtable.from.appendChild(td);
+        directtable.current.push(0);
       }
-    });
-  </script>
-</body>
+
+      const typechanged = function(){
+        let target = event.target;
+        if(target.checked){
+          for(let type of search_type.list) search_type.to[type].classList.add("hide");
+          search_type.current = target.num;
+          target.viewingTo.classList.remove("hide");
+        }
+      };
+      for(let m=search_type.list, i=0, l=m.length, type=m[0]; i<l; i++, type=m[i]){
+        let target = search_type.from[type];
+        target.queryText = type;
+        target.num = i;
+        target.viewingTo = search_type.to[type];
+        target.addEventListener("change", typechanged);
+      }
+
+      document.querySelector(".search-submit").addEventListener("click", function(){
+        let html = "<p>検索結果</p>";
+        let combo = 3;
+        let sdif = "";
+        let diffs = [
+          '<div class="sdif-f"></div>',
+          '<div class="sdif-k"></div>',
+          '<div class="sdif-t"></div>'
+        ];
+        let current;
+        switch (search_type.current) {
+          case 0:
+            let renda = 0;
+            let num = 0;
+            for(let i=0; i<13; i++){
+              let t = directtable.current[i];
+              combo += bunki.combo[i][t];
+              num *= 3;
+              num += t;
+              renda += t;
+              sdif += diffs[t];
+            }
+            html += `    <div class="res">
+        <div class="type-number">Type No.${num+1}</div>
+        <div class="prev-dif">
+          ${sdif}
+        </div>
+        <div class="res-info">
+          <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${combo*1020+renda*100}点＋自由連打</div>
+        </div>
+        <div style="visibility: hidden;">0123456789日本語</div>
+      </div>`
+            output.innerHTML = html;
+            break;
+          case 1:
+            current = combotable.get();
+            if(!current.valid) break;
+            let xhr = new XMLHttpRequest();
+            xhr.addEventListener("progress", function(){
+              output.innerHTML = "<p>検索中... ("+event.loaded+"バイト読み込み済)</p>";
+            });
+            xhr.addEventListener("load", function(){
+              if(this.status === 404){
+                output.innerHTML = "<p>対象が見つからなかったようです...</p>";
+                return;
+              }
+              let json = JSON.parse(this.response);
+              let html = "<p>検索結果（"+json.length+"通り）</p>";
+              for(let p=current.bgn; p<json.length&&p<current.len+current.bgn; p++){
+                let item = json[p];
+                sdif = "";
+                combo = 3;
+                let cb = item.combination.split("");
+                for(let i=0; i<13; i++) sdif += diffs[cb[i]];
+                html += `    <div class="res">
+          <div class="type-number">Type No.${item.number+1}</div>
+          <div class="prev-dif">
+            ${sdif}
+          </div>
+          <div class="res-info">
+            <div class="res-combo">${current.cb}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
+          </div>
+          <div style="visibility: hidden;">0123456789日本語</div>
+        </div>`;
+              }
+              output.innerHTML = html;
+            });
+            xhr.addEventListener("error", function(){
+              output.innerHTML = "<p>対象が見つからなかったようです...</p>";
+            });
+            xhr.open("GET", "https://md-ndv356.github.io/taiko/battle-no1/combo/"+current.cb+".json");
+            xhr.send();
+            output.innerHTML = "<p>検索中...</p>";
+            break;
+          case 2:
+            current = pointtable.get();
+            if(!current.valid) break;
+            pointtable.load.temp = current;
+            output.innerHTML = "<p>検索中...</p>";
+            requestAnimationFrame(pointtable.load.check);
+            break;
+        }
+      });
+    </script>
+  </body>
 </html>
