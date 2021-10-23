@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title>【太鼓の達人】 BATTLE NO.1 譜面分岐検索</title>
     <meta name="description" content="楽曲「BATTLE NO.1」を太鼓の達人でもっと楽しく遊べるように、譜面分岐検索機能などを備えたサイトです！是非ご利用ください。">
@@ -18,6 +18,9 @@
         background: #f2da99;
         width: 90vw;
         padding: 7px;
+      }
+      .direct-search {
+        overflow-x: scroll;
       }
       .direct-search * {
         margin: 0 auto;
@@ -102,7 +105,7 @@
     </style>
   </head>
   <body>
-    <h1>BATTLE NO.1 譜面分岐検索</h1>
+    <h1>BATTLE NO.1<br>譜面分岐検索</h1>
     <div class="search">
       <p>分岐検索</p>
       <div class="search-types">
@@ -129,12 +132,14 @@
       </div>
       <div class="typenum-search hide">
         target: <input type="number" id="input-typenum" value="1594323">
+        <br>（未完成）
       </div>
       <button class="search-submit">検索</button>
     </div>
     <div class="results" id="results">
       <p>検索結果はここに表示されます</p>
     </div>
+    <p style="font-size:5px; color:#aaa;">Copyright (c) 2021 <a href="https://twitter.com/Zisin_YT_LiVe">look Sky</a> All Rights Reserved.</p>
     <script>
       const output = document.getElementById("results");
       const bunki = {
