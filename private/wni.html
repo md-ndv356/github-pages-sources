@@ -5,18 +5,20 @@
 			p { font-size: 13px; }
 		</style>
 		<title>Weathernews LiVE</title>
-		<!-- kusanone-net.com 地震速報ブログパーツVer2.3
-		★設定方法 http://www.kusanone-net.com/blog-part.php#FIXSET -->
-		<script type="text/javascript" src="https://www.kusanone-net.com/KusanoneQuakeAutoDisp23.js?code=UTF-8&width=150&oldDisp=off&sindo=1&position=0&test=off" charset="utf-8"></script>
-		<!-- /kusanone-net.com 地震速報ブログパーツ-->
 	</head>
 	<body>
-		<p>地震が発生した場合に、ここに地震情報が表示されます。<br></p>
+		<p id="wni_live_chat">チャット： ----</p>
 		<div>
-			<iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/zAdWzjab1B8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<iframe id="wni_live" width="640" height="360" src="https://www.youtube-nocookie.com/embed/zAdWzjab1B8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			<iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/ZeZ049BUy8Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="inline"></iframe>
-			<!--<iframe src="http://www.biz-box.jp/clock/dclock.html" width="160" height="137" frameborder="1" marginwidth="0px" marginheight="0px" scrolling="no" class="inline"></iframe>-->
 		</div>
-    <!--<iframe src="https://kwatch-24h.net/2moni/2sec_alm_2monitw.html" width="675" height="530"></iframe>-->
+    <script>
+      let wni_iframe = document.getElementById("wni_live");
+      let chat = document.getElementById("wni_live_chat");
+      fetch("https://weathernews.jp/s/live/json/youtube_cyclic.json").then(response => response.json()).then(json => {
+        wni_iframe.src = "https://www.youtube-nocookie.com/embed/" + json.code;
+        chat.textContent = "チャット： https://www.youtube.com/live_chat?is_popout=1&v=" + json.code;
+      });
+    </script>
 	</body>
 </html>
