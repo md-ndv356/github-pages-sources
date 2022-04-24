@@ -1,0 +1,19 @@
+{
+  "latest": {
+    "id": 1,
+    "last_modified": "2022/04/24Z00:09:00+09:00"
+  },
+  "list": [
+    {
+      "id": 1,
+      "label": "β1.0.0",
+      "published": "2022/04/24Z00:09:00+09:00",
+      "features": "初期",
+      "stopcode": 0
+    }
+  ],
+  "stopcode": {
+    "0": false,
+    "1": "エラーが！！"
+  }
+}
