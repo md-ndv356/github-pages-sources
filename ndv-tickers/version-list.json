@@ -9,11 +9,16 @@
       "label": "β1.0.0",
       "published": "2022/04/24Z00:09:00+09:00",
       "features": "初期",
-      "stopcode": 0
+      "stopcode": 0,
+      "download_url": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.2.7_dev.zip",
+      "bugs": null
     }
   ],
   "stopcode": {
     "0": false,
-    "1": "エラーが！！"
+    "1": {
+      "stopForced": true,
+      "message": "エラーが！！！"
+    }
   }
 }
