@@ -149,8 +149,7 @@
     var locationCoords = null;
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition((loc) => {
-        // let coords = (locationCoords = loc.coords);
-        let coords = (locationCoords = {latitude: 43.447279764862564, longitude: 141.9294118881226});
+        let coords = (locationCoords = loc.coords);
         marker = L.marker([coords.latitude, coords.longitude]).addTo(Maps);
         marker.bindPopup("現在地");
         Maps.setView([coords.latitude, coords.longitude], 10);
