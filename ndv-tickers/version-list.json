@@ -1,24 +1,173 @@
 {
-  "latest": {
-    "id": 1,
-    "last_modified": "2022/04/24Z00:09:00+09:00"
+  "app_alpha": {
+    "latest_info": {
+      "code": "app_alpha1",
+      "name": "α1.0.0"
+    },
+    "last_update": 1648968782,
+    "version_list": [
+      {
+        "code": "app_alpha1",
+        "name": "α1.0.0",
+        "dl_link": "https://md-ndv356.github.io/ndv-tickers/download/",
+        "jumpto": "https://md-ndv356.github.io/ndv-tickers/homepage/",
+        "stopcode": "0",
+        "date": 1648968782,
+        "notice": "aaaaaaaaa"
+      }
+    ]
   },
-  "list": [
-    {
-      "id": 1,
-      "label": "β1.0.0",
-      "published": "2022/04/24Z00:09:00+09:00",
-      "features": "初期",
-      "stopcode": 0,
-      "download_url": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.2.7_dev.zip",
-      "bugs": null
-    }
-  ],
+  "extension": {
+    "newest": {
+      "code": "beta15",
+      "name": "β0.2.9"
+    },
+    "lastupd": 1648968782,
+    "list": [
+      {
+        "name": "β0.2.9",
+        "dl_link": "",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta15",
+        "date": 1648968782,
+        "string": ""
+      },
+      {
+        "name": "β0.2.8",
+        "dl_link": "",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta14",
+        "date": 1648968782,
+        "string": ""
+      },
+      {
+        "name": "β0.2.7",
+        "dl_link": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.2.7_c3c45bcefa74f5d04aed311917e3b1e1.zip",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta13",
+        "date": 1648968782,
+        "string": "Natural Disaster Viewerのご利用ありがとうございます。\n［お知らせ］\n・ダウンロード先のURLを変更しました。\n・地震情報の音量を設定できる欄がありますが、まだ動作しません。\n［今回のアップデート内容］\n・緊急地震速報の地図の描画を変更しました。\n・緊急地震速報の警報を受信した場合にカスタム音源を使用できるようになりました。\n・OS間の字体による差を軽減しました。\n・Manifest V3に移行しました。\n・一部の不具合を修正しました。"
+      },
+      {
+        "name": "β0.2.6",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta12",
+        "date": 1644796520,
+        "string": "Natural Disaster Viewerのご利用ありがとうございます。\n［今回のアップデート内容］\n・降雪量や積雪量のデータが正しく表示されない場合がある問題を修正しました。\n・推定震源が無い場合のPLUM法を受信したときの動作を変更しました。\n・一部のデフォルト値を変更しました。\n・津波情報の音声を変更しました。\n・一部コマンドの変更を行いました。\n・その他軽微な修正が含まれます。"
+      },
+      {
+        "name": "β0.2.5",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta11",
+        "date": 1641135310,
+        "string": "[重要]Ｍスケールによるレイアウトが変更されない問題を修正\n一部デザインの変更\n標準コマンド一覧表を実装\n津波情報の処理を改善\nその他軽微な修正"
+      },
+      {
+        "name": "β0.2.4",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta10",
+        "date": 1641135310,
+        "string": "(重要)東京都２３区が表示できない問題を修正\n緊急地震速報のテストが行えない問題を修正\n緊急地震速報の警報音を変更\nその他様々な変更・修正"
+      },
+      {
+        "name": "β0.2.3",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta9.1",
+        "date": 1631802060,
+        "string": "・(緊急)震度5弱以上の最大震度階級が1つ上がってしまう問題を修正"
+      },
+      {
+        "name": "β0.2.2",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "1",
+        "code": "beta9",
+        "date": 1628836800,
+        "string": "・ミスで、本来とは違う場所にファイルをアップロードしてしまいました。\n　アップデートしてもこのメッセージが表示される方は、再度Driveからダウンロードをお願いします。\n\n(重要)河川情報が正しく表示できない問題を修正\n土砂災害警戒情報のメッセージを変更\n新しく2種類の効果音を追加\nアメダス観測情報を追加\n最大化機能を追加\nその他様々な変更・修正"
+      },
+      {
+        "name": "β0.2.1",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta8",
+        "date": 1627551600,
+        "string": "(重要)特別警報・河川情報関連の処理を変更\n(重要)キャンセル報が反映されない問題を一時的に修正\n(重要)津波情報が表示されないバグを修正\n地震情報のデザインを変更"
+      },
+      {
+        "name": "β0.2.0",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta7",
+        "date": 1625840300,
+        "string": "カラーテーマを変更可能に 設定項目の追加 地震情報リストのスタイル変更 緊急地震速報の受信ログを送信できるように変更 待機中の気象情報を確認する機能を追加 その他様々な変更・修正"
+      },
+      {
+        "name": "β0.1.6",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta6",
+        "date": 1619997600,
+        "string": "(今回は軽微な更新) 緊急地震速報の表示テストが可能に 一部表記を変更 その他軽微な変更・修正"
+      },
+      {
+        "name": "β0.1.5",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta5",
+        "date": 1618066800,
+        "string": "Mスケールが地震情報のタイトルに一部反映されない問題を修正 緊急地震速報のレベル法・PLUM法による電文を一部受信できない問題を修正 時計のデザインを刷新"
+      },
+      {
+        "name": "β0.1.4",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta4",
+        "date": 1617530400,
+        "string": "バージョンアップお知らせ機能追加(起動時) 設定が反映されない場合がある問題を修正 デバッグ機能を追加 その他軽微な変更・修正"
+      },
+      {
+        "name": "β0.1.3",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta3",
+        "date": 1617033600,
+        "string": "一部表記の変更 バージョンアップ後の検知機能 時計の色を変更(仮) その他一部の変更・修正"
+      },
+      {
+        "name": "β0.1.2",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta2",
+        "date": 1616574840,
+        "string": "効果音の音量関係の更新"
+      },
+      {
+        "name": "β0.1.1",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "beta1",
+        "date": 1616509380,
+        "string": "howToUse.txtの更新"
+      },
+      {
+        "name": "β0.1.0",
+        "jumpto": "https://ndv.iaigiri.com/ext/",
+        "stopcode": "0",
+        "code": "R",
+        "date": 1616503200,
+        "string": "ベータ版リリース"
+      }
+    ]
+  },
   "stopcode": {
-    "0": false,
-    "1": {
-      "stopForced": true,
-      "message": "エラーが！！！"
-    }
+    "0": null,
+    "-1": "Critical Error has occurred. This program cannot continue to run.",
+    "-2": "testesttestesteststetssssstetetttt"
   }
 }
