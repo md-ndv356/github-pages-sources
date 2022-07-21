@@ -31,7 +31,7 @@
     </div>
     <script>
       let wni_iframe = document.getElementById("wni_live");
-      let chat = document.getElementById("wni_live_chat");2
+      let chat = document.getElementById("wni_live_chat");
       fetch("https://weathernews.jp/s/live/json/youtube_cyclic.json?t="+Date.now()).then(response => response.json()).then(json => {
         wni_iframe.src = "https://www.youtube-nocookie.com/embed/" + json.code;
         chat.href = "https://www.youtube.com/live_chat?is_popout=1&v=" + json.code;
