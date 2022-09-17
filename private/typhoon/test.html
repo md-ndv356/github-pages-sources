@@ -3,14 +3,41 @@
   <head>
     <meta charset="utf-8">
     <title>Typhoon Map Test</title>
+    <style>
+      table { border-collapse: collapse; width: calc(100vw - 546px); }
+      table, tr, td {  border: 1px solid #333; }
+      td { text-align: center; padding: 1px 5px; }
+      #typh-info-table-list { font: 400 16px serif; }
+      .typh-info-table { margin-top: 3px; }
+      tr > td:first-child { width: 150px; }
+      td[colspan="2"] {
+        background-color: #ffebeb;
+      }
+    </style>
   </head>
   <body>
-    <button onclick=" initialize(true) ">Reload</button>
+    <button style="background: #fff; width: auto; height: 22px; border: 1px solid #999; border-radius: 3px; cursor: pointer; position: fixed; bottom: 2px; right: 2px;" onclick=" initialize(true) ">Click here to Reload.</button>
     <p id="matrix" style="display: none;"></p>
     <p id="info"></p>
-    <div id="typh_title" style="width: 502px; background-color: #082080; text-align: center; font: 15px sans-serif; color: #fff; padding: 3px 10px;"></div>
-    <canvas id="canvas" style="width: 520px; height: 376px; border: solid 1px #333;" width="1040" height="752"></canvas>
-    <div id="typh_comment" style="width: 522px;"></div>
+    <div style="display: flex;">
+      <div>
+        <div id="typh_title" style="width: 502px; background-color: #082080; text-align: center; font: 15px sans-serif; color: #fff; padding: 3px 10px;"></div>
+        <canvas id="canvas" style="width: 520px; height: 376px; border: solid 1px #333;" width="1040" height="752"></canvas>
+        <div id="typh_comment" style="width: 522px;"></div>
+      </div>
+      <div style="margin-left: 8px;" id="typh-info-table-list">
+        <div class="typh-info-table">
+          <table>
+            <tr><td colspan="2">凡例</td></tr>
+            <tr><td>場所</td><td>読み込み中</td></tr>
+            <tr><td>最大風速</td><td>読み込み中</td></tr>
+            <tr><td>最大瞬間風速</td><td>読み込み中</td></tr>
+            <tr><td>移動方向</td><td>読み込み中</td></tr>
+            <tr><td>気圧</td><td>読み込み中</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
     <script>
 
       window.onerror = function(...a){document.write(a[0]); console.log(a)};
@@ -89,46 +116,46 @@
 
       //*inspired*  https://tjkendev.github.io/procon-library/python/geometry/circle_common_tangent_point.html
       function common_tangent_lines(x1, y1, r1, x2, y2, r2) {
-      // console.log("%c -- input --\n"+`  * x1: ${x1}, y1: ${y1}, r1: ${r1}, x2: ${x2}, y2: ${y2}, r2: ${r2}`, "font-family: monospace;");
-      let bx, by, cv, p1, px, py, q1, qx, qy, result, rr0, sv, xd, yd;
-      result = {
-        lines: [],
-        circle: []
-      };
-      xd = x2 - x1;
-      yd = y2 - y1;
-      rr0 = Math.pow(xd, 2) + Math.pow(yd, 2);
-      if (Math.pow(r1 - r2, 2) <= rr0) {
-        cv = r1 - r2;
-        // console.log(`%c  * cv: ${cv}, rr0: ${rr0}`, "font-family: monospace;");
-        if (rr0 === Math.pow(r1 - r2, 2)) {
-          bx = r1 * cv * xd / rr0;
-          by = r1 * cv * yd / rr0;
-          result.lines.push([[x1 + bx, y1 + by], [x1 - yd + bx, y1 + xd + by]]);
-          // なにここ
-        } else {
-          sv = Math.sqrt(rr0 - Math.pow(cv, 2));
-          px = cv * xd - sv * yd;
-          py = sv * xd + cv * yd;
-          result.lines.push([[x1 + r1 * px / rr0, y1 + r1 * py / rr0], [x2 + r2 * px / rr0, y2 + r2 * py / rr0]]);
-          qx = cv * xd + sv * yd;
-          qy = -sv * xd + cv * yd;
-          p1 = (rad2deg(sincos_rad(py / rr0, px / rr0))+360) % 360;
-          q1 = (rad2deg(sincos_rad(qy / rr0, qx / rr0))+360) % 360;
-          // console.log(`%c  * sv: ${sv}, px: ${px}, py: ${py}, qx: ${qx}, qy: ${qy}, p1: ${p1}, q1: ${q1}`, "font-family: monospace;");
-          // console.log(`%c  * px / rr0 = ${px / rr0}, py / rr0 = ${py / rr0}`, "font-family: monospace;");
-          // console.log(`%c  * qx / rr0 = ${qx / rr0}, qy / rr0 = ${qy / rr0}`, "font-family: monospace;");
-          // console.log(`%c  * sincos_rad((py / rr0, px / rr0) = ${sincos_rad(py / rr0, px / rr0)}`, "font-family: monospace;");
-          // console.log(`%c  * sincos_rad((qy / rr0, qx / rr0) = ${sincos_rad(qy / rr0, qx / rr0)}`, "font-family: monospace;");
-          result.circle = [sincos_rad(py / rr0, px / rr0), sincos_rad(qy / rr0, qx / rr0)].sort((a, b) => a - b);
-          result.lines.push([[x1 + r1 * qx / rr0, y1 + r1 * qy / rr0], [x2 + r2 * qx / rr0, y2 + r2 * qy / rr0]]);
+        // console.log("%c -- input --\n"+`  * x1: ${x1}, y1: ${y1}, r1: ${r1}, x2: ${x2}, y2: ${y2}, r2: ${r2}`, "font-family: monospace;");
+        let bx, by, cv, p1, px, py, q1, qx, qy, result, rr0, sv, xd, yd;
+        result = {
+          lines: [],
+          circle: []
+        };
+        xd = x2 - x1;
+        yd = y2 - y1;
+        rr0 = Math.pow(xd, 2) + Math.pow(yd, 2);
+        if (Math.pow(r1 - r2, 2) <= rr0) {
+          cv = r1 - r2;
+          // console.log(`%c  * cv: ${cv}, rr0: ${rr0}`, "font-family: monospace;");
+          if (rr0 === Math.pow(r1 - r2, 2)) {
+            bx = r1 * cv * xd / rr0;
+            by = r1 * cv * yd / rr0;
+            result.lines.push([[x1 + bx, y1 + by], [x1 - yd + bx, y1 + xd + by]]);
+            // なにここ
+          } else {
+            sv = Math.sqrt(rr0 - Math.pow(cv, 2));
+            px = cv * xd - sv * yd;
+            py = sv * xd + cv * yd;
+            result.lines.push([[x1 + r1 * px / rr0, y1 + r1 * py / rr0], [x2 + r2 * px / rr0, y2 + r2 * py / rr0]]);
+            qx = cv * xd + sv * yd;
+            qy = -sv * xd + cv * yd;
+            p1 = (rad2deg(sincos_rad(py / rr0, px / rr0))+360) % 360;
+            q1 = (rad2deg(sincos_rad(qy / rr0, qx / rr0))+360) % 360;
+            // console.log(`%c  * sv: ${sv}, px: ${px}, py: ${py}, qx: ${qx}, qy: ${qy}, p1: ${p1}, q1: ${q1}`, "font-family: monospace;");
+            // console.log(`%c  * px / rr0 = ${px / rr0}, py / rr0 = ${py / rr0}`, "font-family: monospace;");
+            // console.log(`%c  * qx / rr0 = ${qx / rr0}, qy / rr0 = ${qy / rr0}`, "font-family: monospace;");
+            // console.log(`%c  * sincos_rad((py / rr0, px / rr0) = ${sincos_rad(py / rr0, px / rr0)}`, "font-family: monospace;");
+            // console.log(`%c  * sincos_rad((qy / rr0, qx / rr0) = ${sincos_rad(qy / rr0, qx / rr0)}`, "font-family: monospace;");
+            result.circle = [sincos_rad(py / rr0, px / rr0), sincos_rad(qy / rr0, qx / rr0)].sort((a, b) => a - b);
+            result.lines.push([[x1 + r1 * qx / rr0, y1 + r1 * qy / rr0], [x2 + r2 * qx / rr0, y2 + r2 * qy / rr0]]);
+          }
         }
-      }
 
-      // console.log(("%c  * result[0]: "+result[0]).replaceAll(",", ", "), "font-family: monospace;");
-      // console.log(("%c  * result[1]: "+result[1]).replaceAll(",", ", "), "font-family: monospace;");
-      return result;
-    }
+        // console.log(("%c  * result[0]: "+result[0]).replaceAll(",", ", "), "font-family: monospace;");
+        // console.log(("%c  * result[1]: "+result[1]).replaceAll(",", ", "), "font-family: monospace;");
+        return result;
+      }
 
       function WGS84_from_distance(lat, lon, azimuth, distance){
 
@@ -221,6 +248,7 @@
       const canvas_forecast = document.createElement("canvas");
       const typh_title = document.getElementById("typh_title");
       const typh_comment = document.getElementById("typh_comment");
+      const typh_info_table_list = document.getElementById("typh-info-table-list");
       canvas.width = viewWidth * deviceRatio;
       canvas.height = viewHeight * deviceRatio;
       canvas.style.width = viewWidth + "px";
@@ -328,6 +356,20 @@
         typhinfo = typhinfo.typhoon[0];
         typh_title.textContent = typhinfo.name.replace(":", " - ");
         typh_comment.innerText = typhinfo.comment_body;
+
+        typh_info_table_list.innerHTML = "";
+        for (const item of typhinfo.details) {
+          typh_info_table_list.innerHTML += `        <div class="typh-info-table">
+          <table>
+            <tr><td colspan="2">${item.date}</td></tr>
+            <tr><td>場所</td><td>${item.location}</td></tr>
+            <tr><td>最大風速</td><td>${item.maxwind}</td></tr>
+            <tr><td>最大瞬間風速</td><td>${item.windgust}</td></tr>
+            <tr><td>移動方向</td><td>${item.direction}</td></tr>
+            <tr><td>気圧</td><td>${item.pressure}</td></tr>
+          </table>
+        </div>`;
+        }
 
         let latestRoute = typhinfo.route.slice(-1)[0];
         typhdata.latestRoute = {};
