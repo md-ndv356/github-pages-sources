@@ -350,6 +350,7 @@
       let coords = {};
       let typhdata = {};
       async function initialize(flag){
+        typh_title.textContent = "読み込み中・・・";
         coords = await fetch("./json/typhoon_pos_wgs84.json").then(response => response.json());
         let typhinfo = await fetch("https://weathernews.jp/ip/typhoon_data.json").then(response => response.json());
 
