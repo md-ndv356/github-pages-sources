@@ -103,6 +103,7 @@
       xhr.warnList.send();
     };
 
+    let firstget = true;
     xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json?_="+Date.now());
     xhr.warnList.onload = function(){
       exWarningInformation = [];
@@ -123,7 +124,8 @@
       }
       if(zero){
       }
-      requestAnimationFrame(main);
+      if(firstget) requestAnimationFrame(main);
+      firstget = false;
     }
     xhr.areas.send();
 
