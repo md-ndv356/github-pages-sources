@@ -447,7 +447,7 @@
             ]
           });
         });
-
+        isStateChanged = true;
         if(!flag) requestAnimationFrame(main);
       }
 
@@ -646,7 +646,7 @@
       });
 
       initialize();
-      setInterval(initialize, 180000);
+      setInterval(function(){initialize(true);}, 180000);
     </script>
   </body>
 </html>
