@@ -323,7 +323,7 @@
 
           let delta = 1 - event.deltaY / 200;
           if(transform.m11 * delta < 1) delta = 1 / transform.m11;
-          if(transform.m11 * delta > 5) delta = 5 / transform.m11;
+          if(transform.m11 * delta > 8) delta = 8 / transform.m11;
           let rt = canvas.getBoundingClientRect();
           let x = Math.floor(event.clientX - rt.left);
           let y = Math.floor(event.clientY - rt.top)
