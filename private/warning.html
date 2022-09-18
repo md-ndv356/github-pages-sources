@@ -132,6 +132,7 @@
         const region = exWarningInformation[viewingInformationIndex].region;
         regionElement.setAttribute("textLength", Math.min(ctx.measureText(region).width, 260));
         regionElement.textContent = region;
+        titleElement.textContent = exWarningInformation[viewingInformationIndex].type+"発表中";
         viewTick = 0;
       }
       requestAnimationFrame(main);
