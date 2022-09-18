@@ -10,8 +10,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
     body {
       margin: 0;
-      font-family: 'Noto Sans JP', sans-serif;
       color: #ffffff;
+    }
+    .serif {
+      font-family: 'Noto Serif JP', serif;
+    }
+    .sansserif {
+      font-family: 'Noto Sans JP', sans-serif;
     }
     .main_container {
       width: 300px;
@@ -22,13 +27,14 @@
 </head>
 <body>
   <svg class="main_container">
-    <text x="4" y="19" fill="#ffffff" font-size="14" id="title">特別警報発表中</text>
+    <text x="4" y="19" fill="#ffffff" font-size="14" id="title">情報取得中・・・</text>
     <text x="15" y="49" fill="#ffffff" font-size="26" id="region" textLength="260" lengthAdjust="spacingAndGlyphs"></text>
   </svg>
   <script>
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     ctx.font = "26px 'Noto Sans JP";
+    document.body.classList.add(window.location.search.includes("font=serif") ? "serif" : "sansserif");
     window.exWarningInformation = [];
     window.viewTick = 999;
     window.viewingInformationIndex = -1;
@@ -97,9 +103,9 @@
       xhr.warnList.send();
     };
 
-    xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json");
+    xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json?_="+Date.now());
     xhr.warnList.onload = function(){
-      scrollText = "【発表中の気象警報】";
+      exWarningInformation = [];
       let list = JSON.parse(this.response);
       let zero = true;
       for (let pt of list) {
@@ -108,8 +114,6 @@
           let first = true;
           for (let warn of ars.warnings) {
             if ((warn.status == "継続" || warn.status == "発表") && warnCodes[warn.code].name2 === "特別警報") {
-              if (first) scrollText += "　" + code + "：";
-              else scrollText += "・";
               first = false;
               zero = false;
               exWarningInformation.push({type: warnCodes[warn.code].name1 + warnCodes[warn.code].name2, region: code});
@@ -118,7 +122,6 @@
         }
       }
       if(zero){
-        scrollText = "現在発表中の気象警報はありません。";
       }
       requestAnimationFrame(main);
     }
@@ -126,14 +129,19 @@
 
     function main(){
       viewTick++;
-      if (viewTick > 480){
-        viewingInformationIndex++;
-        if (viewingInformationIndex >= exWarningInformation.length) viewingInformationIndex = 0;
-        const region = exWarningInformation[viewingInformationIndex].region;
-        regionElement.setAttribute("textLength", Math.min(ctx.measureText(region).width, 260));
-        regionElement.textContent = region;
-        titleElement.textContent = exWarningInformation[viewingInformationIndex].type+"発表中";
-        viewTick = 0;
+      if (viewTick > 420){
+        if (!exWarningInformation.length){
+          titleElement.textContent = "";
+          regionElement.textContent = "特別警報は全て解除";
+        } else {
+          viewingInformationIndex++;
+          if (viewingInformationIndex >= exWarningInformation.length) viewingInformationIndex = 0;
+          const region = exWarningInformation[viewingInformationIndex].region;
+          regionElement.setAttribute("textLength", Math.min(ctx.measureText(region).width, 260));
+          regionElement.textContent = region;
+          titleElement.textContent = exWarningInformation[viewingInformationIndex].type+"発表中";
+          viewTick = 0;
+        }
       }
       requestAnimationFrame(main);
     }
