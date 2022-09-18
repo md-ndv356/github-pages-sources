@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ex Warning List</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+    body {
+      margin: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #ffffff;
+    }
+    .main_container {
+      width: 300px;
+      height: 60px;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <svg class="main_container">
+    <text x="4" y="19" fill="#ffffff" font-size="14" id="title">特別警報発表中</text>
+    <text x="15" y="49" fill="#ffffff" font-size="26" id="region" textLength="260" lengthAdjust="spacingAndGlyphs"></text>
+  </svg>
+  <script>
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.font = "26px 'Noto Sans JP";
+    window.exWarningInformation = [];
+    window.viewTick = 999;
+    window.viewingInformationIndex = -1;
+    window.titleElement = document.getElementById("title");
+    window.regionElement = document.getElementById("region");
+    var warnCodes = {
+      "33":{name1:"大雨",name2:"特別警報",elem:"rain",level:50},
+      "03":{name1:"大雨",name2:"警報",elem:"rain",level:30},
+      "10":{name1:"大雨",name2:"注意報",elem:"rain",level:20},
+      "04":{name1:"洪水",name2:"警報",elem:"flood",level:30},
+      "18":{name1:"洪水",name2:"注意報",elem:"flood",level:20},
+      "35":{name1:"暴風",name2:"特別警報",elem:"wind",level:40},
+      "05":{name1:"暴風",name2:"警報",elem:"wind",level:30},
+      "15":{name1:"強風",name2:"注意報",elem:"wind",level:20},
+      "32":{name1:"暴風雪",name2:"特別警報",elem:"wind_snow",level:40},
+      "02":{name1:"暴風雪",name2:"警報",elem:"wind_snow",level:30},
+      "13":{name1:"風雪",name2:"注意報",elem:"wind_snow",level:20},
+      "36":{name1:"大雪",name2:"特別警報",elem:"snow",level:40},
+      "06":{name1:"大雪",name2:"警報",elem:"snow",level:30},
+      "12":{name1:"大雪",name2:"注意報",elem:"snow",level:20},
+      "37":{name1:"波浪",name2:"特別警報",elem:"wave",level:40},
+      "07":{name1:"波浪",name2:"警報",elem:"wave",level:30},
+      "16":{name1:"波浪",name2:"注意報",elem:"wave",level:20},
+      "38":{name1:"高潮",name2:"特別警報",elem:"tide",level:40},
+      "08":{name1:"高潮",name2:"警報",elem:"tide",level:40},
+      "19":{name1:"高潮",name2:"注意報",elem:"tide",level:20},
+      "19+":{name1:"高潮",name2:"注意報",elem:"tide",level:30},
+      "14":{name1:"雷",name2:"注意報",elem:"thunder",level:20},
+      "17":{name1:"融雪",name2:"注意報",elem:"snow_melting",level:20},
+      "20":{name1:"濃霧",name2:"注意報",elem:"fog",level:20},
+      "21":{name1:"乾燥",name2:"注意報",elem:"dry",level:20},
+      "22":{name1:"なだれ",name2:"注意報",elem:"avalanche",level:20},
+      "23":{name1:"低温",name2:"注意報",elem:"cold",level:20},
+      "24":{name1:"霜",name2:"注意報",elem:"frost",level:20},
+      "25":{name1:"着氷",name2:"注意報",elem:"ice_accretion",level:20},
+      "26":{name1:"着雪",name2:"注意報",elem:"snow_accretion",level:20}
+    };
+    var xhr = {
+      areas: new XMLHttpRequest(),
+      warnList: new XMLHttpRequest(),
+      landslides: new XMLHttpRequest(),
+      areasReq: undefined
+    };
+    xhr.areas.open("GET", "https://www.jma.go.jp/bosai/common/const/area.json");
+    xhr.areas.overrideMimeType('text/plain; charset=uft-8');
+    xhr.areas.onload = function(){
+      xhr.areasReq = JSON.parse(this.response);
+      window.code2name = function(targetCode){
+        if(targetCode == "370000") return "香川県";
+        if(targetCode == "270000") return "大阪府";
+        let x = [
+          {name:"北海道",enName:"Hokkaido ",officeCodes:["011000","012000","013000","014030","014100","015000","016000","017000"]},
+          {name:"鹿児島県",enName:"Kagoshima ",officeCodes:["460100","460040"]},
+          {name:"沖縄県",enName:"Okinawa ",officeCodes:["471000","472000","473000","474000"]}
+        ];
+        let class2 = xhr.areasReq.class10s[targetCode].name;
+        let toClass1 = xhr.areasReq.class10s[targetCode].parent;
+        for(let y of x){
+          let z = y.officeCodes.indexOf(toClass1);
+          if(z !== -1){
+            return y.name + class2;
+          }
+        }
+        return xhr.areasReq.offices[toClass1].name + class2;
+      }
+      xhr.warnList.send();
+    };
+
+    xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json");
+    xhr.warnList.onload = function(){
+      scrollText = "【発表中の気象警報】";
+      let list = JSON.parse(this.response);
+      let zero = true;
+      for (let pt of list) {
+        for (let ars of pt.areaTypes[0].areas) {
+          let code = code2name(ars.code);
+          let first = true;
+          for (let warn of ars.warnings) {
+            if ((warn.status == "継続" || warn.status == "発表") && warnCodes[warn.code].name2 === "特別警報") {
+              if (first) scrollText += "　" + code + "：";
+              else scrollText += "・";
+              first = false;
+              zero = false;
+              exWarningInformation.push({type: warnCodes[warn.code].name1 + warnCodes[warn.code].name2, region: code});
+            }
+          }
+        }
+      }
+      if(zero){
+        scrollText = "現在発表中の気象警報はありません。";
+      }
+      requestAnimationFrame(main);
+    }
+    xhr.areas.send();
+
+    function main(){
+      viewTick++;
+      if (viewTick > 480){
+        viewingInformationIndex++;
+        if (viewingInformationIndex >= exWarningInformation.length) viewingInformationIndex = 0;
+        const region = exWarningInformation[viewingInformationIndex].region;
+        regionElement.setAttribute("textLength", Math.min(ctx.measureText(region).width, 260));
+        regionElement.textContent = region;
+        viewTick = 0;
+      }
+      requestAnimationFrame(main);
+    }
+  </script>
+</body>
+</html>
