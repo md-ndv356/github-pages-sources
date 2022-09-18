@@ -127,6 +127,11 @@
     }
     xhr.areas.send();
 
+    setInterval(function(){
+      xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json?_="+Date.now());
+      xhr.warnList.send();
+    }, 60000);
+
     function main(){
       viewTick++;
       if (viewTick > 420){
