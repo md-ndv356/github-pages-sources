@@ -26,6 +26,8 @@
         <div id="typh_view_set" style="width: 502px; background-color: #075074; text-align: center; font: 15px sans-serif; color: #fff; padding: 3px 10px; margin-bottom: 7px;">
           <label for="typh_view_fcst">予報を表示</label>
           <input type="checkbox" id="typh_view_fcst" name="typh_view_fcst" checked>
+          <label for="display_loc">現在地を表示</label>
+          <input type="checkbox" id="display_loc" name="display_loc">
         </div>
         <div id="typh_comment" style="width: 522px;"></div>
       </div>
@@ -253,6 +255,7 @@
       const typh_title = document.getElementById("typh_title");
       const typh_comment = document.getElementById("typh_comment");
       const typh_view_fcst = document.getElementById("typh_view_fcst");
+      const display_loc = document.getElementById("display_loc");
       const typh_info_table_list = document.getElementById("typh-info-table-list");
       canvas.width = viewWidth * deviceRatio;
       canvas.height = viewHeight * deviceRatio;
@@ -267,6 +270,7 @@
       let matrix = document.getElementById("matrix");
       const ct = canvas.getContext("2d");
       const ct_forecast = canvas_forecast.getContext("2d");
+      const currentLocationData = { lat: 0, lon: 0, x: null, y: null };
 
       const adjustMapScale = ()=>{
         const info = document.getElementById("info");
@@ -456,6 +460,8 @@
       function main(){
 
         if (isStateChanged){
+          const locationDataIsValid = currentLocationData.x !== null && display_loc.checked;
+
           ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
           ct_forecast.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
           ct.fillStyle = "#414879";
@@ -496,6 +502,23 @@
           let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
           let center_x = fit(cdXstart, typhdata.latestRoute.x, cdXend, mapWidth);
           let center_y = fit(cdYstart, typhdata.latestRoute.y, cdYend, mapHeight);
+          let geolocation_x = fit(cdXstart, currentLocationData.x, cdXend, mapWidth);
+          let geolocation_y = fit(cdYstart, currentLocationData.y, cdYend, mapHeight);
+
+          if (locationDataIsValid){
+            ct.strokeStyle = "#fff9";
+            ct.fillStyle = "#fff9";
+            ct.font = "bold 3px sans-serif";
+            ct.textAlign = "end";
+            ct.beginPath();
+            ct.moveTo(geolocation_x, 0);
+            ct.lineTo(geolocation_x, 376);
+            ct.moveTo(0, geolocation_y);
+            ct.lineTo(520, geolocation_y);
+            ct.stroke();
+            ct.fillText("現在地", (518-transform.m41)/transform.m11, geolocation_y-0.8);
+            ct.textAlign = "start";
+          }
 
           ct.lineCap = "round";
           ct_forecast.fillStyle = "#f00";
@@ -644,6 +667,17 @@
         isStateChanged = true;
         isForecastViewed = typh_view_fcst.checked;
       });
+      display_loc.addEventListener("change", () => {
+        isStateChanged = true;
+        if (!currentLocationData.lat){
+          navigator.geolocation.getCurrentPosition(data => {
+            [currentLocationData.x, currentLocationData.y] = PositionToTileXY([data.coords.longitude, data.coords.latitude]);
+            currentLocationData.lat = data.coords.latitude;
+            currentLocationData.lon = data.coords.longitude;
+            isStateChanged = true;
+          });
+        }
+      })
 
       initialize();
       setInterval(function(){initialize(true);}, 180000);
