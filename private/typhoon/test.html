@@ -83,6 +83,11 @@
 
         return null;
       }
+      // xyの座標系が違うことを考慮しましょう。出力はラジアン
+      function vec2rad(x, y){
+        let hyp = Math.hypot(x, y);
+        return sincos_rad(y/hyp, x/hyp);
+      }
 
       const RAD    = 0.017453292;  // 3.141592654/180
       const RAD_2  = 0.008726646;  // 3.141592654/(180*2)
@@ -363,7 +368,8 @@
         coords = await fetch("./json/typhoon_pos_wgs84.json").then(response => response.json());
         let typhinfo = await fetch("https://weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
 
-        typhinfo = typhinfo.typhoon[0];
+        let targetNumber = window.location.search.slice(1)-0;
+        typhinfo = typhinfo.typhoon[isNaN(targetNumber) ? 0 : targetNumber];
         typh_title.textContent = typhinfo.name.replace(":", " - ");
         typh_comment.innerText = typhinfo.comment_body;
 
@@ -489,11 +495,11 @@
           });
 
           // 事前に計算すると壊れるので、各描画ごとに計算（マップサイズが変更されることも考慮？）
-          let gale_0x = fit(cdXstart, typhdata.gale.x, cdXend, mapWidth);
-          let gale_0y = fit(cdYstart, typhdata.gale.y, cdYend, mapHeight);
-          let gale_1x = fit(cdXstart, typhdata.gale.temp5[0], cdXend, mapWidth);
-          let gale_1y = fit(cdYstart, typhdata.gale.temp5[1], cdYend, mapHeight);
-          let gale_rad = Math.hypot(Math.abs(gale_0x - gale_1x), Math.abs(gale_0y - gale_1y));
+          let gale_0x = typhdata.gale.x ? fit(cdXstart, typhdata.gale.x, cdXend, mapWidth) : null;
+          let gale_0y = typhdata.gale.x ? fit(cdYstart, typhdata.gale.y, cdYend, mapHeight) : null;
+          let gale_1x = typhdata.gale.x ? fit(cdXstart, typhdata.gale.temp5[0], cdXend, mapWidth) : null;
+          let gale_1y = typhdata.gale.x ? fit(cdYstart, typhdata.gale.temp5[1], cdYend, mapHeight) : null;
+          let gale_rad = typhdata.gale.x ? Math.hypot(Math.abs(gale_0x - gale_1x), Math.abs(gale_0y - gale_1y)) : null;
           // document.getElementById("info").innerText = JSON.stringify([gale_0x, gale_0y, gale_1x, gale_1y]);
           let storm_0x = typhdata.storm.temp3 ? fit(cdXstart, typhdata.storm.x, cdXend, mapWidth) : 0;
           let storm_0y = typhdata.storm.temp3 ? fit(cdYstart, typhdata.storm.y, cdYend, mapHeight) : 0;
@@ -512,7 +518,7 @@
             ct.textAlign = "end";
             ct.beginPath();
             ct.moveTo(geolocation_x, 0);
-            ct.lineTo(geolocation_x, 376);
+            ct.lineTo(geolocation_x, 800);
             ct.moveTo(0, geolocation_y);
             ct.lineTo(520, geolocation_y);
             ct.stroke();
@@ -629,12 +635,14 @@
             }
           });
 
-          ct.fillStyle = "#ffd50033";
-          ct.strokeStyle = "#ffd500c0";
-          ct.beginPath();
-          ct.ellipse(gale_0x, gale_0y, gale_rad, gale_rad, 0, 0, 6.283184);
-          ct.fill();
-          ct.stroke();
+          if (gale_0x !== null){
+            ct.fillStyle = "#ffd50033";
+            ct.strokeStyle = "#ffd500c0";
+            ct.beginPath();
+            ct.ellipse(gale_0x, gale_0y, gale_rad, gale_rad, 0, 0, 6.283184);
+            ct.fill();
+            ct.stroke();
+          }
 
           ct.fillStyle = "#c006";
           ct.strokeStyle = "#f00f";
