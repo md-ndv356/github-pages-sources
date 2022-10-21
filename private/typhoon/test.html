@@ -366,7 +366,7 @@
       async function initialize(flag){
         typh_title.textContent = "読み込み中・・・";
         coords = await fetch("./json/typhoon_pos_wgs84.json").then(response => response.json());
-        let typhinfo = await fetch("https://weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
+        let typhinfo = await fetch("https://powerful-shore-59206.herokuapp.com/weathernews/before/weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
 
         let targetNumber = window.location.search.slice(1)-0;
         typhinfo = typhinfo.typhoon[isNaN(targetNumber) ? 0 : targetNumber];
@@ -375,7 +375,7 @@
 
         typh_info_table_list.innerHTML = "";
         for (const item of typhinfo.details) {
-          typh_info_table_list.innerHTML += `        <div class="typh-info-table">
+          typh_info_table_list.insertAdjacentHTML("beforeend", `        <div class="typh-info-table">
           <table>
             <tr><td colspan="2">${item.date}</td></tr>
             <tr><td>場所</td><td>${item.location}</td></tr>
@@ -384,7 +384,7 @@
             <tr><td>移動方向</td><td>${item.direction}</td></tr>
             <tr><td>気圧</td><td>${item.pressure}</td></tr>
           </table>
-        </div>`;
+        </div>`);
         }
 
         let latestRoute = typhinfo.route.slice(-1)[0];
@@ -559,11 +559,11 @@
           });
           ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
           ct.globalAlpha = .3;
-          if (isForecastViewed) ct.drawImage(canvas_forecast, 0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio, 0, 0, viewWidth, viewHeight);
+//          if (isForecastViewed) ct.drawImage(canvas_forecast, 0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio, 0, 0, viewWidth, viewHeight);
           ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
 
           ct_forecast.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
-          ct_forecast.clearRect(0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio);
+//          ct_forecast.clearRect(0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio);
           ct_forecast.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
 
           ct.strokeStyle = "#fff";
