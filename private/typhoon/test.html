@@ -366,7 +366,7 @@
       async function initialize(flag){
         typh_title.textContent = "読み込み中・・・";
         coords = await fetch("./json/typhoon_pos_wgs84.json").then(response => response.json());
-        let typhinfo = await fetch("https://powerful-shore-59206.herokuapp.com/weathernews/before/weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
+        let typhinfo = await fetch("https://weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
 
         let targetNumber = window.location.search.slice(1)-0;
         typhinfo = typhinfo.typhoon[isNaN(targetNumber) ? 0 : targetNumber];
