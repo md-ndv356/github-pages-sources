@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EEW monitor</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
+</style>
+</head>
+<body style="margin: 0; background-color: #000;">
+<div style="height: calc(50vh - 50vw / 16 * 9);">
+</div>
+<canvas width=1920 height=1080 style="width:100%; height: auto; display:block; "></canvas>
+<script>
+
+class VarAnim {
+  constructor(time, type, data, floor) {
+    this.time = time;
+    this.type = type;
+    this.start_n = data.s;
+    this.end_n = data.e;
+    this.startTime = -1;
+    this.nowTime = -1;
+    this.helps = "";
+    this.data = data;
+    this.isEnd = true;
+    this.savedData = data.datas;
+    this.fl = floor ?? false;
+  }
+  start() {
+    this.startTime = (new Date()).getTime();
+    this.isEnd = false;
+  }
+  get aIsEnd() {
+    if((this.nowTime-this.startTime)/this.time < 1){
+      this.isEnd = false;
+    } else {
+      this.isEnd = true;
+    }
+    return this.isEnd;
+  }
+  get current() {
+    this.nowTime = (new Date()).getTime();
+    let t = (this.nowTime-this.startTime)/this.time;
+    let ret;
+    if(t < 1){
+      this.isEnd = false;
+    } else {
+      this.isEnd = true;
+    }
+    switch (this.type) {
+      case "linear":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)/this.time*(this.nowTime-this.startTime);
+          // 5+(9-5)/2000*(150000-149500)=6
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-in-cubic":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*t*t;
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-out-cubic":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*(1-Math.pow(1-t,3));
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-in-out-cubic":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*(t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2);
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-in-quad":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*t*t;
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-out-quad":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*(1-(1-t)*(1-t));
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-in-out-quad":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*(t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2);
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-in-quart":
+        if(t < 1){
+          ret = this.start_n+t**4*(this.end_n-this.start_n);
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "ease-out-quart":
+        if(t < 1){
+          ret = this.start_n+(this.end_n-this.start_n)*(1-(1-t)**4);
+        } else {
+          ret = this.end_n;
+        }
+        break;
+      case "bc_4":
+        if(t>1)t=1;
+        var tp = 1-t;
+        ret = t*t*t*this.data[3] + 3*t*t*tp*this.data[2] + 3*t*tp*tp*this.data[1] + tp*tp*tp*this.data[0];
+        break;
+      case "bc_3":
+        if(t>1)t=1;
+        var tp = 1-t;
+        ret = tp*tp*this.data[0] + 2*tp*t*this.data[1] + t*t*this.data[2];
+        break;
+      case "sliding":
+        var tp = 1-(this.nowTime-this.startTime)/this.time;
+        if(tp<0)tp=0;
+        ret = this.start_n+Math.sqrt(1-Math.pow(tp,2))*(this.end_n-this.start_n);
+        break;
+      case "r_sliding":
+        var tp = (this.nowTime-this.startTime)/this.time;
+        if(tp>1)tp=1;
+        ret = this.start_n+Math.sqrt(1-Math.pow(tp,2))*(this.end_n-this.start_n);
+        break;
+      case "sliding_3":
+        var tp = 1-(this.nowTime-this.startTime)/this.time;
+        if(tp<0)tp=0;
+        ret = this.start_n+Math.sqrt(1-Math.pow(tp,3))*(this.end_n-this.start_n);
+        break;
+      default:
+        console.error(`Variable_Animation/error: Unknown type!(${this.type})`);
+        ret = NaN;
+        break;
+    }
+    if(this.startTime !== -1) {
+      if(this.fl){
+        return Math.floor(ret);
+      } else {
+        return ret;
+      }
+    } else {
+      return this.end_n;
+    }
+  }
+  reset() {
+    this.nowTime = -1;
+    this.startTime = -1;
+    this.isEnd = true;
+    this.helps = "";
+  }
+}
+
+</script>
+<script>
+const menuAnim = new VarAnim(350, "ease-out-quad", {s:1,e:0});
+var canvas = document.querySelector("canvas");
+var ctx = canvas.getContext("2d");
+
+var gr;
+var data;
+var isLoaded = false;
+var time = -1;
+var wrnTime = (new Date()).getTime();
+var spent = -1;
+var scrollText = "";
+var scX = 1620;
+var scMax = 0;
+var eewLastUpdate = 0;
+var warnCodes = {
+  "33":{name1:"大雨",name2:"特別警報",elem:"rain",level:50},
+  "03":{name1:"大雨",name2:"警報",elem:"rain",level:30},
+  "10":{name1:"大雨",name2:"注意報",elem:"rain",level:20},
+  "04":{name1:"洪水",name2:"警報",elem:"flood",level:30},
+  "18":{name1:"洪水",name2:"注意報",elem:"flood",level:20},
+  "35":{name1:"暴風",name2:"特別警報",elem:"wind",level:40},
+  "05":{name1:"暴風",name2:"警報",elem:"wind",level:30},
+  "15":{name1:"強風",name2:"注意報",elem:"wind",level:20},
+  "32":{name1:"暴風雪",name2:"特別警報",elem:"wind_snow",level:40},
+  "02":{name1:"暴風雪",name2:"警報",elem:"wind_snow",level:30},
+  "13":{name1:"風雪",name2:"注意報",elem:"wind_snow",level:20},
+  "36":{name1:"大雪",name2:"特別警報",elem:"snow",level:40},
+  "06":{name1:"大雪",name2:"警報",elem:"snow",level:30},
+  "12":{name1:"大雪",name2:"注意報",elem:"snow",level:20},
+  "37":{name1:"波浪",name2:"特別警報",elem:"wave",level:40},
+  "07":{name1:"波浪",name2:"警報",elem:"wave",level:30},
+  "16":{name1:"波浪",name2:"注意報",elem:"wave",level:20},
+  "38":{name1:"高潮",name2:"特別警報",elem:"tide",level:40},
+  "08":{name1:"高潮",name2:"警報",elem:"tide",level:40},
+  "19":{name1:"高潮",name2:"注意報",elem:"tide",level:20},
+  "19+":{name1:"高潮",name2:"注意報",elem:"tide",level:30},
+  "14":{name1:"雷",name2:"注意報",elem:"thunder",level:20},
+  "17":{name1:"融雪",name2:"注意報",elem:"snow_melting",level:20},
+  "20":{name1:"濃霧",name2:"注意報",elem:"fog",level:20},
+  "21":{name1:"乾燥",name2:"注意報",elem:"dry",level:20},
+  "22":{name1:"なだれ",name2:"注意報",elem:"avalanche",level:20},
+  "23":{name1:"低温",name2:"注意報",elem:"cold",level:20},
+  "24":{name1:"霜",name2:"注意報",elem:"frost",level:20},
+  "25":{name1:"着氷",name2:"注意報",elem:"ice_accretion",level:20},
+  "26":{name1:"着雪",name2:"注意報",elem:"snow_accretion",level:20}
+};
+ctx.strokeLine = function(x1,y1,x2,y2){
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.stroke();
+};
+function recal(){
+  ctx.save();
+  ctx.font = "bold 60px 'Hiragino Kaku Gothic ProN',Meiryo,sans-serif";
+  scMax = ctx.measureText(scrollText).width;
+  ctx.restore();
+};
+const options = {
+  menu: false,
+  current: [],
+  select: {x:0, y:2},
+  info: {
+    eew: [],
+    warn: [],
+    landslide:[]
+  },
+  style: {
+    btmvis: true
+  }
+};
+var xhr = {
+  areas: new XMLHttpRequest(),
+  warnList: new XMLHttpRequest(),
+  landslides: new XMLHttpRequest(),
+  eew: new XMLHttpRequest(),
+  areasReq: undefined
+};
+xhr.areas.open("GET", "https://www.jma.go.jp/bosai/common/const/area.json");
+xhr.areas.overrideMimeType('text/plain; charset=uft-8');
+xhr.areas.onload = function(){
+  xhr.areasReq = JSON.parse(this.response);
+  window.code2name = function(targetCode){
+    if(targetCode == "370000") return "香川県";
+    if(targetCode == "270000") return "大阪府";
+    let x = [
+      {name:"北海道",enName:"Hokkaido ",officeCodes:["011000","012000","013000","014030","014100","015000","016000","017000"]},
+      {name:"鹿児島県",enName:"Kagoshima ",officeCodes:["460100","460040"]},
+      {name:"沖縄県",enName:"Okinawa ",officeCodes:["471000","472000","473000","474000"]}
+    ];
+    let class2 = xhr.areasReq.class10s[targetCode].name;
+    let toClass1 = xhr.areasReq.class10s[targetCode].parent;
+    for(let y of x){
+      let z = y.officeCodes.indexOf(toClass1);
+      if(z !== -1){
+        return y.name + class2;
+      }
+    }
+    return xhr.areasReq.offices[toClass1].name + class2;
+  }
+  xhr.warnList.send();
+};
+
+xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json");
+xhr.warnList.onload = function(){
+  scrollText = "【発表中の気象警報】";
+  let list = JSON.parse(this.response);
+  let zero = true;
+  for (let pt of list) {
+    for (let ars of pt.areaTypes[0].areas) {
+      let code = code2name(ars.code);
+      let first = true;
+      for (let warn of ars.warnings) {
+        if ((warn.status == "継続" || warn.status == "発表") && warnCodes[warn.code].level > 20) {
+          if (first) scrollText += "　" + code + "：";
+           else scrollText += "・";
+          first = false;
+          zero = false;
+          scrollText += warnCodes[warn.code].name1 + warnCodes[warn.code].name2;
+  recal();
+        }
+      }
+    }
+  }
+  if(zero){
+    scrollText = "現在発表中の気象警報はありません。";
+  }
+  xhr.landslides.send();
+  return;
+}
+
+xhr.landslides.open("GET", "https://www.jma.go.jp/bosai/warning/data/landslide/map.json");
+xhr.landslides.onload = function(){
+  let landjson = JSON.parse(this.response);
+  let allfirst = true;
+  for (let pref of landjson) {
+    for (let area of pref.areaTypes[0].areas) {
+      if (area.warningCode === "3") {
+        if (allfirst) scrollText += "　　　【土砂災害警戒情報発令中】対象地域：";
+         else scrollText += "　";
+        scrollText += code2name(area.areaCode);
+        allfirst = false;
+      }
+    }
+  }
+  recal();
+}
+xhr.areas.send();
+
+const eewsound = new Audio("https://md-ndv356.github.io/private/eew.mp3");
+function loadjson(){
+  let res = new XMLHttpRequest();
+//  alert("load"); 
+  time = (new Date()).getTime();
+  res.addEventListener("load",function(){
+    data = JSON.parse(this.responseText);
+    spent = (new Date()).getTime()-time;
+    if(eewLastUpdate !== data.AnnouncedTime.UnixTime){
+      options.info.eew.push({
+        time: data.AnnouncedTime.String,
+        stime: data.AnnouncedTime.UnixTime,
+        raw: JSON.stringify(data, null, "  ").split("\n")
+      });
+      eewsound.currentTime = 0;
+      eewsound.play();
+    }
+    eewLastUpdate = data.AnnouncedTime.UnixTime;
+    isLoaded = !0;
+  });
+  res.addEventListener("error",function(){
+    isLoaded = !1;
+  })
+  res.open("GET","https://api.iedred7584.com/eew/json/?_="+time);
+  res.send();
+};
+// window.onerror = function(a){alert(a)};
+function main(){
+  let cct = (new Date()) - 0;
+  requestAnimationFrame(main);
+  if(cct-time > 3750) loadjson();
+  if(cct-wrnTime > 90000){
+    xhr.warnList.open("GET", "https://www.jma.go.jp/bosai/warning/data/warning/map.json");
+    xhr.landslides.open("GET", "https://www.jma.go.jp/bosai/warning/data/landslide/map.json");
+    xhr.warnList.send();
+    wrnTime = cct;
+  }
+  
+  sub.front(cct);
+  let menuCurrent = menuAnim.current;
+  ctx.save();
+  ctx.translate(0, menuCurrent*150);
+  ctx.globalAlpha = menuCurrent/1.5;
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, -150, 1920, 1230);
+  ctx.fillStyle = "#fff";
+  ctx.strokeStyle = "#333";
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = menuCurrent;
+  ctx.fillRect(200, 0, 1520, 780);
+  ctx.strokeRect(210, 10, 1500, 760);
+  ctx.beginPath();
+  ctx.rect(220, 20, 1480, 740);
+  ctx.clip();
+  ctx.fillStyle = "#333";
+  ctx.font = "40px 'Noto Sans Mono', monospace";
+  if(menuCurrent) options.obj.main();
+  ctx.fillText(JSON.stringify(options.current), 240, 670);
+  ctx.fillText(JSON.stringify(options.select), 240, 720);
+  ctx.restore();
+  
+  ctx.font = "15px Arial,Sans-serif";
+  ctx.fillStyle = "#fff";
+  if(!data.Warn) ctx.fillText("NaturalDisasterViewer/EEW_monitor v0.0.0β",1590,1075);
+  ctx.font = "18px NewYork";
+  ctx.fillStyle = "black";
+  ctx.fillText(time,160,1075);
+  ctx.fillStyle = "darkred";
+  ctx.fillText((new Date()).getTime(),20,1075);
+  if(!isLoaded)ctx.fillText("読み込みに失敗しました。",300,1075); else ctx.fillText("Load:"+spent+"ms",300,1075);
+  scX -= 3;
+  if(-scX > scMax) scX = 1620;
+}
+const sub = {
+  gets: ()=>{},
+  front: (cct)=>{
+    ctx.textAlign = "start";
+    gr = ctx.createLinearGradient(0,0,0,1080);
+    gr.addColorStop(0, "#22bbd6");
+    gr.addColorStop(1, "#157590");
+    ctx.fillStyle = gr;
+    ctx.font = "bold 70px Arial,sans-serif";
+    ctx.fillRect(0,0,1920,1080);
+    gr = ctx.createLinearGradient(460,0,520,0);
+    gr.addColorStop(0, "#4aab46ff");
+    gr.addColorStop(1, "#4aab4600");
+    ctx.fillStyle = gr;
+    ctx.fillRect(0,10,510,90);
+    ctx.fillStyle = "#b5cfd2";
+    ctx.fillRect(1870,0,10,60);
+    gr = ctx.createLinearGradient(1500,0,1560,0);
+    gr.addColorStop(0  , "#7d9c9f00");
+    gr.addColorStop(0.5, "#7d9c9faa");
+    gr.addColorStop(1  , "#7d9c9fff");
+    ctx.fillStyle = gr;
+    ctx.fillRect(1500,10,370,50);
+    ctx.fillStyle = "#fff";
+    ctx.fillText("緊急地震速報",20,80);
+    ctx.font = "bold 40px 'HelveticaNeue-CondensedBold',Arial,Sans-serif";
+    ctx.fillText(("0"+(new Date()).getHours()).slice(-2)+":"+("0"+(new Date()).getMinutes()).slice(-2)+":"+("0"+(new Date()).getSeconds()).slice(-2),1720,50);
+    ctx.font = "bold 32px 'HelveticaNeue-CondensedBold'";
+    ctx.fillText((new Date()).getFullYear()+"/"+((new Date()).getMonth()+1).toString().padStart(2,"0")+"/"+(new Date()).getDate().toString().padStart(2,"0"),1560,50);
+    ctx.font = "bold 30px Arial,Sans-serif";
+    let isEEWrecently = (new Date()).getTime()-data.AnnouncedTime.UnixTime*1000 < 240000;
+    if(isEEWrecently){
+      // ctx.fillStyle = "#3f4";
+      // ctx.fillText("緊急地震速報を受信しました。",10,140);
+    } else {
+      ctx.fillText("緊急地震速報を受信していません。",10,140);
+    }
+    ctx.strokeStyle = "#f7f6bc";
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo( 30, 170);
+    ctx.lineTo( 30, 920);
+    ctx.lineTo(930, 920);
+    ctx.lineTo(930, 170);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = "#78ca55";
+    ctx.strokeLine(34,230,926,230);
+    ctx.strokeLine(34,400,926,400);
+    ctx.strokeLine(34,570,926,570);
+    ctx.strokeStyle = "#f7f6bc";
+    ctx.strokeLine(480,170,480,340);
+    ctx.strokeLine( 34,340,926,340);
+    ctx.strokeLine( 34,510,926,510);
+    ctx.strokeLine(480,510,480,680);
+    ctx.strokeLine( 34,680,926,680);
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 50px Arial,Sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("最大震度",255,220);
+    ctx.fillText("マグニチュード",705,220);
+    ctx.fillText("震源",480,390);
+    ctx.fillText("深さ",255,560);
+    ctx.fillText("種別",705,560);
+    ctx.fillStyle = "#fff";
+    if(data.Status.Code !== "10"){
+      ctx.font = "bold 100px Arial,Sans-serif";
+      ctx.fillText(data.MaxIntensity.String, 255, 320);
+      ctx.fillText(data.Hypocenter.Magnitude.String, 705, 320);
+      ctx.font = "bold 85px Arial,Sans-serif";
+      ctx.fillText(data.Hypocenter.Name, 480, 490, 860);
+      if(!data.Warn){
+        ctx.fillText("予報", 705, 660);
+      } else {
+        if((new Date()).getTime()%1000<500) ctx.fillStyle = "#ee2";
+        ctx.fillText("警報", 705, 660);
+      }
+      ctx.fillStyle = "#fff";
+      ctx.fillText(data.Hypocenter.Location.Depth.String, 255, 660);
+      ctx.font = "bold 45px 'Helvetica Neue','Hiragino Kaku Gothic ProN',Sans-serif";
+    //  ctx.fillText("初報受信:2020/11/25 10:56:25",480,760,860);
+      if(data.Type.Code != 9) ctx.fillStyle = "#8af07b";
+      ctx.fillText("第"+("0"+data.Serial).slice(-2)+"報:"+data.AnnouncedTime.String+" 発表",480,770,860);
+      ctx.font = "bold 65px 'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif";
+      ctx.fillStyle = "#fff";
+      ctx.fillText("発生時刻:"+data.OriginTime.String, 480, 860, 860);
+      ctx.font = "bold 50px Arial,sans-serif";
+      if(!data.Warn)ctx.fillText("警報が発表されている地域はありません。", 1440, 530);
+    //  ctx.fillText("今後の情報に注意してください。",40,1035,860);
+      ctx.textAlign = "start";
+      ctx.fillText("警報が発表されている地域：", 1000, 250);
+      ctx.fillStyle = "#fff";
+      ctx.font = "bold 42px 'Hiragino Kaku Gothic ProN',Meiryo,sans-serif";
+      if(data.Warn){
+        for(let i=0; i<data.Forecast.length; i++){
+          ctx.textAlign = "end";
+          ctx.fillText(data.Forecast[i].Intensity.Name, 1390, 320+50*i);
+          ctx.textAlign = "start";
+          ctx.fillText(data.Forecast[i].Intensity.From, 1460, 320+50*i);
+          if(data.Forecast[i].Arrival.Flag || data.Forecast[i].Arrival.Condition == "主要動の到達予想なし(PLUM法による予想)"){
+            ctx.fillText("到達中", 1610, 320+50*i);
+          } else {
+            let crt = new Date();
+            let foretime = new Date(crt.getFullYear()+"/"+(crt.getMonth()+1)+"/"+crt.getDate()+" "+data.Forecast[i].Arrival.Time);
+            if(foretime.getTime()-crt.getTime()<0)ctx.fillText("到達中",1610,320+50*i);
+            else ctx.fillText(Math.floor((foretime.getTime()-crt.getTime())/1000)+"秒後",1610,320+50*i);
+          }
+        }
+      }
+    } else {
+      ctx.fillStyle = "#000a";
+      ctx.fillRect(0, 165, 1920, 915);
+      ctx.fillStyle = "#fff";
+      ctx.fillText("緊急地震速報は取り消されました。", 960, 540);
+    }
+    if(!isEEWrecently && options.style.btmvis){
+      let ofs = scX < 0 ? Math.floor(-scX/60) : 0;
+      ctx.textAlign = "start";
+      ctx.font = "bold 60px 'Hiragino Kaku Gothic ProN',Meiryo,sans-serif";
+      gr = ctx.createLinearGradient(150,0,1770,0);
+      gr.addColorStop(0   , "#fff0");
+      gr.addColorStop(0.05, "#ffff");
+      gr.addColorStop(0.95, "#ffff");
+      gr.addColorStop(1   , "#fff0");
+      ctx.fillStyle = gr;
+      ctx.fillRect(150,940,1620,100);
+      gr = ctx.createLinearGradient(150,0,1770,0);
+      gr.addColorStop(0   , "#3330");
+      gr.addColorStop(0.05, "#333f");
+      gr.addColorStop(0.95, "#333f");
+      gr.addColorStop(1   , "#3330");
+      ctx.fillStyle = gr;
+      ctx.fillText(scrollText.slice(ofs, 100+ofs),150+scX+ofs*60,1015);
+    }
+  },
+  option: {
+    label: "MAIN MENU",
+    main: ()=>{
+      if(options.select.y < 0) options.select.y = 2;
+      if(options.select.y > 2) options.select.y = 0;
+      ctx.fillText("MAIN MENU", 240, 70);
+      ctx.fillText("Select the item.", 264, 120);
+      ctx.fillText("Change styles", 288, 220);
+      ctx.fillText("Check for received informations", 288, 270);
+      ctx.fillText("Quit", 288, 370);
+  ctx.fillText(">", 240, 220+options.select.y*50+(options.select.y===2 ? 50:0));
+    },
+    sub: [
+      {
+        label: "Change styles",
+        disableEnter: true,
+        custom: (tools)=>{
+          switch (options.select.y){
+            case 0:
+              options.style.btmvis = !options.style.btmvis;
+              break;
+            default:
+              tools.quit();
+              break;
+          }
+        },
+        main: ()=>{
+          if(options.select.y < 0) options.select.y = 0;
+          if(options.select.y > 1) options.select.y = 1;
+          ctx.fillText("Change style", 240, 70);
+          ctx.fillText("Select the item. Press ENTER to change options.", 264, 120);
+          ctx.fillText("["+(options.style.btmvis?"Y":"N")+"] View bottom bar", 288, 220);
+          ctx.fillText("Back", 288, 320);
+  ctx.fillText(">", 240, 220+options.select.y*50+(options.select.y===1 ? 50:0));
+        },
+        sub: []
+      },
+      {
+        label: "Check for received informations",
+        main: ()=>{
+          if(options.select.y < 0) options.select.y = 0;
+          if(options.select.y > 3) options.select.y = 3;
+          ctx.fillText("Check for received informations", 240, 70);
+          ctx.fillText("Select the item.", 264, 120);
+          ctx.fillText("Earthquake Early Warning", 288, 220);
+          ctx.fillText("Weather Warning", 288, 270);
+          ctx.fillText("Landslide", 288, 320);
+          ctx.fillText("Back", 288, 420);
+  ctx.fillText(">", 240, 220+options.select.y*50+(options.select.y===3 ? 50:0));
+        },
+        sub: [
+          {
+            label: "Earthquake Early Warning",
+            disableEnter: true,
+            custom: (tools)=>{
+              let num = options.info.eew.length;
+              if(options.select.y === -1){ tools.quit(); return; }
+              if(options.select.y < num){
+                options.select.x = options.select.y;
+                options.select.y = 0;
+                tools.go(0, {dontChangePos:true});
+              }
+            },
+            main: ()=>{
+              let data = options.info.eew;
+              let num = data.length;
+              if(options.select.y < -1) options.select.y = -1;
+              if(options.select.y > -1+num) options.select.y = -1+num;
+              ctx.fillText("Check / Earthquake Early Warning", 240, 70);
+              ctx.fillText(data.length+" item(s):", 264, 120);
+              data.forEach((item,i)=>{
+                ctx.fillText(item.time, 288, 320+i*50);
+              });
+              ctx.fillText("  Back", 240, 220);
+  ctx.fillText(">", 240, 320+options.select.y*50-(options.select.y===-1 ? 50:0));
+            },
+            sub: {
+              "0": {
+                label: "View Logs",
+                disableEnter: true,
+                custom: (tools)=>{
+                  switch (options.select.y){
+                    case -1:
+                      options.select.y = options.select.x;
+                      tools.quit({dontChangePos:true});
+                      break;
+                    case -2:
+                      options.obj._cmd[2] = "Copying...";
+navigator.clipboard.writeText(options.info.eew[options.select.x].raw.join("\n")).then(()=>{
+  options.obj._cmd[2] = "Copied!";
+});
+                      break;
+                    case -3:
+                      
+                      break;
+                    default:
+                      options.select.y = 0;
+                      break;
+                  }
+                },
+                _cmd: ["","Quit","Copy","Share"],
+                main: ()=>{
+                  let cmd = options.obj._cmd;
+                  if(options.select.y < -3) options.select.y = -3;
+                  if(options.select.y > -2) cmd[2] = "Copy";
+                  let data = options.info.eew;
+                  let num = data.length;
+                  if(options.select.x < 0) options.select.x = 0;
+                  if(options.select.x >= num) options.select.x = num-1;
+                  ctx.fillText(options.select.x, 0, 0);
+                  let tg = options.info.eew[options.select.x];
+                  ctx.fillText("Check / Earthquake Early Warning", 240, 70);
+                  ctx.fillText(tg.time+" ("+(options.select.x+1)+"/"+num+")", 264, 120);
+                  for(let i=0, l; (l=i+options.select.y, i<8); i++){
+                    if(l < 0){
+                      ctx.fillText(cmd[-l], 336, 220+i*50);
+                    } else ctx.fillText(tg.raw[l] ?? "", 240, 220+i*50);
+                  }
+                  if(options.select.y < 0) ctx.fillText("=>", 264, 220);
+                },
+                sub: []
+              }
+            }
+          },
+          { label: "Quit", quit: true },
+          { label: "Quit", quit: true },
+          { label: "Quit", quit: true }
+        ]
+      },
+      { label: "Quit", quit: true }
+    ]
+  }
+};
+
+
+options.obj = sub.option;
+document.body.addEventListener("keydown", (event)=>{
+  if(event.key === "p"){
+    if(options.menu){
+      if(options.canLeave || true){
+        menuAnim.start_n = 1;
+        menuAnim.end_n = 0;
+        options.menu = false;
+        menuAnim.start();
+      }
+    } else {
+      menuAnim.start_n = 0;
+      menuAnim.end_n = 1;
+      options.menu = true;
+      menuAnim.start();
+    }
+  }
+  if(options.menu){
+    switch(event.key){
+      case "ArrowLeft":
+        options.select.x--;
+        break;
+      case "ArrowRight":
+        options.select.x++;
+        break;
+      case "ArrowUp":
+        options.select.y--;
+        break;
+      case "ArrowDown":
+        options.select.y++;
+        break;
+      case "Enter":
+        let target = options.obj.sub[options.select.y];
+        let disableEnter = options.obj.disableEnter && options.select.y >= 0;
+        if(options.obj.custom){
+          options.obj.custom({
+            quit: (modify={})=>{
+              if(options.current.length){
+                options.current.pop();
+                options.obj = sub.option;
+                options.current.forEach(item=>{
+                  options.obj = options.obj.sub[item];
+                });
+                if(!modify.dontChangePos) options.select = {x:0, y:0};
+              } else {
+                menuAnim.start_n = 1;
+                menuAnim.end_n = 0;
+                options.menu = false;
+                menuAnim.start();
+              }
+            },
+            go: (modify)=>{
+              options.current.push(options.select.y);
+              options.obj = sub.option;
+              options.current.forEach(item=>{
+                options.obj = options.obj.sub[item];
+              });
+              if(!modify.dontChangePos) options.select = {x:0, y:0}
+            }
+          });
+        } else {
+          if(!options.current.length && target.quit){
+            menuAnim.start_n = 1;
+            menuAnim.end_n = 0;
+            options.menu = false;
+            menuAnim.start();
+            return;
+          }
+          if(target.quit){
+            options.current.pop();
+            if(disableEnter) return;
+          } else {
+            if(disableEnter) return;
+            options.current.push(options.select.y);
+          }
+          options.obj = sub.option;
+          options.current.forEach(item=>{
+            options.obj = options.obj.sub[item];
+          });
+          options.select = {x:0, y:0};
+        }
+        break;
+    }
+    event.preventDefault();
+  }
+});
+
+requestAnimationFrame(main);
+</script>
+</body>
+</html>
