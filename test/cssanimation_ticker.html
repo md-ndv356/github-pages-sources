@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>look Sky</title>
+  <title>自由に複製、翻訳、翻案、放送、改変、二次利用してどうぞ</title>
   <style>
+    :root {
+      --start-point: 0px; /* CSSの変数 */
+      --end-point: 0px; /* CSSの変数 */
+    }
     body {
       font: 15px sans-serif; /* 表示するフォントを指定 */
       margin: 0; /* デフォルトで余白が入ってるからそれを無効にする */
@@ -19,10 +23,10 @@
     }
     @keyframes animation-telop {
       from {
-        transform: translateX(100vw);
+        transform: translateX(var(--start-point));
       }
       to {
-        transform: translateX(-100%);
+        transform: translateX(var(--end-point));
       }
     }
   </style>
@@ -36,23 +40,26 @@
     const canvas = document.createElement("canvas"); // Canvas要素
     const context = canvas.getContext("2d"); // 2Dのやつ
     context.font = "15px sans-serif"; // 文字幅の測定に使うフォントを指定
-    var text = input.value;
-    // 文字の移動距離
-    // s        　　　　　　                 　　　         e
-    // |--------スクリーン幅-------|---------文字幅---------|
-    var movingWidth = window.innerWidth + context.measureText(text).width;
-    // 文字の移動の速さは、1秒に150px
-    telop.style.animationDuration = movingWidth / 150 + "s";
-    telop.setAttribute("data-width", movingWidth);
-    telop.textContent = text;
+    var text = "";
+    document.addEventListener("DOMContentLoaded", refresh);
+    input.addEventListener("input", refresh);
+    window.addEventListener("resize", refresh);
 
-    input.oninput = function (){
+    function refresh(){
       text = input.value;
-      movingWidth = window.innerWidth + context.measureText(text).width;
+      // 文字の幅を測定
+      const textSize = context.measureText(text).width;
+      // 文字の移動距離
+      // start    　　　　　　                 　　　       end
+      // |--------スクリーン幅-------|---------文字幅---------|
+      movingWidth = window.innerWidth + textSize;
+      // 文字の移動の速さは、1秒に150px
       telop.style.animationDuration = movingWidth / 150 + "s";
       telop.textContent = text;
-      telop.setAttribute("data-width", movingWidth);
-    };
+      // CSSの変数に値を代入
+      document.documentElement.style.setProperty("--start-point", window.innerWidth+"px");
+      document.documentElement.style.setProperty("--end-point", -textSize+"px");
+    }
   </script>
 </body>
 </html>
