@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>look Sky</title>
+  <style>
+    body {
+      font: 15px sans-serif; /* 表示するフォントを指定 */
+      margin: 0; /* デフォルトで余白が入ってるからそれを無効にする */
+    }
+    .telop {
+      white-space: nowrap; /* 改行しない */
+      animation-name: animation-telop;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      width: fit-content;
+    }
+    @keyframes animation-telop {
+      from {
+        transform: translateX(100vw);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="telop" style="animation-duration: 10s;" id="css-telop"></div>
+  <input type="text" style="width: calc(100% - 8px);" value="mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 mozi 文字 ！？！！！！？！？！！？！？？？">
+  <script>
+    const input = document.getElementsByTagName("input")[0]; // Input要素
+    const telop = document.getElementById("css-telop"); // テロップ本体
+    const canvas = document.createElement("canvas"); // Canvas要素
+    const context = canvas.getContext("2d"); // 2Dのやつ
+    context.font = "15px sans-serif"; // 文字幅の測定に使うフォントを指定
+    var text = input.value;
+    // 文字の移動距離
+    // s        　　　　　　                 　　　         e
+    // |--------スクリーン幅-------|---------文字幅---------|
+    var movingWidth = window.innerWidth + context.measureText(text).width;
+    // 文字の移動の速さは、1秒に150px
+    telop.style.animationDuration = movingWidth / 150 + "s";
+    telop.setAttribute("data-width", movingWidth);
+    telop.textContent = text;
+
+    input.oninput = function (){
+      text = input.value;
+      movingWidth = window.innerWidth + context.measureText(text).width;
+      telop.style.animationDuration = movingWidth / 150 + "s";
+      telop.textContent = text;
+      telop.setAttribute("data-width", movingWidth);
+    };
+  </script>
+</body>
+</html>
