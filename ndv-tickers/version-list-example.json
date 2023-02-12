@@ -1,24 +1,61 @@
 {
-  "latest": {
-    "id": 1,
-    "last_modified": "2022/04/24Z00:09:00+09:00"
-  },
-  "list": [
-    {
-      "id": 1,
-      "label": "β1.0.0",
-      "published": "2022/04/24Z00:09:00+09:00",
-      "features": "初期",
-      "stopcode": 0,
-      "download_url": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.2.7_dev.zip",
-      "bugs": null
+  "ext_beta": {
+    "latest": {
+      "id": "beta18",
+      "last_modified": "2022/04/24Z00:09:00+09:00"
+    },
+    "list": [
+      {
+        "id": "beta18",
+        "label": "β0.3.2",
+        "published": "2022/04/24Z00:09:00+09:00",
+        "features": [
+          "BGM再生機能に関する不具合を修正しました。",
+          "起動時に通常画面のテキストが反映されるようになりました。",
+          "通常画面の文字が流れる速度の初期値を3.9から4に変更しました。",
+          "時刻自動調整機能(仮)が有効になりました。",
+          "その他の不具合の修正を行いました。"
+        ],
+        "stopcode": null,
+        "download_url": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.3.2_906668d5d53f8e671a7ed08b1bc758dd.zip",
+        "jump_link": "https://ndv.iaigiri.com/ext/",
+        "bugs": null,
+        "view_str": "ティッカー (拡張機能版) / NDVのご利用ありがとうございます。\n\n起動時に通常画面のテキストが反映されるようになりました。\n通常画面の文字が流れる速度の初期値を3.9から4に変更しました。\n時刻自動調整機能(仮)が有効になりました。\nその他の不具合の修正を行いました。"
+      }
+    ],
+    "stopcode": {
+      "wrong_int1": {
+        "stopForced": true,
+        "message": "誤った最大震度が表示されてしまう可能性があるため、このバージョンは使用することができません。"
+      },
+      "common_stop": {
+        "stopForced": true,
+        "message": "Critical Error has occurred. This program cannot continue to run."
+      }
     }
-  ],
-  "stopcode": {
-    "0": false,
-    "1": {
-      "stopForced": true,
-      "message": "エラーが！！！"
+  },
+  "app_alpha": {
+    "latest": {
+      "id": 1,
+      "last_modified": "2022/04/24Z00:09:00+09:00"
+    },
+    "list": [
+      {
+        "id": 1,
+        "label": "β1.0.0",
+        "published": "2022/04/24Z00:09:00+09:00",
+        "features": "初期",
+        "stopcode": 0,
+        "download_url": "https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.2.7_dev.zip",
+        "bugs": null
+      }
+    ],
+    "stopcode": {
+      "0": false,
+      "1": {
+        "stopForced": true,
+        "message": "エラーが！！！"
+      }
     }
   }
 }
