@@ -11,7 +11,10 @@
     *::-webkit-scrollbar {
       display: none;
     }
-    body { margin: 0; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic", Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    }
     #map {
       width: 100dvw;
       height: calc(100dvh - 75px);
@@ -27,7 +30,7 @@
       justify-content: center;
     }
     .operation-container {
-      width: 100%;
+      width: calc(100% - 54px);
       height: 75px;
       background: linear-gradient(0, #0d598b, #013d64);
       color: #fff;
@@ -55,14 +58,14 @@
     }
     .window-title {
       position: relative;
-      top: 6px;
-      left: 6px;
-      background: #222c;
-      border: solid 2px #4fb0f1;
-      border-radius: 9px;
-      padding: 2px 12px;
-      color: #fff;
-      font-size: 25px;
+      top: 0; left: 0;
+      background: #a8b8c3dd;
+      border-end-end-radius: 9px;
+      backdrop-filter: 10px;
+      padding: 8px 20px;
+      color: #000;
+      font-size: 28px;
+      font-weight: bold;
     }
     .raincount-container {
       background-color: #013d64;
@@ -73,11 +76,29 @@
       max-width: calc(100vw - 300px);
       overflow-x: scroll;
       white-space: nowrap;
-      font: 20px sans-serif;
+      font-size: 20px;
       color: #fff;
       z-index: 9999;
     }
     .raincount-container p { margin: 0; }
+
+    .leaflet-bar {
+      background-color: #052b5e;
+    }
+    .leaflet-bar a {
+      background-color: #0b3c5b;
+      color: #fff;
+    }
+    .leaflet-bar a:hover {
+      background-color: #204b65;
+    }
+    .leaflet-control-layers {
+      background: #025d78;
+    }
+    .leaflet-control-layers-expanded {
+      background: #034f55;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -158,7 +179,8 @@
     var locationCoords = null;
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition((loc) => {
-        let coords = (locationCoords = loc.coords);
+        let coords = (locationCoords = {latitude: 36.3579925300312, longitude: 140.35686492919925});
+        // let coords = (locationCoords = loc.coords);
         marker = L.marker([coords.latitude, coords.longitude]).addTo(Maps);
         marker.bindPopup("現在地");
         Maps.setView([coords.latitude, coords.longitude], 10);
@@ -227,13 +249,15 @@
     function LoadRainCount(){
       htmlElements.raincount.textContent = "";
       htmlElements.raincount_unit.textContent = "更新中・・・";
-      fetch("https://weathernews.jp/s/radar/api_countdown.cgi?lat="+locationCoords.latitude+"&lon="+locationCoords.longitude+"&_="+Date.now()).then(r => r.json()).then(data => {
-        if(data.nocountdown){
-          htmlElements.raincount.textContent = "";
-          htmlElements.raincount_unit.textContent = data.text;
-        } else {
-          htmlElements.raincount.textContent = data.countdown;
+      fetch("https://weathernews.jp/smart/api_fcst5m.fcgi?lat="+locationCoords.latitude+"&lon="+locationCoords.longitude+"&_="+Date.now()).then(r => r.json()).then(data => {
+        const index = data.fcst.findIndex(item => item.fcst >= 300);
+        if (index !== -1 && index !== 0){
+          const minutes = Math.abs(Math.floor((Date.now()/1000 - data.fcst[index].tm)/60));
+          htmlElements.raincount.textContent = minutes;
           htmlElements.raincount_unit.textContent = "分";
+        } else {
+          htmlElements.raincount.textContent = (index === -1) ? "今から1時間以内に、雨が降る予想はありません。" : "すでに降っています。";
+          htmlElements.raincount_unit.textContent = "";
         }
       });
     }
