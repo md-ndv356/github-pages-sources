@@ -179,8 +179,8 @@
     var locationCoords = null;
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition((loc) => {
-        let coords = (locationCoords = {latitude: 36.3579925300312, longitude: 140.35686492919925});
-        // let coords = (locationCoords = loc.coords);
+        // let coords = (locationCoords = {latitude: 36.3579925300312, longitude: 140.35686492919925});
+        let coords = (locationCoords = loc.coords);
         marker = L.marker([coords.latitude, coords.longitude]).addTo(Maps);
         marker.bindPopup("現在地");
         Maps.setView([coords.latitude, coords.longitude], 10);
