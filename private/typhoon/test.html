@@ -403,9 +403,10 @@
             estimated: item.estimated === 1
           });
         });
+        typhdata.latestRoute.arg = vec2rad(typhdata.latestRoute.x - typhdata.route[typhdata.route.length - 1].x, typhdata.route[typhdata.route.length - 1].y - typhdata.latestRoute.y);
 
         typhdata.storm = {};
-        if(typhinfo.storm){
+        if (typhinfo.storm){
           [ typhdata.storm.x, typhdata.storm.y ] = PositionToTileXY([typhinfo.storm.lon, typhinfo.storm.lat]);
           let temp2 = WGS84_from_distance(typhinfo.storm.lat, typhinfo.storm.lon, 90, typhinfo.storm.rad * 1000);
           let temp3 = PositionToTileXY([temp2.lon, temp2.lat]);
@@ -414,14 +415,15 @@
         }
 
         typhdata.gale = {};
-        if(typhinfo.gale){
+        if (typhinfo.gale){
           [ typhdata.gale.x, typhdata.gale.y ] = PositionToTileXY([typhinfo.gale.lon, typhinfo.gale.lat]);
           let temp4 = WGS84_from_distance(typhinfo.gale.lat, typhinfo.gale.lon, 90, typhinfo.gale.rad * 1000);
           let temp5 = PositionToTileXY([temp4.lon, temp4.lat]);
           typhdata.gale.temp5 = temp5;
         }
         typhdata.forecast = [];
-        typhinfo.forecast.forEach(forecast => {
+        let lastX, lastY;
+        typhinfo.forecast.forEach((forecast, i) => {
           let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
           let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
           let temp7 = PositionToTileXY([temp6.lon, temp6.lat]);
@@ -436,8 +438,11 @@
               fit_temp(cdYstart, y, cdYend)
             ],
             disp: forecast.disp_flag,
-            label: details ? details.date : ""
+            label: details ? details.date : "",
+            arg: i == 0 ? vec2rad(x - typhdata.latestRoute.x, typhdata.latestRoute.y - y)
+                        : vec2rad(x - lastX, lastY - y)
           });
+          lastX = x; lastY = y;
         });
         // debugger;
 
@@ -458,7 +463,7 @@
           });
         });
         isStateChanged = true;
-        if(!flag) requestAnimationFrame(main);
+        if (!flag) requestAnimationFrame(main);
       }
 
       let isStateChanged = true;
@@ -529,8 +534,8 @@
           ct.lineCap = "round";
           ct_forecast.fillStyle = "#f00";
           let tangent_x, tangent_y, tangent_r;
-          tangent_x = center_x;
-          tangent_y = center_y;
+          tangent_x = storm_0x;
+          tangent_y = storm_0y;
           tangent_r = storm_rad;
           ct_forecast.beginPath();
           ct_forecast.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
@@ -566,15 +571,15 @@
 //          ct_forecast.clearRect(0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio);
           ct_forecast.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
 
-          ct.strokeStyle = "#fff";
-          ct.lineWidth = 2 / transform.m11;
-          ct.setLineDash([3,4]);
+          ct.strokeStyle = "#fffc";
+          ct.lineWidth = 1.5 / transform.m11;
           ct.globalAlpha = 1;
           ct_forecast.fillStyle = "#fff";
+          ct_forecast.strokeStyle = "#fff";
           tangent_x = center_x;
           tangent_y = center_y;
           tangent_r = 0;
-          let forecast_positions = [[center_x, center_y, (storm_rad+8) * 0.75, (storm_rad+8) * 1.3, typhdata.latestRoute.detail.date, 1]];
+          let forecast_positions = [[center_x, center_y, (gale_rad + 2) * Math.cos(typhdata.latestRoute.arg + 1.570796327), -(gale_rad + 2) * Math.sin(typhdata.latestRoute.arg + 1.570796327), typhdata.latestRoute.detail.date, 1, typhdata.latestRoute.arg]];
           typhdata.forecast.forEach(forecast => {
             let storm_0x = forecast.view[0] * mapWidth;
             let storm_0y = forecast.view[1] * mapHeight;
@@ -582,27 +587,31 @@
             let storm_1y = forecast.temp[1] * mapHeight;
             let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
             let tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
-            if(tangent_lines.length === 2){
-              ct_forecast.beginPath();
-              ct_forecast.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
-              ct_forecast.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
-              ct_forecast.lineTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
-              ct_forecast.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
-              ct_forecast.fill();
+            let pos_arg;
+            if (forecast.disp && isForecastViewed && tangent_lines.length === 2){
+              ct.setLineDash([]);
+              ct.beginPath();
+              ct.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
+              ct.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
+              ct.moveTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
+              ct.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
+              ct.stroke();
             }
             tangent_x = storm_0x;
             tangent_y = storm_0y;
             tangent_r = storm_rad;
-            ct_forecast.beginPath();
-            ct_forecast.ellipse(storm_0x, storm_0y, storm_rad, storm_rad, 0, 0, 6.283184);
-            ct_forecast.fill();
-            forecast_positions.push([storm_0x, storm_0y, (storm_rad+8) * 0.75, (storm_rad+8) * 1.3, forecast.label, forecast.disp]);
-            if(forecast.disp && isForecastViewed){
+            // ct_forecast.beginPath();
+            // ct_forecast.ellipse(storm_0x, storm_0y, storm_rad, storm_rad, 0, 0, 6.283184);
+            // ct_forecast.stroke();
+            forecast_positions.push([storm_0x, storm_0y, (storm_rad + 2) * Math.cos(forecast.arg + 1.570796327), - (storm_rad + 2) * Math.sin(forecast.arg + 1.570796327), forecast.label, forecast.disp, forecast.arg]);
+            if (forecast.disp && isForecastViewed){
+              ct.setLineDash([4,1]);
               ct.beginPath();
               ct.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
               ct.stroke();
             }
           });
+          ct.setLineDash([]);
           ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
           ct.globalAlpha = 0.3;
           if (isForecastViewed) ct.drawImage(canvas_forecast, 0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio, 0, 0, viewWidth, viewHeight);
@@ -611,29 +620,6 @@
           ct.globalAlpha = 1;
           ct.fillStyle = "#fff";
           ct.setLineDash([]);
-          ct.beginPath();
-          if (isForecastViewed) forecast_positions.forEach((position, i) => { if(i) ct.lineTo(position[0], position[1]); else ct.moveTo(position[0], position[1]); });
-          ct.stroke();
-          ct.lineWidth = 1 / transform.m11;
-          ct.font = "bold 6px 'ヒラギノ角ゴ ProN'";
-          forecast_positions.forEach((position, i) => {
-            if ((isForecastViewed || i === 0) && position[5]){
-              ct.strokeStyle = "#fff";
-              ct.beginPath();
-              ct.arc(position[0], position[1], 2 / transform.m11, 0, 6.283184);
-              ct.fill();
-              let width = ct.measureText(position[4]).width;
-              let ps0 = position[0] + position[2];
-              let ps1 = position[1] + position[2];
-              // console.log(width);
-              ct.beginPath();
-              ct.moveTo(position[0], position[1]);
-              ct.lineTo(ps0, ps1);
-              ct.lineTo(ps0 + width, ps1);
-              ct.stroke();
-              ct.fillText(position[4], ps0, ps1 - 1);
-            }
-          });
 
           if (gale_0x !== null){
             ct.fillStyle = "#ffd50033";
@@ -665,6 +651,39 @@
           ct.beginPath();
           ct.arc(center_x, center_y, 3 / transform.m11, 0, 6.283184);
           ct.fill();
+
+          ct.fillStyle = "#fffa";
+          ct.strokeStyle = "#fffa";
+          if (isForecastViewed){
+            ct.beginPath();
+            forecast_positions.forEach((position, i) => {
+              if (i) ct.lineTo(position[0], position[1]); else ct.moveTo(position[0], position[1]);
+            });
+            ct.stroke();
+          }
+          ct.lineWidth = 1 / transform.m11;
+          ct.font = "bold 5px 'ヒラギノ角ゴ ProN'";
+          ct.fillStyle = "#fff";
+          ct.strokeStyle = "#fff";
+          forecast_positions.forEach((position, i) => {
+            if ((isForecastViewed || i === 0) && position[5]){
+              ct.strokeStyle = "#fff";
+              ct.beginPath();
+              ct.arc(position[0], position[1], 2 / transform.m11, 0, 6.283184);
+              ct.fill();
+              let width = ct.measureText(position[4]).width;
+              let ps0 = position[0] + position[2];
+              let ps1 = position[1] + position[3];
+              // console.log(width);
+              ct.beginPath();
+              ct.moveTo(position[0], position[1]);
+              ct.lineTo(ps0, ps1);
+              ct.lineTo(ps0 - (width + 1), ps1);
+              ct.stroke();
+              ct.fillText(position[4], ps0 - width, ps1 - 1);
+            }
+          });
+          // debugger;
 
           isStateChanged = false;
         }
