@@ -9,7 +9,7 @@
       td { text-align: center; padding: 1px 5px; }
       #typh-info-table-list { font: 400 16px serif; }
       .typh-info-table { margin-top: 3px; }
-      tr > td:first-child { width: 150px; }
+      tr > td:first-child { width: 100px; }
       td[colspan="2"] {
         background-color: #ffebeb;
       }
@@ -250,10 +250,12 @@
         }
       }
 
-      let mapWidth = 520;
-      let mapHeight = 520;
-      let viewWidth = 520;
-      let viewHeight = 376;
+      // 実際のマップは634x634だけどviewportは634x376（知らんけど）
+      const mapWidth = 634;
+      const mapHeight = 634;
+      const viewWidth = 634;
+      const viewHeight = 376;
+
       let deviceRatio = window.devicePixelRatio;
       const canvas = document.getElementsByTagName("canvas")[0];
       const canvas_forecast = document.createElement("canvas");
@@ -262,6 +264,11 @@
       const typh_view_fcst = document.getElementById("typh_view_fcst");
       const display_loc = document.getElementById("display_loc");
       const typh_info_table_list = document.getElementById("typh-info-table-list");
+      const typh_view_set = document.getElementById("typh_view_set");
+      typh_title.style.width = (mapWidth - 18) + "px";
+      typh_view_set.style.width = (mapWidth - 18) + "px";
+      typh_comment.style.width = (mapWidth + 2) + "px";
+      canvas.style.width = mapWidth + "px";
       canvas.width = viewWidth * deviceRatio;
       canvas.height = viewHeight * deviceRatio;
       canvas.style.width = viewWidth + "px";
@@ -376,7 +383,7 @@
         typh_info_table_list.innerHTML = "";
         for (const item of typhinfo.details) {
           typh_info_table_list.insertAdjacentHTML("beforeend", `        <div class="typh-info-table">
-          <table>
+          <table style="width: calc(100vw - ${mapWidth + 26}px);">
             <tr><td colspan="2">${item.date}</td></tr>
             <tr><td>場所</td><td>${item.location}</td></tr>
             <tr><td>最大風速</td><td>${item.maxwind}</td></tr>
@@ -525,7 +532,7 @@
             ct.moveTo(geolocation_x, 0);
             ct.lineTo(geolocation_x, 800);
             ct.moveTo(0, geolocation_y);
-            ct.lineTo(520, geolocation_y);
+            ct.lineTo(634, geolocation_y);
             ct.stroke();
             ct.fillText("現在地", (518-transform.m41)/transform.m11, geolocation_y-0.8);
             ct.textAlign = "start";
@@ -547,7 +554,7 @@
             let storm_1y = forecast.temp[1] * mapHeight;
             let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
             let tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
-            if(tangent_lines.length === 2){
+            if (tangent_lines.length === 2){
               ct_forecast.beginPath();
               ct_forecast.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
               ct_forecast.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
@@ -588,18 +595,20 @@
             let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
             let tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
             let pos_arg;
-            if (forecast.disp && isForecastViewed && tangent_lines.length === 2){
-              ct.setLineDash([]);
-              ct.beginPath();
-              ct.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
-              ct.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
-              ct.moveTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
-              ct.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
-              ct.stroke();
+            if (forecast.disp){
+              if (isForecastViewed && tangent_lines.length === 2){
+                ct.setLineDash([]);
+                ct.beginPath();
+                ct.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
+                ct.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
+                ct.moveTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
+                ct.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
+                ct.stroke();
+              }
+              tangent_x = storm_0x;
+              tangent_y = storm_0y;
+              tangent_r = storm_rad;
             }
-            tangent_x = storm_0x;
-            tangent_y = storm_0y;
-            tangent_r = storm_rad;
             // ct_forecast.beginPath();
             // ct_forecast.ellipse(storm_0x, storm_0y, storm_rad, storm_rad, 0, 0, 6.283184);
             // ct_forecast.stroke();
