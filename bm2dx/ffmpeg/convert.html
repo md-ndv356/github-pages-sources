@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弐寺の録画をiPhoneでも再生できるように変換する</title>
+  <meta name="description" content="アップロードせずに変換できるんです！">
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    #log_field {
+      width: 100%;
+      height: 300px;
+      font: 14px monospace;
+      background-color: #ddd;
+      overflow-y: scroll;
+      position: relative;
+    }
+    video {
+      border: solid 2px #ddd;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div style="margin: 10px 0;"><input type="file" accept="video/mp4" id="input_uploader" download=""></div>
+  <div><a id="file_output">［ダウンロード］</a></div>
+  <video id="video_preview" controls></video>
+  <div id="convert_progress" style="border-bottom: solid 1px #333;">変換状況：ffmpegをロード中</div>
+  <div id="log_field">
+    <div style="position: absolute; top: 5px; right: 5px;"><button id="clear_log">ログを削除</button></div>
+  </div>
+  <script src="./coi-serviceworker.js"></script>
+  <script src="./ffmpeg.min.js"></script>
+  <script>
+    Object.defineProperty(Element.prototype, "removeChildren", {
+      value: function (){
+        const elm = this;
+        while (elm.firstChild) elm.removeChild(elm.firstChild);
+      }
+    });
+    const logField = document.createElement("div");
+    document.getElementById("log_field").appendChild(logField);
+    const cv_progress = document.getElementById("convert_progress");
+    const logCollection = [];
+    document.getElementById("clear_log").addEventListener("click", () => {
+      logField.removeChildren();
+    });
+    const getFFmpeg = () => {
+      if (('FFmpeg' in window) && ('SharedArrayBuffer' in window)) {
+        cv_progress.textContent = "変換状況：ファイルを選択してください";
+        return window.FFmpeg;
+      }
+      cv_progress.textContent = "ffmpegを実行できません。ページの再読み込みをお試しください。";
+      throw new Error('ffmpegを実行できません');
+    };
+    (() => {
+      const { createFFmpeg, fetchFile } = getFFmpeg();
+      const ffmpeg = createFFmpeg();
+      ffmpeg.setLogger(({ type, message }) => {
+        const div = document.createElement("div");
+        div.innerText = message;
+        div.classList.add("log_" + type);
+        logField.appendChild(div);
+        logField.scroll({ top: logField.scrollHeight });
+        // logCollection.push(div);
+        // if (logCollection.length > 200) logCollection.shift().remove();
+      });
+      ffmpeg.setProgress(({ ratio }) => {
+        cv_progress.textContent = "変換状況： " + (ratio * 100).toFixed(3) + "% 完了";
+      });
+      const transcode = async ({ target: { files } }) => {
+        await ffmpeg.load();
+        ffmpeg.FS("writeFile", "input.mp4", await fetchFile(files[0]));
+        await ffmpeg.run("-i", "input.mp4", "-profile:v", "high", "-level:v", "4.0", "output.mp4");
+        const data = ffmpeg.FS("readFile", "output.mp4");
+        const video = document.getElementById("video_preview");
+        document.getElementById("file_output").href = video.src = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
+        document.getElementById("file_output").download = files[0].name + ".mp4";
+        cv_progress.textContent = "変換状況： 100% 完了";
+      };
+      document.getElementById("input_uploader").addEventListener("change", transcode);
+    })();
+  </script>
+</body>
+</html>
