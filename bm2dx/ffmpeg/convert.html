@@ -14,7 +14,6 @@
       height: 300px;
       font: 14px monospace;
       background-color: #ddd;
-      overflow-y: scroll;
       position: relative;
     }
     video {
@@ -41,7 +40,11 @@
       }
     });
     const logField = document.createElement("div");
-    document.getElementById("log_field").appendChild(logField);
+    const logFieldContainer = document.getElementById("log_field");
+    logFieldContainer.appendChild(logField);
+    logField.style.width = "inherit";
+    logField.style.height = "inherit";
+    logField.style.overflowY = "scroll";
     const cv_progress = document.getElementById("convert_progress");
     const logCollection = [];
     document.getElementById("clear_log").addEventListener("click", () => {
@@ -55,17 +58,20 @@
       cv_progress.textContent = "ffmpegを実行できません。ページの再読み込みをお試しください。";
       throw new Error('ffmpegを実行できません');
     };
+    const addLog = (type, message) => {
+      const div = document.createElement("div");
+      div.innerText = message;
+      div.classList.add("log_" + type);
+      logField.appendChild(div);
+      logFieldContainer.scrollTop = logFieldContainer.scrollHeight;
+        // logCollection.push(div);
+        // if (logCollection.length > 200) logCollection.shift().remove();
+    };
     (() => {
       const { createFFmpeg, fetchFile } = getFFmpeg();
       const ffmpeg = createFFmpeg();
       ffmpeg.setLogger(({ type, message }) => {
-        const div = document.createElement("div");
-        div.innerText = message;
-        div.classList.add("log_" + type);
-        logField.appendChild(div);
-        logField.scroll({ top: logField.scrollHeight });
-        // logCollection.push(div);
-        // if (logCollection.length > 200) logCollection.shift().remove();
+        addLog(type, message);
       });
       ffmpeg.setProgress(({ ratio }) => {
         cv_progress.textContent = "変換状況： " + (ratio * 100).toFixed(3) + "% 完了";
