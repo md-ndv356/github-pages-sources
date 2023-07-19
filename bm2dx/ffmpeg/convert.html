@@ -63,10 +63,11 @@
       div.innerText = message;
       div.classList.add("log_" + type);
       logField.appendChild(div);
-      logFieldContainer.scrollTop = logFieldContainer.scrollHeight;
+      logField.scrollTop = logField.scrollHeight;
         // logCollection.push(div);
         // if (logCollection.length > 200) logCollection.shift().remove();
     };
+    addLog("", "注意：外部に送信せず端末内で変換するため、充電の減りにご注意ください。");
     (() => {
       const { createFFmpeg, fetchFile } = getFFmpeg();
       const ffmpeg = createFFmpeg();
