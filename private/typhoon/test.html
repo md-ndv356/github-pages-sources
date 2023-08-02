@@ -430,6 +430,7 @@
         }
         typhdata.forecast = [];
         let lastX, lastY;
+        const forecastTimes = [typhinfo.storm ? 0 : null];
         typhinfo.forecast.forEach((forecast, i) => {
           let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
           let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
@@ -449,11 +450,13 @@
             arg: i == 0 ? vec2rad(x - typhdata.latestRoute.x, typhdata.latestRoute.y - y)
                         : vec2rad(x - lastX, lastY - y)
           });
+          forecastTimes.push(forecast.tm);
           lastX = x; lastY = y;
         });
         // debugger;
 
         typhdata.forecast_storm = [];
+        let lastTime = 0;
         typhinfo.bofu.forEach(forecast => {
           let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
           let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
@@ -466,8 +469,10 @@
             view: [
               fit_temp(cdXstart, x, cdXend),
               fit_temp(cdYstart, y, cdYend)
-            ]
+            ],
+            prev: forecastTimes.includes(lastTime)
           });
+          lastTime = forecast.tm;
         });
         isStateChanged = true;
         if (!flag) requestAnimationFrame(main);
@@ -548,13 +553,13 @@
           ct_forecast.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
           ct_forecast.fill();
           typhdata.forecast_storm.forEach(forecast => {
-            let storm_0x = forecast.view[0] * mapWidth;
-            let storm_0y = forecast.view[1] * mapHeight;
-            let storm_1x = forecast.temp[0] * mapWidth;
-            let storm_1y = forecast.temp[1] * mapHeight;
-            let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
-            let tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
-            if (tangent_lines.length === 2){
+            const storm_0x = forecast.view[0] * mapWidth;
+            const storm_0y = forecast.view[1] * mapHeight;
+            const storm_1x = forecast.temp[0] * mapWidth;
+            const storm_1y = forecast.temp[1] * mapHeight;
+            const storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
+            const tangent_lines = forecast.prev ? common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines : null;
+            if (tangent_lines && tangent_lines.length === 2){
               ct_forecast.beginPath();
               ct_forecast.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
               ct_forecast.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
@@ -588,13 +593,12 @@
           tangent_r = 0;
           let forecast_positions = [[center_x, center_y, (gale_rad + 2) * Math.cos(typhdata.latestRoute.arg + 1.570796327), -(gale_rad + 2) * Math.sin(typhdata.latestRoute.arg + 1.570796327), typhdata.latestRoute.detail.date, 1, typhdata.latestRoute.arg]];
           typhdata.forecast.forEach(forecast => {
-            let storm_0x = forecast.view[0] * mapWidth;
-            let storm_0y = forecast.view[1] * mapHeight;
-            let storm_1x = forecast.temp[0] * mapWidth;
-            let storm_1y = forecast.temp[1] * mapHeight;
-            let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
-            let tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
-            let pos_arg;
+            const storm_0x = forecast.view[0] * mapWidth;
+            const storm_0y = forecast.view[1] * mapHeight;
+            const storm_1x = forecast.temp[0] * mapWidth;
+            const storm_1y = forecast.temp[1] * mapHeight;
+            const storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
+            const tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
             if (forecast.disp){
               if (isForecastViewed && tangent_lines.length === 2){
                 ct.setLineDash([]);

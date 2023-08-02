@@ -56,7 +56,7 @@
         return window.FFmpeg;
       }
       cv_progress.textContent = "ffmpegを実行できません。ページの再読み込みをお試しください。";
-      throw new Error('ffmpegを実行できません');
+      return {};
     };
     const addLog = (type, message) => {
       const div = document.createElement("div");
@@ -70,6 +70,7 @@
     addLog("", "注意：外部に送信せず端末内で変換するため、充電の減りにご注意ください。");
     (() => {
       const { createFFmpeg, fetchFile } = getFFmpeg();
+      if (!createFFmpeg) return;
       const ffmpeg = createFFmpeg();
       ffmpeg.setLogger(({ type, message }) => {
         addLog(type, message);
