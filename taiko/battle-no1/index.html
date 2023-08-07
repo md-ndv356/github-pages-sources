@@ -34,7 +34,7 @@
       }
       td {
         padding: 1px 3px;
-        font-size: 8px;
+        font-size: 12px;
       }
       .search button {
         background-color: #333;
@@ -68,7 +68,7 @@
       }
       .type-number {
         margin: 2px 5px;
-        font-family: sans;
+        font-family: serif;
       }
       .prev-dif {
         display: flex;
@@ -80,28 +80,14 @@
         height: 18px;
         margin: 0 1px;
       }
-      .sdif-f {
-        background-color: #666;
-      }
-      .sdif-k {
-        background-color: #86c4e3;
-      }
-      .sdif-t {
-        background-color: #d171d1;
-      }
+      .sdif-f { background-color: #666; }
+      .sdif-k { background-color: #86c4e3; }
+      .sdif-t { background-color: #d171d1; }
       .res-info {
-        position: relative;
+        display: flex;
+        margin: 4px 5px 0;
       }
-      .res-combo {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      .res-mpt {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
+      .res-combo { flex: 1; }
     </style>
   </head>
   <body>
@@ -130,21 +116,19 @@
         表示開始位置：<input type="number" id="input-point-bgn" value="0"><br>
         最大表示数：<input type="number" id="input-point-len" value="50">
       </div>
-      <div class="typenum-search hide">
-        target: <input type="number" id="input-typenum" value="1594323">
-        <br>（未完成）
-      </div>
+      <div class="typenum-search hide">No. <input type="number" id="input-typenum" value="1594323" max="1594323" min="1" step="1"></div>
       <button class="search-submit">検索</button>
     </div>
     <div class="results" id="results">
       <p>検索結果はここに表示されます</p>
     </div>
-    <p style="font-size:5px; color:#aaa;">Copyright (c) 2021 <a href="https://twitter.com/Zisin_YT_LiVe">look Sky</a> All Rights Reserved.</p>
+    <p style="font-size: 12px; color: #444;">右下の最高得点は、分岐に必要な連打数（0〜2）を含んでいます</p>
+    <p style="font-size: 12px; color: #aaa;">Copyright (c) 2021-2023 <a href="https://twitter.com/Zisin_YT_LiVe">look Sky</a> All Rights Reserved.</p>
     <script>
       const output = document.getElementById("results");
       const bunki = {
         combo: [
-          [43, 47, 64],
+          [46, 50, 67],
           [45, 59, 67],
           [66, 74, 81],
           [53, 57, 73],
@@ -196,9 +180,9 @@
           bgn: document.getElementById("input-combo-bgn")
         },
         get: function(){
-          let cb = combotable.from.cb.valueAsNumber;
-          let len = combotable.from.len.valueAsNumber;
-          let bgn = combotable.from.bgn.valueAsNumber;
+          const cb = combotable.from.cb.valueAsNumber;
+          const len = combotable.from.len.valueAsNumber;
+          const bgn = combotable.from.bgn.valueAsNumber;
           let valid = true;
           if(!(cb && pointtable.from.bgn.value && len)){
             output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
@@ -207,6 +191,11 @@
           return {cb, bgn, len, valid};
         }
       };
+      const htmlTypes = [
+        '<div class="sdif-f"></div>',
+        '<div class="sdif-k"></div>',
+        '<div class="sdif-t"></div>'
+      ];
       const pointtable = {
         from: {
           type: document.getElementById("point-minmax"),
@@ -224,10 +213,10 @@
             if(pointtable.load.wait){
               pointtable.load.wait = true;
               output.innerHTML = "<p>全データを読み込み中... （0/"+pointtable.load.list.length+"）</p>";
-              let xhr1 = new XMLHttpRequest();
-              let xhr2 = new XMLHttpRequest();
-              let xhr3 = new XMLHttpRequest();
-              let xhr4 = new XMLHttpRequest();
+              const xhr1 = new XMLHttpRequest();
+              const xhr2 = new XMLHttpRequest();
+              const xhr3 = new XMLHttpRequest();
+              const xhr4 = new XMLHttpRequest();
               xhr1.addEventListener("load", pointtable.load.load);
               xhr2.addEventListener("load", pointtable.load.load);
               xhr3.addEventListener("load", pointtable.load.load);
@@ -245,9 +234,7 @@
               xhr3.send();
               xhr4.send();
             }
-            if(pointtable.load.ended){
-              pointtable.load.search();
-            }
+            if (pointtable.load.ended) pointtable.load.search();
           },
           load: function(){
             pointtable.load.data[this.target] = JSON.parse(this.response);
@@ -271,17 +258,20 @@
           search: function(){
             let html = "<p>検索結果</p>";
             let sdif = "";
-            let diffs = [
-              '<div class="sdif-f"></div>',
-              '<div class="sdif-k"></div>',
-              '<div class="sdif-t"></div>'
-            ];
-            let json = pointtable.load.concatenate().filter(item=>item.max<pointtable.load.temp.pt).sort((a,b)=>b.max-a.max).slice(pointtable.load.temp.bgn,pointtable.load.temp.ln+pointtable.load.temp.bgn);
-            for(let p=0; p<json.length; p++){
-              let item = json[p];
+
+            const targetList = [
+              () => pointtable.load.concatenate()
+                .filter(item => item.max < pointtable.load.temp.pt)
+                .sort((a, b) => b.max - a.max),
+              () => pointtable.load.concatenate()
+                .filter(item => item.max > pointtable.load.temp.pt)
+                .sort((a, b) => a.max - b.max)
+            ][pointtable.load.temp.type]().slice(pointtable.load.temp.bgn, pointtable.load.temp.ln + pointtable.load.temp.bgn);
+            for (let p=0; p<targetList.length; p++){
+              const item = targetList[p];
+              const cb = item.combination.split("");
               sdif = "";
-              let cb = item.combination.split("");
-              for(let i=0; i<13; i++) sdif += diffs[cb[i]];
+              for (let i=0; i<13; i++) sdif += htmlTypes[cb[i]];
               html += `    <div class="res">
         <div class="type-number">Type No.${item.number+1}</div>
         <div class="prev-dif">
@@ -290,18 +280,17 @@
         <div class="res-info">
           <div class="res-combo">${item.combo}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
         </div>
-        <div style="visibility: hidden;">0123456789日本語</div>
       </div>`;
             }
             output.innerHTML = html;
           }
         },
         get: function(){
-          let type = pointtable.from.type.value;
-          let pt = pointtable.from.pt.valueAsNumber;
-          let bgn = pointtable.from.bgn.valueAsNumber;
-          let ln = pointtable.from.ln.valueAsNumber;
-          let isMax = type === "0";
+          const type = pointtable.from.type.value;
+          const pt = pointtable.from.pt.valueAsNumber;
+          const bgn = pointtable.from.bgn.valueAsNumber;
+          const ln = pointtable.from.ln.valueAsNumber;
+          const isMax = type === "0";
           let valid = true;
           if(!(pt && pointtable.from.bgn.value && ln)){
             output.innerHTML = "<p>入力された内容が正しいものではないようです。</p>";
@@ -310,12 +299,40 @@
           return {type, pt, bgn, ln, valid};
         }
       };
-      for(let i=0; i<13; i++){
-        let df1 = document.createElement("button");
-        let df2 = document.createElement("button");
-        let df3 = document.createElement("button");
-        let td = document.createElement("td");
-        let whole = [df1, df2, df3];
+      const getFromNum = () => {
+        const targetId = Math.floor(document.getElementById("input-typenum").value - 0);
+        if (isNaN(targetId) || targetId < 1 || targetId > 1594323){
+          output.innerHTML = "<p>有効な整数（1〜1594323）を入力してください</p>";
+          return;
+        }
+        const scoreTypes = ("000000000000"+(targetId-1).toString(3)).slice(-13).split("");
+        {
+          let renda = 0;
+          let combo = 0;
+          let sdif = "";
+          for (let i=0; i<13; i++){
+            const type = scoreTypes[i];
+            combo += bunki.combo[i][type];
+            renda += type - 0;
+            sdif += htmlTypes[type];
+          }
+          output.innerHTML = `<p>検索結果</p>
+          <div class="res">
+<div class="type-number">Type No.${targetId}</div>
+<div class="prev-dif">${sdif}</div>
+<div class="res-info">
+  <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${combo * bunki.point + renda * bunki.renda}点＋自由連打</div>
+  </div></div>`;
+        }
+      };
+      document.getElementById("input-typenum").addEventListener("input", getFromNum);
+
+      for (let i=0; i<13; i++){
+        const df1 = document.createElement("button");
+        const df2 = document.createElement("button");
+        const df3 = document.createElement("button");
+        const td = document.createElement("td");
+        const whole = [df1, df2, df3];
         df1.classList.add("btn-futsu");
         // df2.classList.add("btn-kuroto");
         // df3.classList.add("btn-tatsujin");
@@ -353,7 +370,7 @@
           target.viewingTo.classList.remove("hide");
         }
       };
-      for(let m=search_type.list, i=0, l=m.length, type=m[0]; i<l; i++, type=m[i]){
+      for (let m=search_type.list, i=0, l=m.length, type=m[0]; i<l; i++, type=m[i]){
         let target = search_type.from[type];
         target.queryText = type;
         target.num = i;
@@ -365,11 +382,6 @@
         let html = "<p>検索結果</p>";
         let combo = 3;
         let sdif = "";
-        let diffs = [
-          '<div class="sdif-f"></div>',
-          '<div class="sdif-k"></div>',
-          '<div class="sdif-t"></div>'
-        ];
         let current;
         switch (search_type.current) {
           case 0:
@@ -381,7 +393,7 @@
               num *= 3;
               num += t;
               renda += t;
-              sdif += diffs[t];
+              sdif += htmlTypes[t];
             }
             html += `    <div class="res">
         <div class="type-number">Type No.${num+1}</div>
@@ -391,7 +403,6 @@
         <div class="res-info">
           <div class="res-combo">${combo}コンボ</div><div class="res-mpt">${combo*1020+renda*100}点＋自由連打</div>
         </div>
-        <div style="visibility: hidden;">0123456789日本語</div>
       </div>`
             output.innerHTML = html;
             break;
@@ -414,7 +425,7 @@
                 sdif = "";
                 combo = 3;
                 let cb = item.combination.split("");
-                for(let i=0; i<13; i++) sdif += diffs[cb[i]];
+                for (let i=0; i<13; i++) sdif += htmlTypes[cb[i]];
                 html += `    <div class="res">
           <div class="type-number">Type No.${item.number+1}</div>
           <div class="prev-dif">
@@ -423,7 +434,6 @@
           <div class="res-info">
             <div class="res-combo">${current.cb}コンボ</div><div class="res-mpt">${item.max}点＋自由連打</div>
           </div>
-          <div style="visibility: hidden;">0123456789日本語</div>
         </div>`;
               }
               output.innerHTML = html;
@@ -442,8 +452,12 @@
             output.innerHTML = "<p>検索中...</p>";
             requestAnimationFrame(pointtable.load.check);
             break;
+          case 3:
+            getFromNum();
+            break;
         }
       });
     </script>
   </body>
+  <!-- 2年ぶりに見てみたら何がどうなってるのか分からないwwww -->
 </html>
