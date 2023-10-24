@@ -1,0 +1,35 @@
+{
+  "ParseStatus": "Success",
+  "Title": {
+    "Code": 39,
+    "String": "緊急地震速報（予報）",
+    "Detail": "キャンセル（取り消し）情報"
+  },
+  "Source": {
+    "Code": 3,
+    "String": "気象庁本庁"
+  },
+  "Status": {
+    "Code": "10",
+    "String": "通常",
+    "Detail": "通常の取り消し"
+  },
+  "AnnouncedTime": {
+    "String": "2002/01/17 09:35:11",
+    "UnixTime": 1011227711,
+    "RFC1123": "Thu, 17 Jan 2002 00:35:11 UTC"
+  },
+  "OriginTime": {
+    "String": "2002/01/17 09:30:10",
+    "UnixTime": 1011227410,
+    "RFC1123": "Thu, 17 Jan 2002 00:30:10 UTC"
+  },
+  "EventID": "20020117093012",
+  "Type": {
+    "Code": 0,
+    "String": "発表",
+    "Detail": "発表(予報)"
+  },
+  "Serial": 6,
+  "OriginalText": "39 03 10 020117093511 C11 020117093010 ND20020117093012 NCN006 JD////////////// JN/// /// N/// E//// /// // // RK///// RT///// RC///// 9999="
+}

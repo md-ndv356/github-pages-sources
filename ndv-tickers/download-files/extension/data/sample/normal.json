@@ -1,0 +1,88 @@
+{
+  "ParseStatus": "Success",
+  "Title": {
+    "Code": 37,
+    "String": "緊急地震速報（予報）",
+    "Detail": "マグニチュード、最大予測震度及び主要動到達予測時刻の緊急地震速報（発表パターン3： グリッドサーチ法、EPOS自動処理手法）"
+  },
+  "Source": {
+    "Code": 3,
+    "String": "気象庁本庁"
+  },
+  "Status": {
+    "Code": "00",
+    "String": "通常",
+    "Detail": "通常"
+  },
+  "AnnouncedTime": {
+    "String": "2018/08/19 01:05:15",
+    "UnixTime": 1534608315,
+    "RFC1123": "Sat, 18 Aug 2018 16:05:15 UTC"
+  },
+  "OriginTime": {
+    "String": "2018/08/19 01:04:07",
+    "UnixTime": 1534608247,
+    "RFC1123": "Sat, 18 Aug 2018 16:04:07 UTC"
+  },
+  "EventID": "20180819010422",
+  "Type": {
+    "Code": 9,
+    "String": "発表",
+    "Detail": "最終の緊急地震速報(予報)"
+  },
+  "Serial": 5,
+  "Hypocenter": {
+    "Code": 190,
+    "Name": "釧路沖",
+    "isAssumption": false,
+    "Location": {
+      "Lat": 42.6,
+      "Long": 144.1,
+      "Depth": {
+        "Int": 100,
+        "String": "約100km"
+      }
+    },
+    "Magnitude": {
+      "Float": 3.3,
+      "String": "M3.3",
+      "LongString": "M3.3"
+    },
+    "Accuracy": {
+      "Epicenter": {
+        "Code": 6,
+        "String": "防災科研システム(5点以上)〔防災科研 Hi-net データ〕",
+        "Rank2": 4,
+        "String2": "IPF法(5点)"
+      },
+      "Depth": {
+        "Code": 6,
+        "String": "防災科研システム(5点以上)〔防災科研 Hi-net データ〕"
+      },
+      "Magnitude": {
+        "Code": 2,
+        "String": "防災科研システム〔防災科研 Hi-net データ〕"
+      },
+      "NumberOfMagnitudeCalculation": 0
+    },
+    "isSea": true
+  },
+  "MaxIntensity": {
+    "From": "1",
+    "To": "1",
+    "String": "1",
+    "LongString": "1程度"
+  },
+  "Warn": false,
+  "Option": {
+    "Change": {
+      "Code": 0,
+      "String": "ほとんど変化なし",
+      "Reason": {
+        "Code": 0,
+        "String": "不明"
+      }
+    }
+  },
+  "OriginalText": "37 03 00 180819010515 C11 180819010407 ND20180819010422 NCN905 JD////////////// JN/// 190 N426 E1441 100 33 01 RK66204 RT10/// RC0//// 9999="
+}

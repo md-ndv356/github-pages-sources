@@ -1,0 +1,35 @@
+{
+	"ParseStatus": "Success",
+	"Title": {
+		"Code": 39,
+		"String": "緊急地震速報（予報）",
+		"Detail": "キャンセル（取り消し）情報"
+	},
+	"Source": {
+		"Code": 3,
+		"String": "気象庁本庁"
+	},
+	"Status": {
+		"Code": "10",
+		"String": "通常",
+		"Detail": "通常の取り消し"
+	},
+	"AnnouncedTime": {
+		"String": "2020/12/18 20:41:09",
+		"UnixTime": 1608291669,
+		"RFC1123": "Fri, 18 Dec 2020 11:41:09 UTC"
+	},
+	"OriginTime": {
+		"String": "2020/12/18 20:40:52",
+		"UnixTime": 1608291652,
+		"RFC1123": "Fri, 18 Dec 2020 11:40:52 UTC"
+	},
+	"EventID": "20201218204055",
+	"Type": {
+		"Code": 0,
+		"String": "発表",
+		"Detail": "発表(予報)"
+	},
+	"Serial": 2,
+	"OriginalText": "39 03 10 201218204109 C11 201218204052 ND20201218204055 NCN002 JD////////////// JN/// /// //// ///// /// // // RK///// RT///// RC///// 9999="
+}

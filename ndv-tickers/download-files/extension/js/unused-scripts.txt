@@ -1,0 +1,135 @@
+var Shindo_name = ["石狩地方北部","石狩地方中部","石狩地方南部","後志地方北部","後志東部","後志西部","空知地方北部","空知中部","空知南部","渡島北部","渡島東部","渡島西部","檜山地方","北海道奥尻島","胆振西部","胆振中東部","日高西部","日高中部","日高東部","上川地方北部","上川地方中部","上川地方南部","留萌地方中北部","留萌地方南部","北海道利尻礼文","網走地方","北見地方","紋別地方","十勝北部","十勝中部","十勝南部","釧路北部","釧路中南部","根室地方北部","根室地方中部","根室地方南部","青森県津軽北部","青森県津軽南部","青森三八上北","青森県下北","岩手沿岸北部","岩手沿岸南部","岩手内陸北部","岩手内陸南部","宮城北部","宮城中部","宮城南部","秋田沿岸北部","秋田沿岸南部","秋田内陸北部","秋田内陸南部","山形庄内地方","山形最上地方","山形村山地方","山形置賜地方","福島中通り","福島浜通り","会津","茨城北部","茨城南部","栃木北部","栃木南部","群馬北部","群馬南部","埼玉北部","埼玉南部","秩父地方","千葉北東部","千葉北西部","千葉南部","東京２３区","東京多摩東部","東京多摩西部","伊豆大島","新島地方","神津島","三宅島","八丈島","小笠原","神奈川東部","神奈川西部","新潟県上越","新潟中越地方","新潟下越地方","新潟県佐渡","富山県東部","富山県西部","石川県能登","加賀地方","福井嶺北地方","福井嶺南地方","山梨東部・富士五湖","山梨中・西部","長野北部","長野中部","長野南部","飛騨地方","美濃東部","美濃中西部","伊豆地方","静岡東部","静岡中部","静岡西部","愛知東部","愛知西部","三重北部","三重中部","三重南部","滋賀北部","滋賀南部","京都北部","京都南部","大阪北部","大阪南部","兵庫北部","兵庫南東部","兵庫南西部","淡路島","奈良県","和歌山県北部","和歌山県南部","鳥取東部","鳥取中部","鳥取西部","島根東部","島根西部","隠岐","岡山北部","岡山南部","広島北部","広島南東部","広島南西部","山口北部","山口東部","山口中部","山口西部","徳島県北部","徳島県南部","香川東部","香川西部","愛媛東予地方","愛媛県中予","愛媛県南予","高知東部","高知中部","高知西部","福岡地方","北九州地方","筑豊地方","筑後地方","佐賀北部","佐賀南部","長崎北部","長崎南西部","島原半島","長崎県対馬","長崎県壱岐","長崎県五島","阿蘇地方","熊本地方","球磨地方","天草・芦北","大分北部","大分中部","大分南部","大分西部","宮崎北部平野部","宮崎北部山沿い","宮崎南部平野部","宮崎南部山沿い","薩摩地方","大隅地方","鹿児島県十島村","甑島","鹿児島県種子島","鹿児島県屋久島","鹿児島県奄美北部","鹿児島県奄美南部","沖縄県本島北部","沖縄県本島中南部","沖縄県久米島","沖縄県大東島","沖縄県宮古島","沖縄県石垣島","沖縄県与那国島","沖縄県西表島"];
+
+var key = new Array(230);
+for(var fn = 0; fn < 230; fn++){
+  key[fn] = false;
+}
+function keydown(){
+  key[event.keyCode] = true;
+  keyWord += event.key;
+  if(event.keyCode == 13 && keyWord.length == 38){
+    quake.reportId = keyWord.slice(0, 2);
+    quake.year = keyWord.slice(2, 6);
+    quake.month = keyWord.slice(6, 8);
+    quake.date = keyWord.slice(8, 10);
+    quake.hour = keyWord.slice(10, 12);
+    quake.minute = keyWord.slice(12, 14);
+    quake.second = keyWord.slice(14, 16);
+    quake.int = keyWord.slice(16, 18)=="10" ? "１" : keyWord.slice(16, 18)=="20" ? "２" : keyWord.slice(16, 18)=="30" ? "３" : keyWord.slice(16, 18)=="40" ? "４" : keyWord.slice(16, 18)=="50" ? "５弱" : keyWord.slice(16, 18)=="55" ? "５強" : keyWord.slice(16, 18)=="60" ? "６弱" : keyWord.slice(16, 18)=="65" ? "６強" : keyWord.slice(16, 18)=="70" ? "７" : "不明";
+    quake.longitude = keyWord.slice(18, 23);
+    quake.latitude = keyWord.slice(23, 27);
+    quake.depth = keyWord.slice(27, 30);
+    quake.magnitude = keyWord.slice(30, 34);
+    quake.isAlert = (keyWord.slice(34, 35) == "1") ? true : false;
+    quake.epicenter = epiList[0][EpicenterCode.indexOf(Number(keyWord.slice(35, 38)))];
+    keyWord = "";
+
+    SetMode(1);
+    eewReportNumber = quake.reportId;
+    eewCalcintensity = quake.int;
+    eewDepth = Number(quake.depth)==0 ? "ごく浅い" : Number(quake.depth)+"km";
+    eewMagnitude = Number(quake.magnitude).toString();
+    eewEpicenter = quake.epicenter;
+  }
+  if(event.keyCode == 13) keyWord = "";
+  if(event.keyCode == 8 && keyWord != ""){
+    keyWord = keyWord.slice(0,keyWord.length-1);
+  }
+  document.getElementById('eew-input').innerText = keyWord;
+}
+
+// (unused) view p2p
+if(p2p_elapsedTime < 1200){
+  context.fillStyle = "#f00";
+  context.moveTo(760, 0);
+  context.lineTo(775, 48);
+  context.lineTo(1279, 48);
+  context.lineTo(1279, 0);
+  context.fill();
+  context.fillStyle = "#fff";
+  context.font = 'bold 38px ArialMT,YuGo-Medium,"游ゴシック Medium","Yu Gothic Medium",sans-serif';
+  context.fillText(datakey+"で地震発生の可能性", 780, 41, 290);
+}
+
+// (unused) 津波が発生する可能性があります。
+if(Number(eewMagnitude) >= 6 && eewIsSea && (startTime%600)>=300){
+  context.fillStyle="yellow";
+  context.fillRect(337,2,553,55);
+  context.fillStyle="black";
+  context.font = "bold 35px 'Microsoft Sans Serif', JPAPGothic";
+  context.fillText("津波が発生する可能性があります。", 348, 45, 534)
+}
+
+function pastEarthquakeChecking(id){
+  if(earthquakes_log[id] === undefined){
+    return false;
+  } else {
+    SetMode(2);
+    epicenter = earthquakes_log[id].epicenter;
+    magnitude = earthquakes_log[id].magnitude;
+    depth = earthquakes_log[id].depth;
+    timeDD = earthquakes_log[id].timeDD;
+    timeH = earthquakes_log[id].timeH;
+    timeM = earthquakes_log[id].timeM;
+    msi = earthquakes_log[id].msi;
+    seismic_intensity = earthquakes_log[id].seismic_intensity;
+    epicenter_id = earthquakes_log[id].epicenter_id;
+    isSokuho = earthquakes_log[id].isSokuho;
+    Text = earthquakes_log[id].text;
+    language = "Ja";
+    tx = 1200;
+    timeCount = 1;
+    earthquake_telop_times = magnitude!="--" ? 0 : -1027;
+    earthquake_telop_remaining = 1500;
+    if(magnitude!="--"){
+      Text[0] = timeDD+"日"+timeH+"時"+timeM+"分頃、最大震度"+siList[msi]+"を観測する地震が発生しました。　震源は"+epicenter+"、地震の規模を示すマグニチュードは"+magnitude;
+      if(depth == "ごく浅い")Text[0] += "、震源は"+depth+"です。"; else Text[0] += "、震源の深さは"+depth+"kmです。";
+    } else {
+      Text[0] = "<<震度速報>> "+timeDD+"日"+timeH+"時"+timeM+"分頃、最大震度"+siList[msi]+"を観測する地震が発生しました。 "+multilingual[0][63];
+      if(epicenter.substr(-1) == "沖" || epicenter.substr(-1) == "湾" || epicenter.substr(-1) == "海"){
+        if(msi < 5)Text[0] += "震源が沖の場合、津波が発生する恐れがあります。海岸から離れるようにしてください。";
+      }
+    }
+    if(magnitude!="--"){
+      Text[0] += "　　　　　　　　　An earthquake has just occurred. The hypocenter is " + epicenter_list[1][epicenter_id] + ". This earthquake resulted in " + nhkSiList[msi]+" of the maximum seismic intensity recorded. The magnitude of earthquake is estimated at "+magnitude+".";
+      if(depth == "ごく浅い")Text[0] += " The depth is very shallow."; else Text[0] += " The depth is "+depth+"km.";
+    } else {
+      Text[0] += "　　　　　　　The earthquake has occurred at "+timeH+":"+timeM+".  This earthquake resulted in "+nhkSiList[msi]+" of the maximum seismic intensity recorded.  "+multilingual[1][63];
+      if(msi > 5){
+        //Text[0] = "震源域が海底ですと、津波が発生する恐れがあります。海岸から離れるようにしてください。"
+      }
+    }
+  }
+}
+
+function fl(n){
+  l = [];
+  for (var i = 0; i < n; i++) {
+    l.push(new Function('pastEarthquakeChecking(document.getElementsByName("elo"+'+i+')[0].id);'));
+  }
+}
+
+function humanReadable(){
+  /*$.ajax({
+    type: 'GET',
+    url: 'https://api.p2pquake.net/v1/human-readable?limit=1',
+    dataType: 'json',
+    timeout: 10000,
+    cache: false,
+    success: function(data){
+      if(JSON.stringify(data)!=lastp2p && lastp2p!="" && data[0].count>14 && data[0].code==5610){
+        datakey="";
+        datacount=0;
+        for (var key in data[0].regions) {
+          if(key == "関東") data[0].regions[key] = data[0].regions[key]/3;
+          if(datacount < data[0].regions[key]) datakey = key, datacount = data[0].regions[key];
+        }
+        p2p_elapsedTime = 0;
+      }
+      lastp2p = JSON.stringify(data);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown){
+      console.log("Loading Error (HumanReadable)\nXMLHttpRequest: " + XMLHttpRequest.status + "\ntextStatus: " + textStatus + "\nerrorThrown: " + errorThrown.message);
+    }
+  })*/
+}

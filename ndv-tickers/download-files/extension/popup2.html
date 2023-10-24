@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<!--<html style="overflow: hidden;">-->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.9/push.min.js"></script>-->
+    <link rel="stylesheet" charset="utf-8" href="./css/stylesheet.css">
+    <link rel="stylesheet" charset="utf-8" href="./css/jpffont.css">
+    <link rel="stylesheet" href="./css/7segment.css">
+    <!--<script src="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"></script>-->
+    <title id="titleT">Ticker (Extension) / Natural Disaster Viewer</title>
+  </head>
+  <body>
+    <div id="navigator"></div>
+    <div class="canvas-container">
+      <div class="canvasmain-container">
+        <canvas id="sample1" width="1080px" height="128px">
+          表示するには、canvasタグをサポートしたブラウザが必要です。
+        </canvas><!-- 本当は横幅1170pxにする案 -->
+      </div>
+      <div class="canvastime-container">
+        <canvas id="sample2" width="128px" height="128px"></canvas>
+      </div>
+    </div>
+    <div style="margin-top: 148px; padding-bottom: 206px; width: 100vw;">
+      <div class="speedChanger">
+        <div class="speed-text">Text Speed</div>
+        <input id="speedVal" type="range" value="4" min="0.5" max="15" step="0.1" style="width:700px" />
+        <div><output id="speedResult">4.0</output> px/f</div>
+      </div>
+      <div>
+        <button class="switch-button" style="margin-left: 12px;">通常</button>
+        <button class="switch-button">EEW</button>
+        <button class="switch-button">地震情報</button>
+        <button class="switch-button">ニュース速報</button>
+        <button class="switch-button">ｿﾗﾎﾞﾀﾝ ｱﾝｹｰﾄ</button>
+        <button class="switch-button">動画再生(これ要る...?)</button>
+        <button class="switch-button">トラフィックモニター</button>
+        <button class="switch-button">読み上げ</button>
+        <button class="switch-button">詳細設定</button>
+        <button class="switch-button">デバッグ</button>
+        <button id="into-fullscreen">最大化</button>
+        <div style="border-top: solid 2px #333; padding-left: 16px; padding-top: 8px;">
+          <div class="tab-item opt-hide">
+            <h2>通常表示</h2>
+            <label for="viewTsunami">津波情報を表示するか：</label><input type="checkbox" id="viewTsunami" checked><br>
+            <hidden style="display: none;">自動更新URL: <input type="text" id="NormalMes" value="default_message.json"><input type="checkbox" id="isNormalMes" value="自動更新有効/無効"></hidden><br>
+            [1] タイトル<input type="text" id="title1" class="Ntitle" value="最高気温(℃)">:
+            本文<input type="text" id="message1" class="Ntext" value="&lt;weather/temperature/high&gt;">
+            <input type="radio" name="scrollfix" value="1"><br>
+            [2] タイトル<input type="text" id="title2" class="Ntitle" value="最低気温(℃)">:
+            本文<input type="text" id="message2" class="Ntext" value="&lt;weather/temperature/low&gt;">
+            <input type="radio" name="scrollfix" value="2"><br>
+            [3] タイトル<input type="text" id="title3" class="Ntitle" value="時降水量(mm/h)">:
+            本文<input type="text" id="message3" class="Ntext" value="&lt;weather/rain/1h&gt;">
+            <input type="radio" name="scrollfix" value="3"><br>
+            [4] タイトル<input type="text" id="title4" class="Ntitle" value="日降水量(mm/d)">:
+            本文<input type="text" id="message4" class="Ntext" value="&lt;weather/rain/24h&gt;">
+            <input type="radio" name="scrollfix" value="4"><br>
+            [5] タイトル<input type="text" id="title5" class="Ntitle" value="最大風速(m/s)">:
+            本文<input type="text" id="message5" class="Ntext" value="&lt;weather/wind&gt;">
+            <input type="radio" name="scrollfix" value="5"><br>
+            <button type="button" name="goMessage">入力された内容を反映して通常画面に復帰する</button>
+            <button type="button" name="skipMessage">現在の表示項目をスキップ</button>
+            <input type="radio" name="scrollfix" value="0">
+            <a href="./disp-commands.html" target="_blank" rel="noopener noreferrer">標準コマンド一覧表</a><br>
+            <div style="display: none;">
+              <button type="button" name="recordingstart">録画開始</button>
+              <button type="button" name="recordingstop">録画停止</button>
+              <button type="button" name="recordingreset">録画済データリセット</button>
+              <input type="checkbox" name="recordingwheneewreceived" id="recordingwheneewreceived" disabled><label for="recordingwheneewreceived">：EEW時ティッカー動作を自動録画</label>
+              <div id="download_movie"></div>
+            </div>
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>緊急地震速報</h2>
+            <button type="button" id="stopWarnAudio">緊急地震速報アラーム音強制停止</button><br>
+            <button type="button" id="startEEWfcstTest">緊急地震速報のテスト受信を開始（予報）</button>
+            <button type="button" id="startEEWwarnTest">緊急地震速報のテスト受信を開始（警報）</button>
+            <button type="button" id="startEEWcancelTest">緊急地震速報のテスト受信を開始（キャンセル報）</button>
+            <button type="button" id="stopEEWtest">緊急地震速報のテスト受信を停止</button>
+            <!-- <div id="eew-input" class="inline-block" style="width:1080px; height:30px; background:black; color:white; font-size:25px; font-family:sans-serif;">-earthquake early warning- text area</div>
+            <div class="inline-block">
+              &lt;〇〇報(2桁)&gt;<br>
+              &lt;発生時間(yyyyMMddHHmmss)&gt;<br>
+              &lt;予想最大震度(10,20,30,40,50,55,60,65,70,00)&gt;<br>
+              &lt;longitude(abc.x)&gt;
+              &lt;latitude(ab.x)&gt;<br>
+              &lt;深さ(abc ㎞)&gt;<br>
+              &lt;マグニチュード(ab.x)&gt;<br>
+              &lt;予報(0)警報(1)&gt;<br>
+              &lt;震央地名コードabc&gt;<br>
+              例) 042011031114462050142.738.201007.21288
+            </div> -->
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>地震情報</h2>
+            <button type="button" id="ChangeToEq">地震情報モードに切り替え</button><br>
+            <div>
+              <div class="template-container">
+                <button class="quakeTemplateView" name="tmpSH-btn">テンプレート表示</button>
+                <div class="template-box">
+                  <button type="button" name="tmp-btn" class="tmp-btn">令和元年山形県沖地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成30年北海道胆振東部地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成30年大阪府北部地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成28年鳥取県中部地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成28年熊本地震(本震)</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成28年熊本地震(前震)</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成27年小笠原諸島西方沖地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">平成25年オホーツク海深発地震</button>
+                  <button type="button" name="tmp-btn" class="tmp-btn">東日本大震災(地震速報)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>ニュース速報</h2>
+            タイトル　　：<input type="text" id="BNtitle" style="width:300px;"><br>
+            サブタイトル：<input type="text" id="BNtext1" style="width:700px;"><br>
+            テキスト　　：<input type="text" id="BNtext2" style="width:700px;"><br>
+            <input type="button" name="BreakingNewsView" value="反映"><br>
+            <button type="button" name="wtWarnListView">停留中の気象情報を確認</button>
+            <div class="wtWarnChecking">
+              <div class="wtWarnListMsg">表示待機中の気象情報はありません</div>
+              <div class="wtWarnListFeeds">
+                <table border="1">
+                  <tbody id="wtWarnTableBody">
+                    <tr>
+                      <td class="title"><div>タイトル</div></td>
+                      <td class="subtitle"><div>サブタイトル</div></td>
+                      <td class="maintext"><div>本文（テキスト）</div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tab-item opt-hide">
+            <button type="button" name="sorabtn">ソラボタン 表示</button>
+            <button type="button" name="sorabtn">ソラボタン オープン</button>
+            <button type="button" name="sorabtn">ソラボタン 表示終了</button><br>
+            ソラボタン 表示切り替え: <input type="checkbox" id="isSoraview">
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>動画表示</h2>
+            <div style="margin: 12px 0;">
+              <div>
+                <input type="text" id="movieSrc" placeholder="再生する動画のURLを入力" style="width: 400px;" value="https://mwsgvs.weathernews.jp/ip/mov/wxn_jpn_ip_320x240.m4v">
+                <button type="button" name="videoChange">切り替え</button>
+              </div>
+              <video controls id="v" preload="auto" style="display: none;">
+                <source src="" />
+              </video>
+              <div id="movietime">
+                動画再生<br>
+                0:00.00 --- 0:00.00
+              </div>
+              <button type="button" name="videostart">Start</button>
+              <button type="button" name="videostop">Stop</button>
+              <button type="button" name="videoreset">Reset</button>
+              <button type="button" name="videoview">表示</button>
+              <button type="button" name="videomuteChange">消音切り替え</button>
+              <form id="volumeChanger"><input type="range" min="0.01" max="1" step="0.01" value="1" style="width:200px;" id="videovolrange"><output id="videovolume">1</output></form>
+            </div>
+            BGMを選択：<input type="file" accept="audio/*" class="BGMinput" multiple><br>
+            <style>
+              #audiolist .rel {
+                position: relative;
+              }
+              #audiolist .abs {
+                position: absolute;
+              }
+              #audiolist .a {
+                height: 62px;
+              }
+              #audiolist .b {
+                width: 575px;
+                height: 62px;
+                top: 0;
+                left: 0;
+              }
+              #audiolist .bg {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                border-radius: 8px;
+              }
+              #audiolist .c {
+                height: 16px;
+                width: 16px;
+                top: 7px;
+                outline: none;
+                padding: 0;
+                background-color: transparent;
+                border: 0;
+              }
+              #audiolist .d {
+                align-items: center;
+                display: flex;
+                height: 31px;
+                left: 74px;
+                width: 475px;
+              }
+              #audiolist .e {
+                width: 36px;
+                font-size: 12px;
+                text-align: right;
+                color: #fff;
+                right: 450px;
+              }
+              #audiolist .f {
+                height: 16px;
+                left: 32px;
+                width: 405px;
+              }
+              #audiolist .g {
+                left: 0;
+                width: 100%;
+                top: 5.5px;
+                height: 5px;
+                pointer-events: none;
+                font-family: sans-serif;
+              }
+              #audiolist .h {
+                left: 21.5px;
+                top: -2px;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #fff;
+                transform: translateX(-50%);
+              }
+              #audiolist .i {
+                top: 0;
+                height: 100%;
+                border-radius: 4.5px;
+              }
+              #audiolist .j {
+                background-color: rgba(255,255,255,0.1);
+              }
+              #audiolist .k {
+                background-color: rgba(255,255,255,0.35);
+              }
+              #audiolist .l {
+                background-color: rgba(255,255,255,0.05);
+              }
+              #audiolist .m {
+                top: 0;
+                margin: 0;
+                height: 100%;
+                background-color: transparent;
+                outline: none;
+                left: -2px;
+                width: 100%;
+                appearance: none;
+                top: -1px;
+                border: none;
+              }
+              #audiolist .musicDurationOrLeft {
+                width: 36px;
+                font-size: 12px;
+                text-align: left;
+                color: #fff;
+                left: 445px;
+                font-family: sans-serif;
+              }
+              #audiolist .musichide {
+                display: none;
+              }
+              #audiolist .musicButtomContainer {
+                top: 31px;
+                left: 5px;
+              }
+              #audiolist .BGMrepeatingStart {
+                left: 0;
+                top: 0;
+                height: 14px;
+                width: 111px;
+              }
+              #audiolist .BGMrepeatingStop {
+                left: 152px;
+                top: 0;
+                height: 14px;
+                width: 112px;
+              }
+              #audiolist .n {
+                font-size: 16px;
+                font-family: sans-serif;
+                left: 119px;
+                top: -1px;
+                color: white;
+                width: 32px;
+              }
+              #audiolist .o {
+                font-size: 16px;
+                font-family: sans-serif;
+                left: 272px;
+                top: -1px;
+                color: white;
+                width: 96px;
+              }
+              #audiolist .musicVol {
+                left: 390px;
+                top: 0;
+                width: 130px;
+              }
+              .musicVol::-webkit-slider-thumb {
+                background-color: #fff;
+              }
+              #audiolist .BGMrepeats {
+                left: 304px;
+                top: 3px;
+              }
+              #audiolist .p {
+                color: white;
+                top: 0;
+                left: 523px;
+                font-size: 13px;
+                font-family: sans-serif;
+              }
+              #audiolist .BGMvolOutput {
+                color: white;
+                top: 1px;
+                left: 525px;
+                font-size: 13px;
+                font-family: sans-serif;
+                width: 40px;
+              }
+              .musicrange::-webkit-slider-thumb {
+                appearance: none;
+                cursor: pointer;
+                outline: none;
+                background: #0000;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+              }
+            </style>
+            <div id="audiolist"></div>
+            <!-- Windowsだと崩れる問題 -->
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>Traffic Monitor</h2>
+            <div id="tfmoni"></div>
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>読み上げ</h2>
+            <div class="speech-item">
+              <div>読み上げステータス情報</div>
+              <div id="speech-status-current"></div>
+            </div>
+            <div class="speech-item">
+              <div>読み上げ音量</div>
+              <div>
+                <input type="range" min="0" max="1.2" value="1" step="0.01" id="speech-vol-input">
+                <span id="speech-vol-view">100%</span>
+              </div>
+            </div>
+            <div><button id="speech-test1">テスト音声を再生</button></div>
+          </div>
+          <div class="tab-item opt-hide">
+            <h2>詳細設定</h2>
+            <button type="button" id="dataSaver">保存</button><text> ←ここをクリックするか60秒毎の自動保存を待って設定を保存</text>
+            <table border=1>
+              <tbody>
+                <tr>
+                  <td>テーマカラー</td>
+                  <td>
+                    <select name="themeColors">
+                      <option value=0>ライト</option>
+                      <option value=1>ダーク</option>
+                      <option value=2>モノトーン</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>地震情報表示条件(AND条件)</td>
+                  <td>
+                    <div>
+                      最大震度
+                      <select name="minint">
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=6>5-</option>
+                        <option value=7>5+</option>
+                        <option value=8>6-</option>
+                        <option value=9>6+</option>
+                        <option value=10>7</option>
+                      </select>
+                      以上<br>M
+                      <select name="minmag">
+                        <option value=0>指定なし</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=3.5>3.5</option>
+                        <option value=4>4</option>
+                        <option value=4.5>4.5</option>
+                        <option value=5>5</option>
+                        <option value=5.5>5.5</option>
+                        <option value=6>6</option>
+                        <option value=6.5>6.5</option>
+                        <option value=7>7</option>
+                        <option value=7.5>7.5</option>
+                        <option value=8>8</option>
+                        <option value=8.5>8.5</option>
+                        <option value=9>9</option>
+                      </select>
+                      以上<br>深さ
+                      <select name="depmin">
+                        <option value=1000>指定なし</option>
+                        <optgroup label="0km~100km">
+                          <option value=0>0</option>
+                          <option value=10>10</option>
+                          <option value=20>20</option>
+                          <option value=30>30</option>
+                          <option value=40>40</option>
+                          <option value=50>50</option>
+                          <option value=60>60</option>
+                          <option value=70>70</option>
+                          <option value=80>80</option>
+                          <option value=90>90</option>
+                          <option value=100>100</option>
+                        </optgroup>
+                        <optgroup label="110km~200km">
+                          <option value=110>110</option>
+                          <option value=120>120</option>
+                          <option value=130>130</option>
+                          <option value=140>140</option>
+                          <option value=150>150</option>
+                          <option value=160>160</option>
+                          <option value=170>170</option>
+                          <option value=180>180</option>
+                          <option value=190>190</option>
+                          <option value=200>200</option>
+                        </optgroup>
+                        <optgroup label="210km~300km">
+                          <option value=210>210</option>
+                          <option value=220>220</option>
+                          <option value=230>230</option>
+                          <option value=240>240</option>
+                          <option value=250>250</option>
+                          <option value=260>260</option>
+                          <option value=270>270</option>
+                          <option value=280>280</option>
+                          <option value=290>290</option>
+                          <option value=300>300</option>
+                        </optgroup>
+                        <optgroup label="310km~400km">
+                          <option value=310>310</option>
+                          <option value=320>320</option>
+                          <option value=330>330</option>
+                          <option value=340>340</option>
+                          <option value=350>350</option>
+                          <option value=360>360</option>
+                          <option value=370>370</option>
+                          <option value=380>380</option>
+                          <option value=390>390</option>
+                          <option value=400>400</option>
+                        </optgroup>
+                        <optgroup label="410km~500km">
+                          <option value=410>410</option>
+                          <option value=420>420</option>
+                          <option value=430>430</option>
+                          <option value=440>440</option>
+                          <option value=450>450</option>
+                          <option value=460>460</option>
+                          <option value=470>470</option>
+                          <option value=480>480</option>
+                          <option value=490>490</option>
+                          <option value=500>500</option>
+                        </optgroup>
+                        <optgroup label="510km~600km">
+                          <option value=510>510</option>
+                          <option value=520>520</option>
+                          <option value=530>530</option>
+                          <option value=540>540</option>
+                          <option value=550>550</option>
+                          <option value=560>560</option>
+                          <option value=570>570</option>
+                          <option value=580>580</option>
+                          <option value=590>590</option>
+                          <option value=600>600</option>
+                        </optgroup>
+                        <optgroup label="610km~700km">
+                          <option value=610>610</option>
+                          <option value=620>620</option>
+                          <option value=630>630</option>
+                          <option value=640>640</option>
+                          <option value=650>650</option>
+                          <option value=660>660</option>
+                          <option value=670>670</option>
+                          <option value=680>680</option>
+                          <option value=690>690</option>
+                          <option value=700>700</option>
+                        </optgroup>
+                        <optgroup label="710km~800km">
+                          <option value=710>710</option>
+                          <option value=720>720</option>
+                          <option value=730>730</option>
+                          <option value=740>740</option>
+                          <option value=750>750</option>
+                          <option value=760>760</option>
+                          <option value=770>770</option>
+                          <option value=780>780</option>
+                          <option value=790>790</option>
+                          <option value=800>800</option>
+                        </optgroup>
+                        <optgroup label="810km~900km">
+                          <option value=810>810</option>
+                          <option value=820>820</option>
+                          <option value=830>830</option>
+                          <option value=840>840</option>
+                          <option value=850>850</option>
+                          <option value=860>860</option>
+                          <option value=870>870</option>
+                          <option value=880>880</option>
+                          <option value=890>890</option>
+                          <option value=900>900</option>
+                        </optgroup>
+                        <optgroup label="910km~990km">
+                          <option value=910>910</option>
+                          <option value=920>920</option>
+                          <option value=930>930</option>
+                          <option value=940>940</option>
+                          <option value=950>950</option>
+                          <option value=960>960</option>
+                          <option value=970>970</option>
+                          <option value=980>980</option>
+                          <option value=990>990</option>
+                        </optgroup>
+                      </select>
+                      km以下
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>緊急地震速報表示条件(OR条件) (動作しません)</td>
+                  <td>
+                    <div>
+                      最大震度
+                      <select name="eewminint">
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5-</option>
+                        <option value=6>5+</option>
+                        <option value=7>6-</option>
+                        <option value=8>6+</option>
+                        <option value=9>7</option>
+                      </select>
+                      以上(不明を
+                      <select name="eewintunknown">
+                        <option value=1>含む</option>
+                        <option value=0>含まない</option>
+                      </select>
+                      )<br>M
+                      <select name="eewminmag">
+                        <option value=0>指定なし</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=3.5>3.5</option>
+                        <option value=4>4</option>
+                        <option value=4.5>4.5</option>
+                        <option value=5>5</option>
+                        <option value=5.5>5.5</option>
+                        <option value=6>6</option>
+                        <option value=6.5>6.5</option>
+                        <option value=7>7</option>
+                        <option value=7.5>7.5</option>
+                        <option value=8>8</option>
+                        <option value=8.5>8.5</option>
+                        <option value=9>9</option>
+                      </select>
+                      以上<br>深さ
+                      <select name="eewdepmin">
+                        <option value=-1>指定なし</option>
+                        <optgroup label="0km~100km">
+                          <option value=0>0</option>
+                          <option value=10>10</option>
+                          <option value=20>20</option>
+                          <option value=30>30</option>
+                          <option value=40>40</option>
+                          <option value=50>50</option>
+                          <option value=60>60</option>
+                          <option value=70>70</option>
+                          <option value=80>80</option>
+                          <option value=90>90</option>
+                          <option value=100>100</option>
+                        </optgroup>
+                        <optgroup label="110km~200km">
+                          <option value=110>110</option>
+                          <option value=120>120</option>
+                          <option value=130>130</option>
+                          <option value=140>140</option>
+                          <option value=150>150</option>
+                          <option value=160>160</option>
+                          <option value=170>170</option>
+                          <option value=180>180</option>
+                          <option value=190>190</option>
+                          <option value=200>200</option>
+                        </optgroup>
+                        <optgroup label="210km~300km">
+                          <option value=210>210</option>
+                          <option value=220>220</option>
+                          <option value=230>230</option>
+                          <option value=240>240</option>
+                          <option value=250>250</option>
+                          <option value=260>260</option>
+                          <option value=270>270</option>
+                          <option value=280>280</option>
+                          <option value=290>290</option>
+                          <option value=300>300</option>
+                        </optgroup>
+                        <optgroup label="310km~400km">
+                          <option value=310>310</option>
+                          <option value=320>320</option>
+                          <option value=330>330</option>
+                          <option value=340>340</option>
+                          <option value=350>350</option>
+                          <option value=360>360</option>
+                          <option value=370>370</option>
+                          <option value=380>380</option>
+                          <option value=390>390</option>
+                          <option value=400>400</option>
+                        </optgroup>
+                        <optgroup label="410km~500km">
+                          <option value=410>410</option>
+                          <option value=420>420</option>
+                          <option value=430>430</option>
+                          <option value=440>440</option>
+                          <option value=450>450</option>
+                          <option value=460>460</option>
+                          <option value=470>470</option>
+                          <option value=480>480</option>
+                          <option value=490>490</option>
+                          <option value=500>500</option>
+                        </optgroup>
+                        <optgroup label="510km~600km">
+                          <option value=510>510</option>
+                          <option value=520>520</option>
+                          <option value=530>530</option>
+                          <option value=540>540</option>
+                          <option value=550>550</option>
+                          <option value=560>560</option>
+                          <option value=570>570</option>
+                          <option value=580>580</option>
+                          <option value=590>590</option>
+                          <option value=600>600</option>
+                        </optgroup>
+                        <optgroup label="610km~700km">
+                          <option value=610>610</option>
+                          <option value=620>620</option>
+                          <option value=630>630</option>
+                          <option value=640>640</option>
+                          <option value=650>650</option>
+                          <option value=660>660</option>
+                          <option value=670>670</option>
+                          <option value=680>680</option>
+                          <option value=690>690</option>
+                          <option value=700>700</option>
+                        </optgroup>
+                        <optgroup label="710km~800km">
+                          <option value=710>710</option>
+                          <option value=720>720</option>
+                          <option value=730>730</option>
+                          <option value=740>740</option>
+                          <option value=750>750</option>
+                          <option value=760>760</option>
+                          <option value=770>770</option>
+                          <option value=780>780</option>
+                          <option value=790>790</option>
+                          <option value=800>800</option>
+                        </optgroup>
+                        <optgroup label="810km~900km">
+                          <option value=810>810</option>
+                          <option value=820>820</option>
+                          <option value=830>830</option>
+                          <option value=840>840</option>
+                          <option value=850>850</option>
+                          <option value=860>860</option>
+                          <option value=870>870</option>
+                          <option value=880>880</option>
+                          <option value=890>890</option>
+                          <option value=900>900</option>
+                        </optgroup>
+                        <optgroup label="910km~990km">
+                          <option value=910>910</option>
+                          <option value=920>920</option>
+                          <option value=930>930</option>
+                          <option value=940>940</option>
+                          <option value=950>950</option>
+                          <option value=960>960</option>
+                          <option value=970>970</option>
+                          <option value=980>980</option>
+                          <option value=990>990</option>
+                        </optgroup>
+                      </select>
+                      km以上
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>クリップボードへの自動コピーの有無</td>
+                  <td>
+                    <div>
+                      緊急地震速報：<input type="checkbox" id="setClipEEW"><br>
+                      地震情報　　：<input type="checkbox" id="setClipQuake">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>気象情報の単位</td>
+                  <td>
+                    <div>
+                      風速：
+                      <select name="unitWinds">
+                        <option value="m/s">m/s</option>
+                        <option value="km/h">km/h</option>
+                        <option value="mph">mph</option>
+                        <option value="kt">kt</option>
+                        <option value="ft/s">ft/s</option>
+                      </select><br>
+                      気温：
+                      <select name="unitTemp">
+                        <option value="℃">℃</option>
+                        <option value="K">K</option>
+                        <option value="℉">℉</option>
+                      </select><br>
+                      <button type="button" id="unitsReflect">反映して再読み込み</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>情報の取得間隔</td>
+                  <td>
+                    <div>
+                      緊急地震速報： <input type="number" min="1100" value="5000" step="50" id="setIntervalIedred">ms<br>
+                      地震情報　　： <input type="number" min="5000" value="12000" step="50" id="setIntervalNHKquake">ms<br>
+                      気象情報　　： <input type="number" min="5000" value="15000" step="50" id="setIntervalJmaWt">ms<br>
+                      津波情報　　： <input type="number" min="25000" value="30000" step="250" id="setIntervalTenkiJpTsu">ms<br>
+                      Ｍスケール　： <input type="number" min="10000" value="30000" step="250" id="setIntervalWNImscale">ms<br>
+                      ソラボタン　： <input type="number" min="10000" value="30000" step="250" id="setIntervalWNIsorabtn">ms<br>
+                      河川情報　　： <input type="number" min="60000" value="300000" step="1000" id="setIntervalWNIriver">ms<br>
+                      <span style="display:none;">(NHK) WNI様： <input type="number" min="480000" value="600000" step="10000" id="setIntervalJMAfcst">ms<br></span>
+                      ウェザーニュースLiVE番組表： <input type="number" min="60000" value="240000" step="250" id="setIntervalWNItm">ms<br>
+                      (東京電力停電情報) 東京電力様： <input type="number" min="30000" value="60000" step="250" id="setIntervalTpcBlackOut">ms
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>アメダスの地点を抜粋して読み込む</td>
+                  <td>
+                    <div>
+                      チェックで有効：<input type="checkbox" id="setParticallyReadingAme" checked>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>サウンド関連</td>
+                  <td>
+                    <ul style="padding-inline-end: 20px;">
+                      <li>音量
+                        <ul>
+                          <li>緊急地震速報(初報)：<input type="number" min="0" max="200" value="10" id="volEEWl1">%<button id="voltestEEWl1">テスト</button></li>
+                          <li>緊急地震速報(継続報)：<input type="number" min="0" max="200" value="100" id="volEEWl5">%<button id="voltestEEWl5">テスト</button></li>
+                          <li>緊急地震速報(最終報)：<input type="number" min="0" max="200" value="100" id="volEEWl9">%<button id="voltestEEWl9">テスト</button></li>
+                          <li>緊急地震速報(ビープ音)：<input type="number" min="0" max="200" value="10" id="volEEWh">%<button id="voltestEEWh">テスト(3秒)</button></li>
+                          <li>緊急地震速報(カスタム)：<input type="number" min="0" max="200" value="100" id="volEEWc">%<button id="voltestEEWcustom">テスト</button></li>
+                          <li>緊急地震速報(PLUM法)<a target="_blank" href="https://www.data.jma.go.jp/svd/eew/data/nc/shiryo/setsumeikai170712/170712_3c.pdf"><sup>[?]</sup></a>：<input type="number" min="0" max="200" value="100" id="volEEWp">%<button id="voltestEEWp">テスト</button></li>
+                          <li>土砂災害警戒情報：<input type="number" min="0" max="200" value="100" id="volGL">%<button id="voltestGL">テスト</button></li>
+                          <li>竜巻注意情報：<input type="number" min="0" max="200" value="100" id="volNtc">%<button id="voltestNtc">テスト</button></li>
+                          <li>気象特別警報：<input type="number" min="0" max="200" value="100" id="volSpW">%<button id="voltestSpW">テスト</button></li>
+                          <li>津波情報：<input type="number" min="0" max="200" value="100" id="volTnm">%<button id="voltestTnm">テスト</button></li>
+                          <li>記録的短時間大雨情報：<input type="number" min="0" max="200" value="100" id="volHvRa">%<button id="voltestHvRa">テスト</button></li>
+                          <li>氾濫危険情報：<input type="number" min="0" max="200" value="100" id="volFldOc4">%<button id="voltestFldOc4">テスト</button></li>
+                          <li>氾濫発生情報：<input type="number" min="0" max="200" value="100" id="volFldOc5">%<button id="voltestFldOc5">テスト</button></li>
+                        </ul>
+                      </li>
+                      <li>緊急地震速報警報時の音声をカスタマイズするには？<div style="width: 550px;">
+                        「sound」フォルダ内に「EEW_Warning.wav」「EEW_Warning.mp3」「EEW_Warning.ogg」のいずれかが存在する場合に、それらを読み込みます。
+                        音量の設定をするには、上記の項目にある「緊急地震速報(カスタム)」から設定できます。
+                        カスタマイズ音を使用する場合、「緊急地震速報(ビープ音)」の音量を0%にすることを推奨します。
+                      </div></li>
+                      <li>地震情報：
+                        <table border="1" class="settings_volume_quake_table">
+                          <tbody>
+                            <tr><th></th>
+                              <th class="sound_quake_type" data-type="normal" data-index="1">震度1</th>
+                              <th class="sound_quake_type" data-type="normal" data-index="2">震度2</th>
+                              <th class="sound_quake_type" data-type="normal" data-index="3">震度3</th>
+                              <th class="sound_quake_type" data-type="normal" data-index="4">震度4</th>
+                              <th class="sound_quake_type" data-type="normal" data-index="5">震度5弱</th>
+                              <th class="sound_quake_type" data-type="major" data-index="6">震度5強</th>
+                              <th class="sound_quake_type" data-type="major" data-index="7">震度6弱</th>
+                              <th class="sound_quake_type" data-type="major" data-index="8">震度6強</th>
+                              <th class="sound_quake_type" data-type="major" data-index="9">震度7</th>
+                            </tr>
+                            <tr>
+                              <th>音量(%)</th>
+                              <td><input type="number" min="0" max="200" value="30" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="50" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="70" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="80" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="90" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="100" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="100" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="100" class="sound_quake_volume"></td>
+                              <td><input type="number" min="0" max="200" value="100" class="sound_quake_volume"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-item opt-hide">
+            <div id="dbTickerVersion" style="margin-left: 12px; margin-top: 8px;">Ticker Version: (null)</div>
+            <div style="margin: 8px; margin-bottom: 10px;">
+              <button type="button" style="font-size: 18px;" id="exportEEWs">緊急地震速報の受信ログを出力する</button><br>
+              <button type="button" style="font-size: 18px;" id="exportErrors">エラーログを出力する</button>
+              <p>ログは再読み込みすると破棄されます。</p>
+            </div>
+            <div class="debugPerformance">
+              <div style="margin: 8px;">
+                <div id="dbMemoryAvCap"></div>
+                <div id="dbMemoryWhCap"></div>
+              </div>
+              <p id="dbCpuUsages"></p>
+              <p id="dbPfDrawing"></p>
+              <p id="dbPfWeather"></p>
+            </div>
+            <!-- <button type="button" id="exportQuakes">地震情報受信ログを出力する</button> -->
+          </div>
+        </div>
+        <div id="menu">
+          <div class="eiList" aria-label="地震情報一覧" id="eiList">
+            <button type="button" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">＜震源名＞ ＜最大震度＞ ＜発生時刻＞</button>
+            <button type="button" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">最大震度により背景色が変わります。</button>
+            <button type="button" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">また、地震速報の場合はこの文字に色がつきます。</button>
+          </div>
+          <div class="eiListHider" id="eiListHider">読み込み待機中・・・<br>Tips: 点滅→表示中の情報</div>
+          <div class="eiTitle" aria-label="地震情報のタイトル" id="eiTitle"></div>
+          <div class="eiwind" aria-label="地震情報の本文" id="eiwind"></div>
+          <div class="tsunamiList" aria-label="津波情報" id="tsunamiList"></div>
+          <div class="dataList" aria-label="使用データリスト" id="dataList">
+            <a href="https://dmdata.jp/" target="_blank">【技術者向け：防災情報をAPI形式で素早く入手したい方へ】</a><br>
+            <a href="https://voicevox.hiroshiba.jp/" target="_blank">読み上げ音声: VOICEVOX</a><br>
+            <a href="https://www.data.jma.go.jp/developer/multilingual.html" target="_blank">出典：気象庁ホームページ／多言語辞書データ</a><br>
+            <a href="https://www.data.jma.go.jp/obd/stats/data/mdrr/docs/csv_dl_readme.html" target="_blank">出典：気象庁ホームページ／「最新の気象データ」</a><br>
+            <a href="https://www.jma.go.jp/bosai/map.html#contents=amedas" target="_blank">出典：気象庁ホームページ／「統合地図ページ」</a><br>
+            <a href="https://www.nhk.or.jp/kishou-saigai/earthquake/" target="_blank">NHK地震情報</a><br>
+            <a href="https://dic.nicovideo.jp/a/mスケール" target="_blank">Weathenews Mスケール</a><br>
+            <a href="http://weathernews.com/ja/nc/press/2010/100114.html" target="_blank">Weathernews ソラボタン情報</a><br>
+            <a href="https://earthquake.tenki.jp/bousai/tsunami/" target="_blank">tenki.jp 津波情報</a><br>
+            <a href="https://github.com/dataofjapan/land" target="_blank">国土地理院ウェブサイト 地球地図日本 (japan.geojson)</a><br>
+            <a href="https://weathernews.jp/s/topics/map/river_level.html" target="_blank" charset="uft-8">Weathernews 河川情報</a><br>
+            <a href="http://nlftp.mlit.go.jp/ksj/" target="_blank">国土数値情報　行政区域データ　平成31年</a><br>
+            <a href="https://www.bosai.go.jp/" target="_blank">防災科研 緊急地震速報JSONデータ</a><br>
+            <a href="https://iedred7584.dev/" target="_blank">緊急地震速報 JSON API (iedred7584様)</a><br>
+            <a href="https://teideninfo.tepco.co.jp/" target="_blank" >東京電力 停電情報xml</a><br>
+            <a href="https://jpafonts.osdn.jp/" target="_blank">IPAフォントライセンスv1.0で公開されているJPAフォントを使用しています。</a><br>
+          </div>
+          <div class="setMenu" id="setMenu" aria-label="設定">
+            <div style="margin: 5px;">この機能は諸事情より休止になりました...</div>
+            <div style="display: none;">
+              <div id="stab">
+                <div id="tab1" class="stab">1時間降水量</div>
+                <div id="tab2" class="stab">24時間降水量</div>
+                <div id="tab3" class="stab">最大風速</div>
+                <div id="tab4" class="stab">最高気温</div>
+                <div id="tab5" class="stab">最低気温</div>
+                <div class="tabop">
+                  <div id="tabop-m" class="tabopbutton">-</div>
+                  <div id="tabop-p" class="tabopbutton">+</div>
+                </div>
+              </div>
+              <div id="smain">
+                <div id="main1" class="menu"></div>
+                <div id="main2" class="menu"></div>
+                <div id="main3" class="menu"></div>
+                <div id="main4" class="menu"></div>
+                <div id="main5" class="menu"></div>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div><button aria-label="地震情報を表示するボタン" type="button">地震情報一覧表示</button></div>
+            <div><button aria-label="津波情報を表示するボタン" type="button">津波情報表示</button></div>
+            <div><button aria-label="謝辞を表示するボタン" type="button">使用データ</button></div>
+            <div style="display: none;"><button aria-label="アメダス地点設定を表示するボタン" type="button">アメダス地点設定</button></div>
+          </div>
+          <image src="img/settingicon.png" alt="settings" class="icon" />
+        </div>
+      </div>
+    </div>
+    <iframe style="display: none;" id="sandbox-webassembly" src="sandbox/webassembly.html" width="1" height="1"></iframe>
+    <script src="js/connection2sandbox.js" charset="utf-8"></script>
+    <script src="js/init.js" charset="utf-8"></script>
+    <script src="js/init-canvas.js" charset="utf-8"></script>
+    <script src="js/settings_epicenter.js" charset="utf-8"></script>
+    <script src="js/settings_SubdivisionArea.js" charset="utf-8"></script>
+    <script src="library/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- <script src="js/xlsx.full.min.js"></script> -->
+    <script src="library/jszip.min.js"></script>
+    <script src="js/jma_multilingual.js" charset="utf-8"></script>
+    <script src="js/tsunami_multilingual.js" charset="utf-8"></script>
+    <script src="js/jquery.funcResizeBox.js" charset="utf-8"></script>
+    <!-- <script src="js/japan.geojson.js" charset="utf-8"></script> -->
+    <script src="js/map-japan.js" charset="utf-8"></script>
+    <script src="library/variable-animation.js" charset="utf-8"></script>
+    <script src="js/init_AreaForecastLocalM.js" charset="utf-8"></script>
+    <!-- <script src="js/init_JMAWarnTypeList.js" charset="utf-8"></script> -->
+    <!-- <script src="js/init_MapData1.js" charset="utf-8"></script> -->
+    <script src="js/init_colorScheme.js" charset="utf-8"></script>
+    <script src="js/speech-controller.js" charset="utf-8"></script>
+    <script src="js/main.js" charset="utf-8"></script><!-- <script type="text/javascript" src="js/Earthquake viewer.js"></script> -->
+    <script src="js/font-loading.js" charset="utf-8"></script>
+  </body>
+  <!--
+  地震速報リスト:
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193817.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193846.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193908.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193918.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212194008.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212194016.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193732_20200212194056.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193732_20200212194217.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200122185244_20200122185429.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200122185244_20200122185523.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116184023.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183757.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183847.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183857.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121191939.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121192038.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121192049.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032543.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032640.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032808.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152325.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152408.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152530.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191218083524_20191218083702.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191218083524_20191218083817.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212011130.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212011352.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212030054.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191204193509_20191204193750.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180653.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180751.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180912.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191117200537_20191117200830.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191117200537_20191117200714.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191116181709_20191116181850.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191116181709_20191116182024.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191112215546_20191112215723.xml
+  -->
+  <!--
+  Mac Safari 13.0.5
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15
+
+  Mac Chrome
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Google Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+
+  iPhone LINE browser
+  navigator.language = ja-JP
+  navigator.playform = iPhone
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Geoko) Mobile/15E148 Safari Line/10.1.1
+
+  iPad Safari
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Geoko) Version/13.0.5 Safari/605.1.15
+
+  iPhone あんしん(フィルタリング有)
+  navigator.language = ja-JP
+  navigator.playform = iPhone
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Geoko) Version/13.0 Mobile/15E148 Safari/605.1.15 i-filter/sbm-safety/1.00.08.0004
+
+  Mac Firefox
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20100101
+  navigator.vendor =
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:72.0) Gecko/20100101 Firefox/72.0
+
+  Mac Opera
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Google Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 OPR/66.0.3515.72
+
+  iPhone Safari 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  iPod touch 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPod; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  iPad 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPad; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  Microsoft Edge (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299
+
+  Windows Google Chrome (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+  Windows Firefox (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0
+  -->
+</html>
