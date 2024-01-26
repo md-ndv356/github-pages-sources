@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+<canvas width=128 height=128></canvas>
+<script>
+var canvas = document.querySelector("canvas");
+var ct = canvas.getContext("2d");
+var gr;
+
+ct.textAlign = "center";
+ct.textBaseline = "middle";
+
+ct.resetTransform();
+ct.clearRect(0, 0, 128, 128);
+ct.scale(2, 2);
+ct.font = "bold 56px 'AdobeGothicStd-Bold','wf-AdobeGothicStd-Bold'";
+ct.fillStyle = "#565db8";
+ct.fillRect(0, 0, 64, 64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#000";
+ct.lineJoin = "round";
+ct.fillText("1", 32, 32);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 128, 128);
+ct.scale(2, 2);
+ct.font = "bold 56px 'AdobeGothicStd-Bold','wf-AdobeGothicStd-Bold'";
+ct.fillStyle = "#f547a9";
+ct.fillRect(0, 0, 64, 64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#000";
+ct.lineJoin = "round";
+ct.fillText("6", 22, 32);
+ct.fillRect(38, 38, 18, 4);
+
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(0,"#FFED7F");
+gr.addColorStop(1,"#C8B600");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("4",14,52);
+ct.strokeText("4",14,52);
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(0,"#FFC899");
+gr.addColorStop(1,"#FF7400");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("5",14,48);
+ct.strokeText("5",14,48);
+ct.fillRect(17,54,30,4);
+ct.strokeRect(17,54,30,4);
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(0,"#FFC899");
+gr.addColorStop(1,"#FF7400");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("5",14,56);
+ct.strokeText("5",14,56);
+ct.fillRect(17,8,30,4);
+ct.strokeRect(17,8,30,4);
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(0,"#FFA1E0");
+gr.addColorStop(1,"#D64AA7");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("6",14,48);
+ct.strokeText("6",14,48);
+ct.fillRect(17,54,30,4);
+ct.strokeRect(17,54,30,4);
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(0,"#FFA1E0");
+gr.addColorStop(1,"#D64AA7");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("6",14,56);
+ct.strokeText("6",14,56);
+ct.fillRect(17,8,30,4);
+ct.strokeRect(17,8,30,4);
+/*
+gr = ct.createRadialGradient(16,16,0,16,16,54);
+gr.addColorStop(  0,"#EB7575");
+gr.addColorStop(0.5,"#D90000");
+gr.addColorStop(  1,"#A60000");
+ct.fillStyle = gr;
+ct.fillRect(0,0,64,64);
+ct.fillStyle = "#fff";
+ct.strokeStyle = "#777";
+ct.lineJoin = "round";
+ct.fillText("7",14,52);
+ct.strokeText("7",14,52);
+
+/**/
+</script>
+</body>
+</html>

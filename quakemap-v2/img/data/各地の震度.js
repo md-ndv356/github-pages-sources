@@ -1,0 +1,121 @@
+ct.textAlign = "center";
+ct.textBaseline = "middle";
+ct.font = "28px 'AdobeGothicStd-Bold','wf-AdobeGothicStd-Bold'";
+
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#888888");
+gr.addColorStop(1, "#666666");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("?", 16, 16);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#acacfa");
+gr.addColorStop(1, "#565db8");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("1", 16, 16);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#48cacf");
+gr.addColorStop(1, "#169ca1");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("2", 16, 16);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#5fd45f");
+gr.addColorStop(1, "#189e10");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("3", 17, 16);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#edd84e");
+gr.addColorStop(1, "#bfaf00");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("4", 16, 16);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#fca760");
+gr.addColorStop(1, "#ff7400");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("5", 12, 16);
+ct.fillRect(20, 18, 9, 3);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#fca760");
+gr.addColorStop(1, "#ff7400");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("5", 12, 16);
+ct.fillRect(20, 12, 9, 3);
+ct.fillRect(23, 9, 3, 9);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#f584d0");
+gr.addColorStop(1, "#c23091");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("6", 11, 16);
+ct.fillRect(20, 18, 9, 3);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(0, "#f584d0");
+gr.addColorStop(1, "#c23091");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("6", 11, 16);
+ct.fillRect(20, 12, 9, 3);
+ct.fillRect(23, 9, 3, 9);
+
+ct.resetTransform();
+ct.clearRect(0, 0, 96, 96);
+ct.scale(3, 3);
+gr = ct.createRadialGradient(8, 8, 0, 8, 8, 27);
+gr.addColorStop(  0,"#eb7575");
+gr.addColorStop(0.5,"#d90000");
+gr.addColorStop(  1,"#a60000");
+ct.fillStyle = gr;
+ct.fillCircle(16, 16, 16);
+ct.fillStyle = "#fff";
+ct.fillText("7", 16, 16);
