@@ -17,14 +17,13 @@ body {
 }
 #title {
   position: absolute;
-  left: 5px;
-  top: 5px;
+  left: 5px; top: 5px;
   background: #fff;
   border-radius: 10px;
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  border: lightblue solid 2px;
+  border: 1px solid #c9f2ff;
   width: auto;
   height: 35px;
   font-size: 25px;
@@ -83,11 +82,12 @@ body {
   width: 640px;
   height: 150px;
   position: fixed;
-  bottom: 20px;
+  bottom: 21px;
   right: 55px;
   z-index: 1000;
-  background: #fff;
+  background: #222d;
   display: flex;
+  border: 1px solid #fff;
 }
 #quake_selector, #quake_contents {
   height: 150px;
@@ -121,58 +121,22 @@ body {
   background: #f7afb3;
 }
 #menu_quake_button {
-  border-color: #fff;
-  background: #000;
+  border: 1px solid #fff;
+  background-color: #222d;
   color: #fff;
-  font-size: 20px;
+  font-size: 19px;
   position: fixed;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  margin: 0;
+  margin: 0; padding: 2px 6px;
   right: 55px;
   z-index: 1000;
 }
 #menu_quake_button.show {
-  bottom: 170px;
+  bottom: 172px;
 }
 #menu_quake_button.hide {
   bottom: 20px;
-}
-#zoom_whole {
-  position: absolute;
-  bottom: 26px;
-  left: 10px;
-  width: 75px;
-  height: 27px;
-  font-size: 14px;
-  z-index: 1000;
-}
-#zoom_japan {
-  position: absolute;
-  bottom: 26px;
-  left: 95px;
-  width: 75px;
-  height: 27px;
-  font-size: 14px;
-  z-index: 1000;
-}
-.auto_update_container {
-  position: absolute;
-  bottom: 26px;
-  left: 180px;
-  color: #333;
-  background-color: #fffd;
-  padding: 2px;
-  z-index: 1000;
-}
-.view_every_area_container {
-  position: absolute;
-  bottom: 26px;
-  left: 336px;
-  color: #333;
-  background-color: #fffd;
-  padding: 2px;
-  z-index: 1000;
 }
 
 .maplibregl-ctrl-attrib.maplibregl-compact {
@@ -193,6 +157,27 @@ body {
   background: #fffd;
   backdrop-filter: blur(3px);
 }
+
+.bottom-menulist {
+  position: absolute;
+  left: 10px; bottom: 26px;
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  z-index: 1000;
+}
+.bottom-menulist > * {
+  display: block;
+  color: #333;
+  background-color: #fffd;
+  padding: 3px 7px;
+}
+@media (prefers-color-scheme: dark){
+  .bottom-menulist > * {
+    background-color: #222d;
+    color: #fff;
+  }
+}
     </style>
   </head>
   <body>
@@ -205,10 +190,12 @@ body {
       </div>
       <div id="occurred-time">08/32 00:00頃発生</div>
       <div id="shindo-list"></div>
-      <button type="button" id="zoom_whole">全体表示</button>
-      <button type="button" id="zoom_japan">全国表示</button>
-      <label class="auto_update_container"><input type="checkbox" id="auto_update" checked>自動更新(10秒)</label>
-      <label class="view_every_area_container"><input type="checkbox" id="view_every_area">地域毎表示</label>
+      <div class="bottom-menulist">
+        <button type="button" id="zoom_whole">全体</button>
+        <button type="button" id="zoom_japan">全国</button>
+        <label class="auto_update_container"><input type="checkbox" id="auto_update" checked>自動更新(10秒)</label>
+        <label class="view_every_area_container"><input type="checkbox" id="view_every_area">地域毎表示</label>
+      </div>
       <div id="control_container">
         <!-- <div id="quake_reports"></div> -->
         <div id="quake_contents"></div>
@@ -221,6 +208,7 @@ body {
     <script src="./js/jquery-3.6.0.min.js" charset="utf-8"></script>
     <script>
 var intervalID = 0;
+const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 const map = new maplibregl.Map({
   container: "map",
   center: [139.42, 35.69],
@@ -287,7 +275,7 @@ const map = new maplibregl.Map({
         "source-layer": "緊急地震速報／府県予報区",
         type: "fill",
         paint: {
-          "fill-color": "#fff"
+          "fill-color": isDarkMode ? "#333" : "#fff"
         }
       },
       {
@@ -303,7 +291,7 @@ const map = new maplibregl.Map({
             5, 0.5,
             10, 1
           ],
-          "line-color": "#404040"
+          "line-color": isDarkMode ? "#888" : "#404040"
         }
       }
     ]
