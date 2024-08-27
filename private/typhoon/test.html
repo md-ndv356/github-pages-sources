@@ -431,6 +431,7 @@
         typhdata.forecast = [];
         let lastX, lastY;
         const forecastTimes = [typhinfo.storm ? 0 : null];
+        debugger;
         typhinfo.forecast.forEach((forecast, i) => {
           let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
           let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
@@ -448,7 +449,8 @@
             disp: forecast.disp_flag,
             label: details ? details.date : "",
             arg: i == 0 ? vec2rad(x - typhdata.latestRoute.x, typhdata.latestRoute.y - y)
-                        : vec2rad(x - lastX, lastY - y)
+                        : vec2rad(x - lastX, lastY - y),
+            detail: details
           });
           forecastTimes.push(forecast.tm);
           lastX = x; lastY = y;

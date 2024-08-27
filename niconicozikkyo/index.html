@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ニコニコ実況API再生</title>
+    <link rel="stylesheet" href="./master.css">
+  </head>
+  <body>
+    <header>
+      <p>ニコニコ実況過去ログAPIの再生</p>
+    </header>
+    <main>
+      <input type="file" id="inputJSON">
+      <button type="button" id="start" onclick="requestAnimationFrame(check); startAt=(new Date()).getTime()-1602161740*1000; console.log(startAt);">開始</button>
+      <button type="button" id="stop"  onclick=" cancelAnimationFrame(check); ">停止</button>
+      <text id="time"></text>
+      <div class="mainC">
+        <div class="com" style="display: none;" role="Starting point"></div>
+      </div>
+    </main>
+    <footer><span class="foot_title">コメ／分</span><span id="per_minute">0</span></footer>
+    <script src="./main.js" charset="utf-8"></script>
+  </body>
+</html>
