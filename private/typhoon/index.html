@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Typhoon Map</title>
+    <style>
+      table { border-collapse: collapse; width: calc(100vw - 546px); }
+      table, tr, td {  border: 1px solid #333; }
+      td { text-align: center; padding: 1px 5px; }
+      #typh-info-table-list { font: 400 16px serif; }
+      .typh-info-table { margin-top: 3px; }
+      tr > td:first-child { width: 100px; }
+      td[colspan="2"] {
+        background-color: #ffebeb;
+      }
+      #typh_comment::before {
+        content: "ウェザーニュースのコメント";
+        display: block;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+    <button style="background: #fff; width: auto; height: 22px; border: 1px solid #999; border-radius: 3px; cursor: pointer; position: fixed; bottom: 2px; right: 2px;" onclick=" initialize(true) ">Click here to Reload.</button>
+    <p id="matrix" style="display: none;"></p>
+    <p id="info"></p>
+    <div style="display: flex;">
+      <div>
+        <div id="typh_title" style="width: 502px; background-color: #082080; text-align: center; font: 15px sans-serif; color: #fff; padding: 3px 10px;"></div>
+        <canvas id="canvas" style="width: 520px; height: 376px; border: solid 1px #333;" width="1040" height="752"></canvas>
+        <div id="typh_view_set" style="width: 502px; background-color: #075074; text-align: center; font: 15px sans-serif; color: #fff; padding: 3px 10px; margin-bottom: 7px;">
+          <label for="typh_view_fcst">予報を表示</label>
+          <input type="checkbox" id="typh_view_fcst" name="typh_view_fcst" checked>
+          <label for="display_loc">現在地を表示</label>
+          <input type="checkbox" id="display_loc" name="display_loc">
+        </div>
+        <div id="typh_comment" style="width: 522px;"></div>
+      </div>
+      <div style="margin-left: 8px;" id="typh-info-table-list">
+        <div class="typh-info-table">
+          <table>
+            <tr><td colspan="2">凡例</td></tr>
+            <tr><td>場所</td><td>読み込み中</td></tr>
+            <tr><td>最大風速</td><td>読み込み中</td></tr>
+            <tr><td>最大瞬間風速</td><td>読み込み中</td></tr>
+            <tr><td>移動方向</td><td>読み込み中</td></tr>
+            <tr><td>気圧</td><td>読み込み中</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+
+      window.onerror = function(...a){document.write(a[0]); console.log(a)};
+
+      function Clip(n, minValue, maxValue){
+        return Math.min(Math.max(n, minValue), maxValue);
+      }
+      function PositionToTileXY(position){
+        const EarthRadius = 6378137;
+        const MinLatitude = -85.05112878;
+        const MaxLatitude = 85.05112878;
+        const MinLongitude = -180;
+        const MaxLongitude = 180;
+        let latitude = Clip(position[1], MinLatitude, MaxLatitude);
+        let longitude = Clip(position[0], MinLongitude, MaxLongitude);
+
+        let sinLatitude = Math.sin(latitude * Math.PI / 180);
+        let x = (longitude + 180) / 360;
+        let y = 0.5 - Math.log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * Math.PI);
+        return [x, y];
+      }
+      function deg2rad(deg){
+        return deg * ( Math.PI / 180 );
+      }
+      function rad2deg(rad){
+        return rad * ( 180 / Math.PI ) ;
+      }
+      function sincos_rad(sin, cos) {
+        let asin = Math.asin(sin);
+        let acos = Math.acos(cos);
+
+        if (sin === 0) return acos;
+        if (cos === 0) return asin;
+        if (sin > 0) return acos;
+        if (sin < 0 && cos < 0) return Math.PI * 2 - acos;
+        if (sin < 0 && cos > 0) return asin;
+
+        return null;
+      }
+      // xyの座標系が違うことを考慮しましょう。出力はラジアン
+      function vec2rad(x, y){
+        let hyp = Math.hypot(x, y);
+        return sincos_rad(y/hyp, x/hyp);
+      }
+
+      const RAD    = 0.017453292;  // 3.141592654/180
+      const RAD_2  = 0.008726646;  // 3.141592654/(180*2)
+      const PAI_4  = 0.785398163;  // 3.141592654/4
+
+      function polartest(){
+        console.log(polar_latlon2xy([140.0, 61.2,  -1.95, 355.0, -542, -144, 1023.5, 995], 16.16666, 141 ));
+      }
+
+      function polar_latlon2xy(polar, lat, lon){
+        let [
+          lon0,   // 基準経度
+          lat1,   // 上辺の緯度
+          lat2,   // 下辺の緯度
+          x_lon0, // 基準経度のX座標
+          scr_x1, // 表示範囲左上のX座標
+          scr_y1, // 表示範囲左上のY座標
+          scr_x2, // 表示範囲右下のX座標
+          scr_y2  // 表示範囲右下のY座標
+        ] = polar;
+        let d_y, d_lat, myu1, myu2, k;
+        d_y   = scr_y2 - scr_y1;
+        d_lat = lat2   - lat1;
+        if ((d_y == 0) || (d_lat == 0)) return;
+
+        myu1 = Math.tan( PAI_4 - ( lat1 * RAD_2 ) );
+        myu2 = Math.tan( PAI_4 - ( lat2 * RAD_2 ) );
+        k    = d_y / ( myu2 - myu1 );
+
+        let x, y, myu, shi;
+        shi = ( lon - lon0 ) * RAD;
+        myu = Math.tan( PAI_4 - ( lat  * RAD_2 ) );
+        x = k * myu * Math.sin( shi ) + x_lon0;
+        y = scr_y1 + k * ( myu * Math.cos( shi ) - myu1 );
+        return [x, y];
+      }
+
+      //*inspired*  https://tjkendev.github.io/procon-library/python/geometry/circle_common_tangent_point.html
+      function common_tangent_lines(x1, y1, r1, x2, y2, r2) {
+        // console.log("%c -- input --\n"+`  * x1: ${x1}, y1: ${y1}, r1: ${r1}, x2: ${x2}, y2: ${y2}, r2: ${r2}`, "font-family: monospace;");
+        let bx, by, cv, p1, px, py, q1, qx, qy, result, rr0, sv, xd, yd;
+        result = {
+          lines: [],
+          circle: []
+        };
+        xd = x2 - x1;
+        yd = y2 - y1;
+        rr0 = Math.pow(xd, 2) + Math.pow(yd, 2);
+        if (Math.pow(r1 - r2, 2) <= rr0) {
+          cv = r1 - r2;
+          // console.log(`%c  * cv: ${cv}, rr0: ${rr0}`, "font-family: monospace;");
+          if (rr0 === Math.pow(r1 - r2, 2)) {
+            bx = r1 * cv * xd / rr0;
+            by = r1 * cv * yd / rr0;
+            result.lines.push([[x1 + bx, y1 + by], [x1 - yd + bx, y1 + xd + by]]);
+            // なにここ
+          } else {
+            sv = Math.sqrt(rr0 - Math.pow(cv, 2));
+            px = cv * xd - sv * yd;
+            py = sv * xd + cv * yd;
+            result.lines.push([[x1 + r1 * px / rr0, y1 + r1 * py / rr0], [x2 + r2 * px / rr0, y2 + r2 * py / rr0]]);
+            qx = cv * xd + sv * yd;
+            qy = -sv * xd + cv * yd;
+            p1 = (rad2deg(sincos_rad(py / rr0, px / rr0))+360) % 360;
+            q1 = (rad2deg(sincos_rad(qy / rr0, qx / rr0))+360) % 360;
+            // console.log(`%c  * sv: ${sv}, px: ${px}, py: ${py}, qx: ${qx}, qy: ${qy}, p1: ${p1}, q1: ${q1}`, "font-family: monospace;");
+            // console.log(`%c  * px / rr0 = ${px / rr0}, py / rr0 = ${py / rr0}`, "font-family: monospace;");
+            // console.log(`%c  * qx / rr0 = ${qx / rr0}, qy / rr0 = ${qy / rr0}`, "font-family: monospace;");
+            // console.log(`%c  * sincos_rad((py / rr0, px / rr0) = ${sincos_rad(py / rr0, px / rr0)}`, "font-family: monospace;");
+            // console.log(`%c  * sincos_rad((qy / rr0, qx / rr0) = ${sincos_rad(qy / rr0, qx / rr0)}`, "font-family: monospace;");
+            result.circle = [sincos_rad(py / rr0, px / rr0), sincos_rad(qy / rr0, qx / rr0)].sort((a, b) => a - b);
+            result.lines.push([[x1 + r1 * qx / rr0, y1 + r1 * qy / rr0], [x2 + r2 * qx / rr0, y2 + r2 * qy / rr0]]);
+          }
+        }
+
+        // console.log(("%c  * result[0]: "+result[0]).replaceAll(",", ", "), "font-family: monospace;");
+        // console.log(("%c  * result[1]: "+result[1]).replaceAll(",", ", "), "font-family: monospace;");
+        return result;
+      }
+
+      function WGS84_from_distance(lat, lon, azimuth, distance){
+
+        // 反復計算の上限回数
+        const ITERATION_LIMIT = 1000;
+
+        /*
+          Vincenty法(順解法)
+          始点の座標(緯度経度)と方位角と距離から、終点の座標と方位角を求める
+          :param lat: 緯度
+          :param lon: 経度
+          :param azimuth: 方位角
+          :param distance: 距離
+          :param ellipsoid: 楕円体
+          :return: 終点の座標、方位角
+        */
+// def vincenty_direct(lat, lon, azimuth, distance, ellipsoid=None):
+
+        // 計算時に必要な長軸半径(a)と扁平率(ƒ)を定数から取得し、短軸半径(b)を算出する
+
+        const a = 6378137; // 長軸半径
+        const ƒ = 1 / 298.257223563; // 扁平率
+        const b = 6356752.314245; // 短軸半径
+
+        // ラジアンに変換する(距離以外)
+        let φ1 = deg2rad(lat);
+        let λ1 = deg2rad(lon);
+        let α1 = deg2rad(azimuth);
+        let s = distance;
+
+        let sinα1 = Math.sin(α1);
+        let cosα1 = Math.cos(α1);
+
+        // 更成緯度(補助球上の緯度)
+        let U1 = Math.atan((1 - ƒ) * Math.tan(φ1));
+
+        let sinU1 = Math.sin(U1);
+        let cosU1 = Math.cos(U1);
+        let tanU1 = Math.tan(U1);
+
+        let σ1 = Math.atan2(tanU1, cosα1);
+        let sinα = cosU1 * sinα1;
+        let cos2α = 1 - sinα ** 2;
+        let u2 = cos2α * (a ** 2 - b ** 2) / (b ** 2);
+        let A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+        let B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+
+        // σをs/(b*A)で初期化
+        let σ = s / (b * A);
+
+        let cos2σm, sinσ, cosσ, Δσ;
+
+        // 以下の計算をσが収束するまで反復する
+        // 地点によっては収束しないことがあり得るため、反復回数に上限を設ける
+        for(let i=0; i<ITERATION_LIMIT; i++){
+          cos2σm = Math.cos(2 * σ1 + σ);
+          sinσ = Math.sin(σ);
+          cosσ = Math.cos(σ);
+          Δσ = B * sinσ * (cos2σm + B / 4 * (cosσ * (-1 + 2 * cos2σm ** 2) - B / 6 * cos2σm * (-3 + 4 * sinσ ** 2) * (-3 + 4 * cos2σm ** 2)));
+          let σʹ = σ;
+          σ = s / (b * A) + Δσ;
+
+          // 偏差が.000000000001以下ならbreak
+          if(Math.abs(σ - σʹ) <= 1e-12) break;
+        }
+
+        // σが所望の精度まで収束したら以下の計算を行う
+        let x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
+        let φ2 = Math.atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - ƒ) * Math.sqrt(sinα ** 2 + x ** 2));
+        let λ = Math.atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
+        let C = ƒ / 16 * cos2α * (4 + ƒ * (4 - 3 * cos2α));
+        let L = λ - (1 - C) * ƒ * sinα * (σ + C * sinσ * (cos2σm + C * cosσ * (-1 + 2 * cos2σm ** 2)));
+        let λ2 = L + λ1;
+
+        let α2 = Math.atan2(sinα, -x) + Math.PI;
+
+        return {
+          lat: rad2deg(φ2),     // 緯度
+          lon: rad2deg(λ2),     // 経度
+          azimuth: rad2deg(α2), // 方位角
+        }
+      }
+
+      // 実際のマップは634x634だけどviewportは634x376（知らんけど）
+      const mapWidth = 634;
+      const mapHeight = 634;
+      const viewWidth = 634;
+      const viewHeight = 376;
+
+      let deviceRatio = window.devicePixelRatio;
+      const canvas = document.getElementsByTagName("canvas")[0];
+      const canvas_forecast = document.createElement("canvas");
+      const typh_title = document.getElementById("typh_title");
+      const typh_comment = document.getElementById("typh_comment");
+      const typh_view_fcst = document.getElementById("typh_view_fcst");
+      const display_loc = document.getElementById("display_loc");
+      const typh_info_table_list = document.getElementById("typh-info-table-list");
+      const typh_view_set = document.getElementById("typh_view_set");
+      typh_title.style.width = (mapWidth - 18) + "px";
+      typh_view_set.style.width = (mapWidth - 18) + "px";
+      typh_comment.style.width = (mapWidth + 2) + "px";
+      canvas.style.width = mapWidth + "px";
+      canvas.width = viewWidth * deviceRatio;
+      canvas.height = viewHeight * deviceRatio;
+      canvas.style.width = viewWidth + "px";
+      canvas.style.height = viewHeight + "px";
+      canvas_forecast.width = viewWidth * deviceRatio;
+      canvas_forecast.height = viewHeight * deviceRatio;
+      document.body.appendChild(canvas_forecast);
+      canvas_forecast.style.width = viewWidth + "px";
+      canvas_forecast.style.height = viewHeight + "px";
+      canvas_forecast.style.display = "none";
+      let matrix = document.getElementById("matrix");
+      const ct = canvas.getContext("2d");
+      const ct_forecast = canvas_forecast.getContext("2d");
+      const currentLocationData = { lat: 0, lon: 0, x: null, y: null };
+
+      const adjustMapScale = ()=>{
+        const info = document.getElementById("info");
+        // let mapScale = transform.m11;
+        // let mapX = -transform.m41;
+        // let mapY = -transform.m42;
+        if(transform.m41 > 0) transform.m41 = 0;
+        if(transform.m42 > 0) transform.m42 = 0;
+        if((-transform.m41 + viewWidth) / transform.m11 > mapWidth) transform.m41 = -(mapWidth * transform.m11 - viewWidth);
+        if((-transform.m42 + viewHeight) / transform.m11 > mapHeight) transform.m42 = -(mapHeight * transform.m11 - viewHeight);
+      };
+
+      let isMoving = false;
+      let mouse = {};
+
+      canvas.addEventListener("mousedown", (event)=>{
+        event.preventDefault();
+        isMoving = true;
+        let rt = canvas.getBoundingClientRect();
+        mouse.x = Math.floor(event.clientX - rt.left);
+        mouse.y = Math.floor(event.clientY - rt.top);
+        isStateChanged = true;
+      });
+      document.addEventListener("mousemove", (event)=>{
+        if(isMoving){
+          event.preventDefault();
+          let rt = canvas.getBoundingClientRect();
+          let x = Math.floor(event.clientX - rt.left);
+          let y = Math.floor(event.clientY - rt.top);
+          let xDiff = x - mouse.x;
+          let yDiff = y - mouse.y;
+
+          // translate (xDiff, yDiff) - devicePixelRatioは考慮しない
+          ct.setTransform(1, 0, 0, 1, 0, 0);
+          ct.translate(xDiff, yDiff);
+          ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+          transform = ct.getTransform();
+
+          mouse.x = x;
+          mouse.y = y;
+
+          adjustMapScale();
+          isStateChanged = true;
+        }
+      });
+      document.addEventListener("mouseup", ()=>{
+        event.preventDefault();
+        isMoving = false;
+        isStateChanged = true;
+      });
+      canvas.addEventListener("wheel", ()=>{
+        if(Math.abs(event.deltaX/event.deltaY)<1.5){
+          event.preventDefault();
+
+          let delta = 1 - event.deltaY / 200;
+          if(transform.m11 * delta < 1) delta = 1 / transform.m11;
+          if(transform.m11 * delta > 8) delta = 8 / transform.m11;
+          let rt = canvas.getBoundingClientRect();
+          let x = Math.floor(event.clientX - rt.left);
+          let y = Math.floor(event.clientY - rt.top)
+
+          // scale (delta) : x, y
+          ct.setTransform(1, 0, 0, 1, 0, 0);
+          ct.translate(x, y);
+          ct.scale(delta, delta);
+          ct.translate(-x, -y);
+          ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+          transform = ct.getTransform();
+
+          adjustMapScale();
+          isStateChanged = true;
+        }
+      });
+
+      let [cdXstart, cdYstart] = PositionToTileXY([100, 60]);
+      let [cdXend, cdYend] = PositionToTileXY([180, 0]);
+      const fit = (start, point, end, size) => (point - start) / (end - start) * size;
+      const fit_temp = (start, point, end) => (point - start) / (end - start); // サイズ後回し
+
+      let transform = ct.getTransform();
+      // ct.setTransform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+
+      ct.setTransform(3.066091061, 0, 0, 3.066091061, -317.374145508, -988.3914794920001);
+      transform = ct.getTransform();
+
+      let coords = {};
+      let typhdata = {};
+      async function initialize(flag){
+        typh_title.textContent = "読み込み中・・・";
+        coords = await fetch("./json/typhoon_pos_wgs84.json").then(response => response.json());
+        let typhinfo = await fetch("https://weathernews.jp/ip/typhoon_data.json?_="+Date.now()).then(response => response.json());
+
+        let targetNumber = window.location.search.slice(1)-0;
+        typhinfo = typhinfo.typhoon[isNaN(targetNumber) ? 0 : targetNumber];
+        typh_title.textContent = typhinfo.name.replace(":", " - ");
+        typh_comment.innerText = typhinfo.comment_body;
+
+        typh_info_table_list.innerHTML = "";
+        for (const item of typhinfo.details) {
+          typh_info_table_list.insertAdjacentHTML("beforeend", `        <div class="typh-info-table">
+          <table style="width: calc(100vw - ${mapWidth + 26}px);">
+            <tr><td colspan="2">${item.date}</td></tr>
+            <tr><td>場所</td><td>${item.location}</td></tr>
+            <tr><td>最大風速</td><td>${item.maxwind}</td></tr>
+            <tr><td>最大瞬間風速</td><td>${item.windgust}</td></tr>
+            <tr><td>移動方向</td><td>${item.direction}</td></tr>
+            <tr><td>気圧</td><td>${item.pressure}</td></tr>
+          </table>
+        </div>`);
+        }
+
+        let latestRoute = typhinfo.route.slice(-1)[0];
+        typhdata.latestRoute = {};
+        [ typhdata.latestRoute.x, typhdata.latestRoute.y ] = PositionToTileXY([latestRoute.lon, latestRoute.lat]);
+        typhdata.latestRoute.estimated = latestRoute.estimated === 1;
+        typhdata.latestRoute.detail = typhinfo.details[0];
+
+        typhdata.route = [];
+        typhinfo.route.forEach(item => {
+          let temp1 = PositionToTileXY([item.lon, item.lat]);
+          typhdata.route.push({
+            x: fit(cdXstart, temp1[0], cdXend, mapWidth),
+            y: fit(cdYstart, temp1[1], cdYend, mapHeight),
+            tm: new Date(item.tm * 1000),
+            estimated: item.estimated === 1
+          });
+        });
+        typhdata.latestRoute.arg = vec2rad(typhdata.latestRoute.x - typhdata.route[typhdata.route.length - 1].x, typhdata.route[typhdata.route.length - 1].y - typhdata.latestRoute.y);
+
+        typhdata.storm = {};
+        if (typhinfo.storm){
+          [ typhdata.storm.x, typhdata.storm.y ] = PositionToTileXY([typhinfo.storm.lon, typhinfo.storm.lat]);
+          let temp2 = WGS84_from_distance(typhinfo.storm.lat, typhinfo.storm.lon, 90, typhinfo.storm.rad * 1000);
+          let temp3 = PositionToTileXY([temp2.lon, temp2.lat]);
+          typhdata.storm.temp3 = temp3;
+          JSON.stringify([typhdata.storm, temp3]);
+        }
+
+        typhdata.gale = {};
+        if (typhinfo.gale){
+          [ typhdata.gale.x, typhdata.gale.y ] = PositionToTileXY([typhinfo.gale.lon, typhinfo.gale.lat]);
+          let temp4 = WGS84_from_distance(typhinfo.gale.lat, typhinfo.gale.lon, 90, typhinfo.gale.rad * 1000);
+          let temp5 = PositionToTileXY([temp4.lon, temp4.lat]);
+          typhdata.gale.temp5 = temp5;
+        }
+        typhdata.forecast = [];
+        let lastX, lastY;
+        const forecastTimes = [typhinfo.storm ? 0 : null];
+        // debugger;
+        typhinfo.forecast.forEach((forecast, i) => {
+          let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
+          let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
+          let temp7 = PositionToTileXY([temp6.lon, temp6.lat]);
+          let details = typhinfo.details[typhinfo.details.findIndex(a => a.ft === forecast.ft)];
+          typhdata.forecast.push({
+            temp: [
+              fit_temp(cdXstart, temp7[0], cdXend),
+              fit_temp(cdYstart, temp7[1], cdYend)
+            ],
+            view: [
+              fit_temp(cdXstart, x, cdXend),
+              fit_temp(cdYstart, y, cdYend)
+            ],
+            disp: forecast.disp_flag,
+            label: details ? details.date : "",
+            arg: i == 0 ? vec2rad(x - typhdata.latestRoute.x, typhdata.latestRoute.y - y)
+                        : vec2rad(x - lastX, lastY - y),
+            detail: details
+          });
+          forecastTimes.push(forecast.tm);
+          lastX = x; lastY = y;
+        });
+        // debugger;
+
+        typhdata.forecast_storm = [];
+        let lastTime = 0;
+        typhinfo.bofu.forEach(forecast => {
+          let [ x, y ] = PositionToTileXY([forecast.lon, forecast.lat]);
+          let temp6 = WGS84_from_distance(forecast.lat, forecast.lon, 90, forecast.rad * 1000);
+          let temp7 = PositionToTileXY([temp6.lon, temp6.lat]);
+          typhdata.forecast_storm.push({
+            temp: [
+              fit_temp(cdXstart, temp7[0], cdXend),
+              fit_temp(cdYstart, temp7[1], cdYend)
+            ],
+            view: [
+              fit_temp(cdXstart, x, cdXend),
+              fit_temp(cdYstart, y, cdYend)
+            ],
+            prev: forecastTimes.includes(lastTime)
+          });
+          lastTime = forecast.tm;
+        });
+        isStateChanged = true;
+        if (!flag) requestAnimationFrame(main);
+      }
+
+      let isStateChanged = true;
+      let isForecastViewed = true;
+      function main(){
+
+        if (isStateChanged){
+          const locationDataIsValid = currentLocationData.x !== null && display_loc.checked;
+
+          ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
+          ct_forecast.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
+          ct.fillStyle = "#414879";
+          ct.fillRect(0, 0, mapWidth, mapHeight);
+          ct_forecast.clearRect(0, 0, mapWidth, mapHeight);
+          ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+          ct_forecast.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+          matrix.textContent = ct.getTransform()+"\n"+fit(cdXstart, typhdata.latestRoute.x, cdXend, mapWidth);
+
+          ct.fillStyle = "#44a5ba";
+          coords.geometry.forEach(item1 => {
+            ct.beginPath();
+            item1.forEach((item2, i) => {
+              let adjusted = [
+                fit(cdXstart, item2[0], cdXend, mapWidth),
+                fit(cdYstart, item2[1], cdYend, mapHeight)
+              ];
+              if(i){
+                ct.lineTo(adjusted[0], adjusted[1]);
+              } else {
+                ct.moveTo(adjusted[0], adjusted[1]);
+              }
+            });
+            ct.fill();
+          });
+
+          // 事前に計算すると壊れるので、各描画ごとに計算（マップサイズが変更されることも考慮？）
+          let gale_0x = typhdata.gale.x ? fit(cdXstart, typhdata.gale.x, cdXend, mapWidth) : null;
+          let gale_0y = typhdata.gale.x ? fit(cdYstart, typhdata.gale.y, cdYend, mapHeight) : null;
+          let gale_1x = typhdata.gale.x ? fit(cdXstart, typhdata.gale.temp5[0], cdXend, mapWidth) : null;
+          let gale_1y = typhdata.gale.x ? fit(cdYstart, typhdata.gale.temp5[1], cdYend, mapHeight) : null;
+          let gale_rad = typhdata.gale.x ? Math.hypot(Math.abs(gale_0x - gale_1x), Math.abs(gale_0y - gale_1y)) : null;
+          // document.getElementById("info").innerText = JSON.stringify([gale_0x, gale_0y, gale_1x, gale_1y]);
+          let storm_0x = typhdata.storm.temp3 ? fit(cdXstart, typhdata.storm.x, cdXend, mapWidth) : 0;
+          let storm_0y = typhdata.storm.temp3 ? fit(cdYstart, typhdata.storm.y, cdYend, mapHeight) : 0;
+          let storm_1x = typhdata.storm.temp3 ? fit(cdXstart, typhdata.storm.temp3[0], cdXend, mapWidth) : 0;
+          let storm_1y = typhdata.storm.temp3 ? fit(cdYstart, typhdata.storm.temp3[1], cdYend, mapHeight) : 0;
+          let storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
+          let center_x = fit(cdXstart, typhdata.latestRoute.x, cdXend, mapWidth);
+          let center_y = fit(cdYstart, typhdata.latestRoute.y, cdYend, mapHeight);
+          let geolocation_x = fit(cdXstart, currentLocationData.x, cdXend, mapWidth);
+          let geolocation_y = fit(cdYstart, currentLocationData.y, cdYend, mapHeight);
+
+          if (locationDataIsValid){
+            ct.strokeStyle = "#fff9";
+            ct.fillStyle = "#fff9";
+            ct.font = "bold 3px sans-serif";
+            ct.textAlign = "end";
+            ct.beginPath();
+            ct.moveTo(geolocation_x, 0);
+            ct.lineTo(geolocation_x, 800);
+            ct.moveTo(0, geolocation_y);
+            ct.lineTo(634, geolocation_y);
+            ct.stroke();
+            ct.fillText("現在地", (518-transform.m41)/transform.m11, geolocation_y-0.8);
+            ct.textAlign = "start";
+          }
+
+          ct.lineCap = "round";
+          ct_forecast.fillStyle = "#f00";
+          let tangent_x, tangent_y, tangent_r;
+          tangent_x = storm_0x;
+          tangent_y = storm_0y;
+          tangent_r = storm_rad;
+          ct_forecast.beginPath();
+          ct_forecast.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
+          ct_forecast.fill();
+          typhdata.forecast_storm.forEach(forecast => {
+            const storm_0x = forecast.view[0] * mapWidth;
+            const storm_0y = forecast.view[1] * mapHeight;
+            const storm_1x = forecast.temp[0] * mapWidth;
+            const storm_1y = forecast.temp[1] * mapHeight;
+            const storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
+            const tangent_lines = forecast.prev ? common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines : null;
+            if (tangent_lines && tangent_lines.length === 2){
+              ct_forecast.beginPath();
+              ct_forecast.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
+              ct_forecast.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
+              ct_forecast.lineTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
+              ct_forecast.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
+              ct_forecast.fill();
+            }
+            tangent_x = storm_0x;
+            tangent_y = storm_0y;
+            tangent_r = storm_rad;
+            ct_forecast.beginPath();
+            ct_forecast.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
+            ct_forecast.fill();
+          });
+          ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
+          ct.globalAlpha = .3;
+//          if (isForecastViewed) ct.drawImage(canvas_forecast, 0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio, 0, 0, viewWidth, viewHeight);
+          ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+
+          ct_forecast.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
+//          ct_forecast.clearRect(0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio);
+          ct_forecast.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+
+          ct.strokeStyle = "#fffc";
+          ct.lineWidth = 1.5 / transform.m11;
+          ct.globalAlpha = 1;
+          ct_forecast.fillStyle = "#fff";
+          ct_forecast.strokeStyle = "#fff";
+          tangent_x = center_x;
+          tangent_y = center_y;
+          tangent_r = 0;
+          let forecast_positions = [[center_x, center_y, (gale_rad + 2) * Math.cos(typhdata.latestRoute.arg + 1.570796327), -(gale_rad + 2) * Math.sin(typhdata.latestRoute.arg + 1.570796327), typhdata.latestRoute.detail.date, 1, typhdata.latestRoute.arg]];
+          typhdata.forecast.forEach(forecast => {
+            const storm_0x = forecast.view[0] * mapWidth;
+            const storm_0y = forecast.view[1] * mapHeight;
+            const storm_1x = forecast.temp[0] * mapWidth;
+            const storm_1y = forecast.temp[1] * mapHeight;
+            const storm_rad = Math.hypot(Math.abs(storm_0x - storm_1x), Math.abs(storm_0y - storm_1y));
+            const tangent_lines = common_tangent_lines(tangent_x, tangent_y, tangent_r, storm_0x, storm_0y, storm_rad).lines;
+            if (forecast.disp){
+              if (isForecastViewed && tangent_lines.length === 2){
+                ct.setLineDash([]);
+                ct.beginPath();
+                ct.moveTo(tangent_lines[0][0][0], tangent_lines[0][0][1]);
+                ct.lineTo(tangent_lines[0][1][0], tangent_lines[0][1][1]);
+                ct.moveTo(tangent_lines[1][1][0], tangent_lines[1][1][1]);
+                ct.lineTo(tangent_lines[1][0][0], tangent_lines[1][0][1]);
+                ct.stroke();
+              }
+              tangent_x = storm_0x;
+              tangent_y = storm_0y;
+              tangent_r = storm_rad;
+            }
+            // ct_forecast.beginPath();
+            // ct_forecast.ellipse(storm_0x, storm_0y, storm_rad, storm_rad, 0, 0, 6.283184);
+            // ct_forecast.stroke();
+            forecast_positions.push([storm_0x, storm_0y, (storm_rad + 2) * Math.cos(forecast.arg + 1.570796327), - (storm_rad + 2) * Math.sin(forecast.arg + 1.570796327), forecast.label, forecast.disp, forecast.arg]);
+            if (forecast.disp && isForecastViewed){
+              ct.setLineDash([4,1]);
+              ct.beginPath();
+              ct.arc(storm_0x, storm_0y, storm_rad, 0, 6.283184);
+              ct.stroke();
+            }
+          });
+          ct.setLineDash([]);
+          ct.setTransform(deviceRatio, 0, 0, deviceRatio, 0, 0);
+          ct.globalAlpha = 0.3;
+          if (isForecastViewed) ct.drawImage(canvas_forecast, 0, 0, viewWidth * deviceRatio, viewHeight * deviceRatio, 0, 0, viewWidth, viewHeight);
+          ct.transform(transform.m11, 0, 0, transform.m22, transform.m41, transform.m42);
+
+          ct.globalAlpha = 1;
+          ct.fillStyle = "#fff";
+          ct.setLineDash([]);
+
+          if (gale_0x !== null){
+            ct.fillStyle = "#ffd50033";
+            ct.strokeStyle = "#ffd500c0";
+            ct.beginPath();
+            ct.ellipse(gale_0x, gale_0y, gale_rad, gale_rad, 0, 0, 6.283184);
+            ct.fill();
+            ct.stroke();
+          }
+
+          ct.fillStyle = "#c006";
+          ct.strokeStyle = "#f00f";
+          ct.beginPath();
+          ct.ellipse(storm_0x, storm_0y, storm_rad, storm_rad, 0, 0, 6.283184);
+          ct.fill();
+          ct.stroke();
+
+          ct.strokeStyle = "#f90a";
+          ct.fillStyle = "#f90a";
+          ct.beginPath();
+          typhdata.route.forEach((item, i) => {
+            if(i){
+              ct.lineTo(item.x, item.y);
+            } else {
+              ct.moveTo(item.x, item.y);
+            }
+          });
+          ct.stroke();
+          ct.beginPath();
+          ct.arc(center_x, center_y, 3 / transform.m11, 0, 6.283184);
+          ct.fill();
+
+          ct.fillStyle = "#fffa";
+          ct.strokeStyle = "#fffa";
+          if (isForecastViewed){
+            ct.beginPath();
+            forecast_positions.forEach((position, i) => {
+              if (i) ct.lineTo(position[0], position[1]); else ct.moveTo(position[0], position[1]);
+            });
+            ct.stroke();
+          }
+          ct.lineWidth = 1 / transform.m11;
+          ct.font = "bold 5px 'ヒラギノ角ゴ ProN'";
+          ct.fillStyle = "#fff";
+          ct.strokeStyle = "#fff";
+          forecast_positions.forEach((position, i) => {
+            if ((isForecastViewed || i === 0) && position[5]){
+              ct.strokeStyle = "#fff";
+              ct.beginPath();
+              ct.arc(position[0], position[1], 2 / transform.m11, 0, 6.283184);
+              ct.fill();
+              let width = ct.measureText(position[4]).width;
+              let ps0 = position[0] + position[2];
+              let ps1 = position[1] + position[3];
+              // console.log(width);
+              ct.beginPath();
+              ct.moveTo(position[0], position[1]);
+              ct.lineTo(ps0, ps1);
+              ct.lineTo(ps0 - (width + 1), ps1);
+              ct.stroke();
+              ct.fillText(position[4], ps0 - width, ps1 - 1);
+            }
+          });
+          // debugger;
+
+          isStateChanged = false;
+        }
+        requestAnimationFrame(main);
+      }
+
+      typh_view_fcst.addEventListener("change", () => {
+        isStateChanged = true;
+        isForecastViewed = typh_view_fcst.checked;
+      });
+      display_loc.addEventListener("change", () => {
+        isStateChanged = true;
+        if (!currentLocationData.lat){
+          navigator.geolocation.getCurrentPosition(data => {
+            [currentLocationData.x, currentLocationData.y] = PositionToTileXY([data.coords.longitude, data.coords.latitude]);
+            currentLocationData.lat = data.coords.latitude;
+            currentLocationData.lon = data.coords.longitude;
+            isStateChanged = true;
+          });
+        }
+      })
+
+      initialize();
+      setInterval(function(){initialize(true);}, 180000);
+    </script>
+  </body>
+</html>
