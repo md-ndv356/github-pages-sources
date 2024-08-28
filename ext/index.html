@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Natural Disaster Viewer</title>
+    <link rel="stylesheet" href="/fonts/inter-sel.css">
+    <style>
+      /* 共通部分 */
+      :root {
+        --font-sans: "Inter", "Hiragino Kaku Gothic ProN", BlinkMacSystemFont, "Noto Sans JP", "游ゴシック", "YuGothic", "Noto Sans CJK", "Meiryo", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        --font-serif: "Source Serif", "ヒラギノ明朝", "MS P明朝", "Times", serif;
+      }
+      body {
+        font-family: var(--font-sans);
+        margin: 12px;
+        text-align: center;
+        margin-top: 50px;
+      }
+      header {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 25px;
+        background-color: #c5f2f8;
+        padding: 6px 14px;
+        margin: auto;
+        z-index: 999;
+      }
+      header a {
+        text-decoration: none;
+        color: #333;
+        font: bold 15px sans-serif;
+      }
+
+      img {
+        display: inline-block;
+        cursor: pointer;
+        height: 300px;
+      }
+      .ex {
+        overflow-x: scroll;
+        white-space: nowrap;
+      }
+      .ex::-webkit-scrollbar {
+        height: 10px; width: 10px;
+      }
+      .ex::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 5px;
+      }
+      .ex img {
+        display: inline-block;
+        height: 200px;
+      }
+      .navigation_list {
+        background-color: #defbfb;
+        padding: 6px;
+        border: solid 2px black;
+        border-radius: 4px;
+        display: inline-block;
+      }
+
+      .page-link {
+        background: #ffffb5ff;
+        padding: 4px 10px 0;
+        display: inline-block;
+        margin: 4px;
+        border-radius: 8px;
+      }
+
+      /* 項目タイトル */
+      .item {
+        margin-top: 20px;
+      }
+      h2 {
+        display: flex;
+        align-items: center;
+        /* text-decoration: underline solid #4868da 3px; */
+        margin: 0;
+        padding-bottom: 5px;
+        /* 見出しの左右両端に線を入れる https://design-levelup.com/webdesign/html_css_making_2/ */
+      }
+      h2:before,
+      h2:after {
+        content: "";
+        height: 1px;
+        flex-grow: 1;
+        background-color: #b0b0b0;
+      }
+      h2:before {
+        margin-right: 1rem;
+        margin-left: 3%;
+      }
+      h2:after {
+        margin-left: 1rem;
+        margin-right: 3%;
+      }
+
+      .features-itemlist > div {
+        display: inline-block;
+        width: max-content;
+        background-color: #c3f0f8;
+        border-radius: 8px;
+        margin: 8px;
+        padding: 6px 12px;
+      }
+      .command_table tr td:nth-child(1) { text-align: right; padding-right: 16px; }
+      .command_table tr td:nth-child(2) { text-align: left; }
+      .item.using img {
+        max-width: 100%;
+        height: auto;
+      }
+      .iframe-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: min(calc(720 / 960 * 100%), 720px);
+        max-width: 960px;
+      }
+      .iframe-wrapper iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+      }
+
+      @media (max-width: 535px) {
+        .command_table * { display: block; }
+        .command_table tr td:nth-child(1) {
+          text-align: left;
+          color: #6b6b6b;
+          font-size: 15px;
+        }
+        .command_table tr td:nth-child(2) {
+          text-align: right;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div><a href="../">Natural Disaster Viewer</a></div>
+    </header>
+    <div style="background:#b10a0a; color:#fff; font-size:16px; font-weight:bold; font-family:sans-serif; text-align:center; border-radius:7px; padding-top:5px; padding-bottom:5px; margin: 4px 0;">
+      「Natural Disaster Viewer」はベータ版です。<br>
+      多少の不具合が存在する場合がありますが、ご了承ください。<br>
+      ［お知らせ］現在緊急地震速報のテスト受信がご利用いただけない場合があります。
+    </div>
+    <div class="page-link"><a href="https://forms.gle/GGnyyGnPLdp9C7y68">ご意見・ご要望はこちらへ！</a></div>
+    <div class="page-link"><a href="./update_note/">リリースノートはここから！</a></div>
+    <h3>こちらはデスクトップPC版「Google Chrome」アプリの 拡張機能です。</h3>
+    <p>自然災害の情報を確認・配信用に表示できるティッカーです。<br>
+    <strong>必ず</strong>下記の「注意事項」を読んでからダウンロードしてください。</p>
+    <p>
+      動作要件：Chrome & Edge 93 以降<br>
+      <a href="https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.5.1_d409499164f39e680bdc9be2ce20fe56.zip">最新版をダウンロード（ベータ版 β0.5.1）</a>
+    </p>
+
+    <div class="navigation_list">
+      <h3 style="margin: 3px; margin-left: 12px;">目次（クリックで各項目に飛びます）</h3>
+      <ol>
+        <li><a href="#nav_using">追加方法</a></li>
+        <li><a href="#nav_features">機能</a></li>
+        <li><a href="#nav_updating">更新方法</a></li>
+        <li><a href="#nav_movie">紹介動画（仮）</a></li>
+        <li><a href="#nav_commands">「通常」モードのメッセージ書式</a></li>
+        <li><a href="#nav_notice">注意事項</a></li>
+        <li><a href="#nav_eximage">MacBookでの動作例</a></li>
+        <li><a href="#nav_outlook">今後の展望</a></li>
+        <li><a href="#nav_authorinfo">作者からのお知らせ</a></li>
+      </ol>
+    </div>
+
+    <div class="item features" id="nav_features">
+      <h2>機能</h2>
+      <div class="features-itemlist">
+        <div>通常のティッカーとして</div>
+        <div>緊急地震速報</div>
+        <div>地震情報</div>
+        <div>気象速報</div>
+        <div>津波情報</div>
+        <div>河川情報</div>
+        <div>アメダス情報</div>
+        <div>情報読み上げ機能（専用ソフト不要）</div>
+        <div>ウェザーニュースのMスケールを自動反映</div>
+        <div>BGM再生機能</div>
+      </div>
+    </div>
+    <div class="item using" id="nav_using">
+      <h2>どうやって追加するの？</h2>
+      <div class="iframe-wrapper">
+        <iframe src="https://www.youtube.com/embed/WbMzEqZEJ6U" width="724" height="367" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>
+      </div>
+      まず、上のリンクからzipファイルをダウンロードします。<br>
+      （動画はGoogle Drive経由でダウンロードした場合の実例です。）<br>
+      <img src="./img0.png"><br>
+      そして、アドレスバー(URL)に「chrome://extensions/」と入力し、拡張機能の管理画面を出します。<br>
+      拡張機能の一覧が出てくるので、そこで「デベロッパーモード」をオンにして、<br>
+      拡張機能が入っているフォルダーを拡張機能のタブにドラッグ＆ドロップして追加してください。<br>
+      アドレスバーの右にある、拡張機能の一覧にある「Natural Disaster Viewer」アイコンをクリックして起動です！<br>
+      <img src="./img1.png">
+    </div><br>
+    <div class="item updating" id="nav_updating">
+      <h2>どうやって更新するの？</h2>
+      ファイルをダウンロード・解凍をし、フォルダーに上書き保存をします。
+      アドレスバーに「chrome://extensions/」と入力し、拡張機能の管理画面を出します。
+      「更新」をクリックで完了！
+    </div><br>
+
+    <h2 id="nav_movie">紹介動画（仮）</h2>
+    <div class="iframe-wrapper">
+      <iframe width="960" height="720" src="https://www.youtube.com/embed/RTO_iBClDsw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <h2 id="nav_commands">「通常」モードのメッセージ書式</h2>
+    特殊な入力をすることで、データを表示することができます。<br>
+    <div style="display: flex; justify-content: center;"><table class="command_table"><tbody>
+      <tr><td>最高気温（ランキング）</td><td>&lt;weather/temperature/high&gt;<br></td></tr>
+      <tr><td>最低気温（ランキング）</td><td>&lt;weather/temperature/low&gt;<br></td></tr>
+      <tr><td>１時間降水量（ランキング）</td><td>&lt;weather/rain_rank/1h&gt;<br></td></tr>
+      <tr><td>２４時間降水量（ランキング）</td><td>&lt;weather/rain_rank/1d&gt;<br></td></tr>
+      <tr><td>風速（ランキング）</td><td>&lt;weather/wind_rank&gt;<br></td></tr>
+      <tr><td>実況気温</td><td>&lt;weather/temperature/current&gt;<br></td></tr>
+      <tr><td>過去１０分の降水量</td><td>&lt;weather/rain/10m&gt;<br></td></tr>
+      <tr><td>過去１時間の降水量</td><td>&lt;weather/rain/1h&gt;<br></td></tr>
+      <tr><td>過去３時間の降水量</td><td>&lt;weather/rain/3h&gt;<br></td></tr>
+      <tr><td>過去２４時間の降水量</td><td>&lt;weather/rain/24h&gt;<br></td></tr>
+      <tr><td>現在の湿度</td><td>&lt;weather/humidity&gt;<br></td></tr>
+      <tr><td>現在の風速</td><td>&lt;weather/wind&gt;<br></td></tr>
+      <tr><td>現在の日照時間</td><td>&lt;weather/sun1h&gt;<br></td></tr>
+      <tr><td>現在の積雪高さ</td><td>&lt;weather/snow/height&gt;<br></td></tr>
+      <tr><td>過去１時間の降雪量</td><td>&lt;weather/snow/1h&gt;<br></td></tr>
+      <tr><td>過去６時間の降雪量</td><td>&lt;weather/snow/6h&gt;<br></td></tr>
+      <tr><td>過去１２時間の降雪量</td><td>&lt;weather/snow/12h&gt;<br></td></tr>
+      <tr><td>過去２４時間の降雪量</td><td>&lt;weather/snow/24h&gt;<br></td></tr>
+      <tr><td>現在の気圧</td><td>&lt;weather/pressure&gt;<br></td></tr>
+      <tr><td>気象警報・注意報</td><td>&lt;weather/warn&gt;<br></td></tr>
+      <tr><td>河川情報</td><td>&lt;weather/river&gt;<br></td></tr>
+      <tr><td>現在の風速</td><td>&lt;weather/wind&gt;<br></td></tr>
+      <tr><td>避難情報</td><td>&lt;bousai/evacuation&gt;<br></td></tr>
+      <tr><td>ＷＮＩライブ配信番組表</td><td>&lt;weathernews/live/timetable&gt;<br></td></tr>
+    </tbody></table></div>
+    例えば、&lt;weather/temperature/high&gt;を本文に入力すると、自動的に最高気温の情報に置換されます。<br>
+
+    <div class="item notice" id="nav_notice">
+      <h2>注意事項</h2>
+      開発環境がMacBookなのでWindowsですと表示が崩れる恐れがあります。<br>
+      効果音は全てオリジナルのものを使用しています。無断で関係のないプログラムや動画などに使用しないでください。<br>
+      <br>
+      <br>
+      【重要】<br>
+      現状は緊急地震速報の表示条件は設定しても効果はありません。<br>
+      過度なアクセスを行わない程度に情報の取得間隔を設定し、なるべく矢印キーを使って調整してください。<br>
+      効果音の二次配布は許可されていません。<br>
+      DoS攻撃などへの悪用はおやめください。<br>
+      <br>
+      【使用上の注意】<br>
+      ベータ版なので、致命的な不具合が発生する恐れがあります。特に、トラフィックモニターに注意してください。（気づかないうちにDoS攻撃になっている恐れがあるため）<br>
+      過度なアクセスが認められる場合には、使用を中止し製作者にご連絡ください。<br>
+      このティッカーは、起動時に使用中のバージョンの情報をサーバーに送信します。ご了承の上ダウンロードを行ってください。<br>
+      アイコンに使用されている地震波はイメージです。実際のものではありません。<br>
+      なにかご不明な点がありましたら、<a href="https://twitter.com/Zisin_YT_LiVe">Twitter</a>からお知らせください。<br><br>
+      <br>
+      このホームページはユーザーへの告知なく変更する場合があります。<br>
+      重要な変更がある場合には、ティッカー起動時にポップアップ表示でお知らせをいたします。<br>
+    </div>
+
+    <div class="item ex" id="nav_eximage">
+      <h2>MacBookでの動作例（右にスクロール）</h2><br>
+      <img src="./png/ex/0.5.0.2.png">
+      <img src="./png/ex/0.5.0.3.png">
+      <img src="./png/ex/0.5.0.4.png">
+      <img src="./png/ex/0.5.0.5.png">
+      <img src="./png/ex/0.5.0.6.png">
+      <img src="./png/ex/0.5.0.7.png">
+      <img src="./png/ex/0.5.0.8.png">
+      <img src="./png/ex/0.5.0.9.png">
+      <img src="./png/ex/0.5.0.10.png">
+      <img src="./png/ex/0.5.0.11.png">
+      <img src="./png/ex/0.5.0.12.png">
+    </div>
+
+    <div class="item outlook" id="nav_outlook">
+      <h2>今後の展望</h2>
+      <ul style="padding: 0; list-style: none;">
+        <li>台風情報</li>
+        <li>避難情報</li>
+        <li>鉄道情報</li>
+        <li>フォント変更機能</li>
+        <li>気象情報履歴表示機能</li>
+        <li>噴火速報の表示</li>
+        <li>選択中の地震情報がどこかわかるやつ</li>
+        <li>表示する項目数の増減を可能に</li>
+        <li>アプリケーション化(.exe)</li>
+        <li>気象警報が長すぎて潰れる問題を修正</li>
+        <li>緊急地震速報取得元を増やしてサーバーの負荷軽減</li>
+        <li>設定と本体のウィンドウを分ける</li>
+      </ul>
+    </div>
+
+    <div class="item noticeAuthor" id="nav_authorinfo">
+      <h2>作者からのお知らせ</h2>
+      <p>本当に自分が使うか判断して決めてください<br>
+      重くなりそうだったら無理せず使用を中止しましょう！</p>
+    </div>
+
+    <div class="item mailto" id="nav_mailto">
+      <h2>連絡先</h2>
+      Twitter: <a href="https://twitter.com/looksky495">@looksky495</a><br>
+      YouTube: <a href="https://www.youtube.com/@looksky495">@looksky495</a><br>
+      Discord: unknown_lookSky#1950
+    </div>
+
+    These programs are made by look Sky.<br>
+    最終更新 2024/08/28 22:21<br><br><br><br><br>
+    無料サーバーを使っているので広告が出ます。ご了承ください。<br>
+    <!-- がんばろう！！！（こなみ） -->
+
+    <script>
+      document.querySelectorAll("img").forEach(function(item){
+        item.addEventListener("click", function(){
+          window.open(event.target.src);
+        });
+      });
+    </script>
+  </body>
+</html>

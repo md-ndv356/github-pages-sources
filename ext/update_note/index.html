@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Notes / Ticker (Extension) / NDV</title>
+  <link rel="stylesheet" href="/fonts/inter-sel.css">
+  <style>
+    /* 共通部分 */
+    :root {
+      --font-sans: "Inter", "Hiragino Kaku Gothic ProN", BlinkMacSystemFont, "Noto Sans JP", "游ゴシック", "YuGothic", "Noto Sans CJK", "Meiryo", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      --font-serif: "Source Serif", "ヒラギノ明朝", "MS P明朝", "Times", serif;
+    }
+    body {
+      font-family: var(--font-sans);
+      margin: 12px;
+      margin-top: 50px;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 25px;
+      background-color: #c5f2f8;
+      padding: 6px 14px;
+      margin: auto;
+      z-index: 999;
+    }
+    header a {
+      text-decoration: none;
+      color: #333;
+      font: bold 15px sans-serif;
+    }
+
+    main {
+      margin: 0 16px;
+      margin-top: 57px; /* 37px + 20px */
+    }
+    .ver_info {
+      margin-left: 16px;
+    }
+    .ver_info h2 {
+      margin: 6px 0;
+      margin-top: 12px;
+    }
+    .ver_info ul {
+      margin: 6px 0;
+      padding-left: 24px;
+    }
+    .ver_info span.ver_newest {
+      font-size: 16px;
+      color: #666;
+      margin-left: 8px;
+    }
+    .ver_info span.release_date::before {
+      content: "-";
+      margin: 0 8px;
+    }
+    .ver_info span.release_date {
+      font-size: 16px;
+      color: #666;
+      margin-left: 2px;
+    }
+    @media (max-width: 630px) {
+      h1 { font-size: 20px; }
+    }
+    @media (max-width: 410px) {
+      h1, h2 { font-size: 18px; }
+      .ver_info span.ver_newest, .ver_info span.release_date { font-size: 14px; }
+    }
+    @media (prefers-color-scheme: dark){
+      body {
+        background-color: #333;
+        color: #fff;
+      }
+      .ver_info a { color: #9ce5ff; }
+      header { background-color: #a31f19; }
+      header a { color: #fff; }
+      .ver_info span.ver_newest, .ver_info span.release_date { color: #dedb16; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><a href="../">Natural Disaster Viewer</a></div>
+  </header>
+  <main>
+    <h1>Ticker (Extension) Release Notes</h1>
+    <div class="ver_info">
+      <h2><a href="https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.5.1_d409499164f39e680bdc9be2ce20fe56.zip">NDV β0.5.1​</a><span class="ver_newest">最新</span><span class="release_date">2024/08/28</span></h2>
+      <ul>
+        <li>［変更］指定河川洪水予報の表示を変更しました。</li>
+        <li>［変更］氾濫危険情報の効果音が変更されました。</li>
+        <li>［変更］津波情報がニュースに表示されるようにしました。</li>
+        <li>［変更］気象特別警報報知の警告文を変更しました。</li>
+        <li>［修正］気象特別警報報知が正しく表示されない問題を修正しました。</li>
+        <li>［修正］地震情報の更新が止まることがある問題を修正しました。</li>
+        <li>［修正］全般台風情報がうまく表示されない問題を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a href="https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.5.0_87906c814f28e9b708a22afa249b0e6a.zip">NDV β0.5.0​</a><span class="release_date">2024/07/19</span></h2>
+      <ul>
+        <li>［追加］マスター音量を調整できるようになりました。</li>
+        <li>［追加］マスター音量の時刻設定を追加しました。</li>
+        <li>［追加］読み上げの種別設定ができるようになりました。</li>
+        <li>［追加］読み上げに記録的短時間大雨情報・特別警報報知が追加されました。</li>
+        <li>［修正］Text Speedと読み上げ音量が保存されるようになりました。</li>
+        <li>［修正］津波予報の表示が終了しない問題を修正しました。</li>
+        <li>［修正］起動時に効果音の音量が反映されない問題を修正しました。</li>
+        <li>［修正］緊急地震速報の表示テストができない問題を修正しました。</li>
+        <li>［変更］Traffic Monitorの表示が変わりました。</li>
+        <li>［変更］緊急地震速報の最終報で流れる効果音が変更されました。</li>
+        <li>［変更］読み上げテストの音声が変更されました。</li>
+        <li>［変更］記録的短時間大雨情報の表示が変わりました。</li>
+        <li>［変更］地震情報の表示が変わりました。</li>
+        <li>［変更］過去の地震情報を表示する際、待機時間が短く済むようになりました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a href="https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.4.2_0299971f9f77162c6bfb81e47633686b.zip">NDV β0.4.2​</a><span class="release_date">2024/01/02</span></h2>
+      <ul>
+        <li>【重要】緊急地震速報の取得が16分ほど遅れる問題を修正しました。（対象：β0.3.0以後）</li>
+        <li>新バージョン通知のウィンドウが正しく表示されない問題を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a href="https://md-ndv356.github.io/ndv-tickers/download-files/extension_beta0.4.1_a3a115183ccb3be9ca2cee18cc9f761f.zip">NDV β0.4.1​</a><span class="release_date">2024/01/02</span></h2>
+      <ul>
+        <li>津波情報を、通常画面に上書きする形で表示できるようになりました。</li>
+        <li>現在発表されている気象警報を表示できるようになりました。</li>
+        <li>津波情報の取得が速くなりました。</li>
+        <li>読み上げ音声の読み込みが速くなりました。</li>
+        <li>BGM再生機能が強化されました。</li>
+        <li>英字フォントを変更しました。</li>
+        <li>一部のデザインを変更しました。</li>
+        <li>Text Speedのデフォルト値が 4→5 になりました。</li>
+        <li>動画表示機能が廃止されました。</li>
+        <li>震度7の情報を表示する際に、音声が流れない問題を修正しました。</li>
+        <li>カスタム音声についての説明が誤っている問題を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a>NDV β0.4.0​</a><span class="release_date">2023/08/09</span></h2>
+      <ul>
+        <li>読み上げ機能（緊急地震速報・土砂災害警戒情報）を追加しました。</li>
+        <li>録画機能を中止しました。</li>
+        <li>緊急地震速報(警報)で表示される震央地名表示を非表示にしました。</li>
+        <li>効果音の音量を200%まで上げられるようになりました。</li>
+        <li>緊急地震速報の通知音の音量をさらに細かく分けられるようになりました。</li>
+        <li>Mスケール3のときの背景色を変更しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a>NDV β0.3.4​</a><span class="release_date">2023/05/03</span></h2>
+      <ul>
+        <li>ウィンドウサイズに関する問題を修正しました。</li>
+        <li>津波情報のデザインを変更しました。</li>
+        <li>エラーログを出力する機能を追加しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a>NDV β0.3.3​</a><span class="release_date">2023/02/12</span></h2>
+      <ul>
+        <li>重大なパフォーマンスの問題を改善しました。</li>
+        <li>多少のデザインの変更を行いました。</li>
+        <li>カスタム地震情報表示機能が廃止になりました。テンプレート表示は引き続き利用可能です。</li>
+        <li>その他の不具合の修正を行いました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a>NDV β0.3.2​</a><span class="release_date">2023/02/11</span></h2>
+      <ul>
+        <li>BGM再生機能に関する不具合を修正しました。</li>
+        <li>起動時に通常画面のテキストが反映されるようになりました。</li>
+        <li>通常画面の文字が流れる速度の初期値を3.9から4に変更しました。</li>
+        <li>時刻自動調整機能(仮)が有効になりました。</li>
+        <li>その他の不具合の修正を行いました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2><a>NDV β0.3.1​</a><span class="release_date">2022/09/17</span></h2>
+      <ul>
+        <li>モノトーンの表示に不具合が発生することがある現象を修正しました。</li>
+        <li>気象特別警報報知の不具合を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.3.0​<span class="release_date">2022/08/31</span></h2>
+      <ul>
+        <li>地震情報で震度観測点の地名が「undefined」にならなくなりました。</li>
+        <li>モノトーンスタイルを追加しました。</li>
+        <li>その他不具合の修正・変更を行いました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.9​<span class="release_date">2022/07/21</span></h2>
+      <ul>
+        <li>［重要］指定河川洪水予報が表示されない問題を修正しました。</li>
+        <li>［重要］土砂災害警戒情報・氾濫危険情報・氾濫発生情報の効果音を変更しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.8​<span class="release_date">2022/07/13</span></h2>
+      <ul>
+        <li>地震情報で震度ごとの音量・音声タイプを変更できるようになりました。</li>
+        <li>指定河川洪水予報の表示を一部変更しました。</li>
+        <li>その他不具合の修正を行いました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.7​<span class="release_date">2022/04/03</span></h2>
+      <ul>
+        <li>緊急地震速報の地図の描画を変更しました。</li>
+        <li>緊急地震速報の警報を受信した場合にカスタム音源を使用できるようになりました。</li>
+        <li>OS間の字体による差を軽減しました。</li>
+        <li>(Manifest V3に移行しました。)</li>
+        <li>一部の不具合を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.6​<span class="release_date">2022/02/21</span></h2>
+      <ul>
+        <li>推定震源が無い場合のPLUM法を受信したときの動作を変更</li>
+        <li>一部のデフォルト値を変更</li>
+        <li>津波情報の音声を変更</li>
+        <li>一部コマンドの変更</li>
+        <li>アメダスのデータが正しく表示されない場合がある問題を修正</li>
+        <li>（その他軽微な修正）</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.5​<span class="release_date">2022/01/16</span></h2>
+      <ul>
+        <li>Ｍスケールによるレイアウトが変更されない問題を修正</li>
+        <li>一部デザインの変更</li>
+        <li>標準コマンド一覧表を実装</li>
+        <li>津波情報の処理を改善</li>
+        <li>（その他軽微な修正）</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.4​<span class="release_date">2022/01/03</span></h2>
+      <ul>
+        <li>東京都２３区が表示できない問題を修正しました。</li>
+        <li>緊急地震速報のテスト方式を変更しました。</li>
+        <li>緊急地震速報の警報音を変更しました。</li>
+        <li>（その他様々な変更・修正）</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.3​<span class="release_date">2021/09/16</span></h2>
+      <ul>
+        <li>最大震度の表示が本来とは異なるものになる問題を修正しました。</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.2​<span class="release_date">2021/08/13</span></h2>
+      <ul>
+        <li>(重要)河川情報が正しく表示できない問題を修正</li>
+        <li>土砂災害警戒情報のメッセージを変更</li>
+        <li>新しく2種類の効果音を追加</li>
+        <li>アメダス観測情報を追加</li>
+        <li>最大化機能を追加</li>
+        <li>その他様々な変更・修正</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.1​<span class="release_date">2021/07/29</span></h2>
+      <ul>
+        <li>(重要)特別警報・河川情報関連の処理を変更</li>
+        <li>(重要)キャンセル報が反映されない問題を一時的に修正</li>
+        <li>(重要)津波情報が表示されないバグを修正</li>
+        <li>地震情報のデザインを変更</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.2.0​<span class="release_date">2021/07/09</span></h2>
+      <ul>
+        <li>カラーテーマを変更可能に</li>
+        <li>設定項目の追加</li>
+        <li>地震情報リストのスタイル変更</li>
+        <li>緊急地震速報の受信ログを送信できるように変更</li>
+        <li>待機中の気象情報を確認する機能を追加</li>
+        <li>その他様々な変更・修正</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.6</h2>
+      <ul>
+        <li>緊急地震速報の表示テストが可能に</li>
+        <li>一部表記を変更</li>
+        <li>緊急地震速報ログを自動送信できるように変更</li>
+        <li>自動再読み込み機能追加</li>
+        <li>その他軽微な変更・修正</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.5</h2>
+      <ul>
+        <li>Mスケールが地震情報のタイトルに一部反映されない問題を修正</li>
+        <li>緊急地震速報のレベル法・PLUM法による電文を一部受信できない問題を修正</li>
+        <li>時計のデザインを刷新</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.4</h2>
+      <ul>
+        <li>バージョンアップお知らせ機能追加(起動時)</li>
+        <li>設定が反映されない場合がある問題を修正</li>
+        <li>デバッグ機能を追加</li>
+        <li>その他軽微な変更・修正</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.3</h2>
+      <ul>
+        <li>一部表記の変更</li>
+        <li>バージョンアップ検知機能</li>
+        <li>時計の色を変更(仮)</li>
+        <li>その他一部の変更・修正</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.2</h2>
+      <ul>
+        <li>効果音の音量関係の更新</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.1</h2>
+      <ul>
+        <li>howToUse.txtの更新</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>NDV β0.1.0​<span class="release_date">2021/03/22</span></h2>
+      <ul>
+        <li>テストリリース</li>
+      </ul>
+    </div>
+    <div class="ver_info">
+      <h2>Earthquake Information 0.0.0​<span class="release_date">2019/12/01</span></h2>
+      <ul>
+        <li>作成開始</li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

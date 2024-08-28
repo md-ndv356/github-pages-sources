@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!--<html style="overflow: hidden;">-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="settings_epicenter.js" charset="utf-8"></script>
+    <script type="text/javascript" src="settings_SubdivisionArea.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.1/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="jma_multilingual.js" charset="utf-8"></script>
+    <script type="text/javascript" src="tsunami_multilingual.js" charset="utf-8"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.9/push.min.js"></script>-->
+    <link rel="stylesheet" href="Earthquake viewer.css">
+    <!--<script src="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"></script>-->
+    <title id="titleT">eqVi 2020</title>
+    <audio id="EI" preload="auto">
+      <source src="EI.mp3" type="audio/mp3" />
+      <!--<source src="/Users/ayato/Desktop/Earthquakes Information/EI.m4a" type="audio/m4a" />-->
+    </audio>
+    <audio id="EI5H" preload="auto">
+      <source src="EI5H-7.mp3" type="audio/mp3" />
+      <source src="EI5H-7.m4a" type="audio/m4a" />
+    </audio>
+    <audio id="TW" preload="auto">
+      <source src="TW.mp3" type="audio/mp3" />
+      <source src="TW.m4a" type="audio/m4a" />
+    </audio>
+  </head>
+  <body>
+    <h2>ティッカー</h2>
+    <div id="navigator"></div>
+    <div>
+      <canvas id="sample1" width="1080px" height="128px" style="border: solid #afe0f0aa">
+        表示するには、canvasタグをサポートしたブラウザが必要です。
+      </canvas>
+      <canvas id="sample2" width="128px" height="128px" style="border: solid #afe0f0aa">
+      </canvas>
+    </div>
+    <div id="speedform">
+      <form oninput="result.value=b.value; speed=b.value;">
+        <text class="speed-tx">Speed:</text>
+        <input type="range" name="b" value="5" min="0.5" max="15" step="0.1" style="width:700px" />
+        <output name="result">5</output>
+      </form>
+    </div>
+    <script type="text/javascript" src="Earthquake viewer.js"></script>
+    <div>
+    <button class="switch-button">Normal</button>
+    <button class="switch-button">EEW</button>
+    <button class="switch-button">Earthquake Info</button>
+    <button class="switch-button">Breaking news</button>
+    <button class="switch-button">ｿﾗﾎﾞﾀﾝ•ｱﾝｹｰﾄ</button>
+    <button class="switch-button">動画再生(これ要る...?)</button>
+    <div class="switchable-tab">
+      <div class="tab">
+        <?php
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://www.data.jma.go.jp/developer/xml/data/b81558f8-e2c7-3398-a8f5-0c6ef76c32e0.xml");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        echo htmlspecialchars($res)
+        ?>
+        自動更新URL: <input type="text" id="NormalMes" value="default_message.json"><input type="checkbox" id="isNormalMes" value="自動更新有効/無効"><br>
+        [1] Title<input type="text" id="title1" class="Ntitle" value="風速情報(m/s)">:
+        Message<input type="text" id="message1" class="Ntext" value="<weather/wind>"><br>
+        [2] Title<input type="text" id="title2" class="Ntitle" value="降水情報">:
+        Message<input type="text" id="message2" class="Ntext" value="<weather/rain>"><br>
+        [3] Title<input type="text" id="title3" class="Ntitle" value="河川情報">:
+        Message<input type="text" id="message3" class="Ntext" value="<weather/river>"><br>
+        [4] Title<input type="text" id="title4" class="Ntitle" value="大雨特別警報">:
+        Message<input type="text" id="message4" class="Ntext" value="大雨特別警報が岐阜県・長野県に大雨特別警報が発表されました。これまでに経験したことのないような大雨となっています。何らかの災害がもう既に発生している可能性が高く、警戒レベル5(最も高い)に相当する状況です。命を守るために最善を尽くさなければいけない状況となっています。"><br>
+        [5] Title<input type="text" id="title5" class="Ntitle" value="">:
+        Message<input type="text" id="message5" class="Ntext" value=""><!--<br>
+        [6] Title<input type="text" id="title6">:
+        Message<input type="text" id="message6"><br>
+        [7] Title<input type="text" id="title7">:
+        Message<input type="text" id="message7"><br>
+        [8] Title<input type="text" id="title8">:
+        Message<input type="text" id="message8"><br>
+        [9] Title<input type="text" id="title9">:
+        Message<input type="text" id="message9"><br>
+        -->
+        <br><button type="button" onclick="goMessage();">表示</button>
+      </div>
+      <div class="tab">
+        <div id="eew-input" class="inline-block" style="width:1080px; height:30px; background:black; color:white; font-size:25px; font-family:sans-serif;">-earthquake early warning- text area</div>
+        <div class="inline-block">
+          &lt;〇〇報(2桁)&gt;<br>
+          &lt;発表時間(yyyyMMddHHmmss)&gt;<br>
+          &lt;予想最大震度(10,20,30,40,50,55,60,65,70,00)&gt;<br>
+          &lt;longitude(aaa.a)&gt;
+          &lt;latitude(aa.a)&gt;<br>
+          &lt;深さ(aaa ㎞)&gt;<br>
+          &lt;マグニチュード(aa.a)&gt;<br>
+          &lt;予報(0)警報(1)&gt;<br>
+          &lt;震央地名コード&gt;<br>
+          例) 042011031114462050142.738.201007.21288
+        </div>
+      </div>
+      <div class="tab">
+        <div>
+          <text class="temp-tx">
+            テンプレートを表示
+            <button class"tmpSH-btn" onclick="$('.tmp-box').toggle();">表示/非表示</button>
+          </text>
+          <div class="tmp-box">
+            <button type="button" onclick="tempRef(1);" class="tmp-btn">平成30年山形県沖地震</button>
+            <button type="button" onclick="tempRef(2);" class="tmp-btn">平成30年北海道胆振東部地震</button>
+            <button type="button" onclick="tempRef(3);" class="tmp-btn">平成30年大阪府北部地震</button>
+            <button type="button" onclick="tempRef(4);" class="tmp-btn">平成28年鳥取県中部地震</button>
+            <button type="button" onclick="tempRef(5);" class="tmp-btn">平成28年熊本地震(本震)</button>
+            <button type="button" onclick="tempRef(6);" class="tmp-btn">平成28年熊本地震(前震)</button>
+            <button type="button" onclick="tempRef(7);" class="tmp-btn">平成27年小笠原諸島西方沖地震</button>
+            <button type="button" onclick="tempRef(8);" class="tmp-btn">平成25年オホーツク海深発地震</button>
+            <button type="button" onclick="tempRef(9);" class="tmp-btn">東日本大震災(地震速報)</button>
+          </div>
+          <!--
+          <select id="template">
+            <option value=1>山形県沖地震</option>
+            <option value=2>平成30年北海道胆振東部地震</option>
+            <option value=3>平成30年大阪府北部地震</option>
+            <option value=4>平成28年鳥取県中部地震</option>
+            <option value=5>平成28年熊本地震(本震)</option>
+            <option value=6>平成28年熊本地震(前震)</option>
+            <option value=7>平成27年小笠原諸島西方沖地震</option>
+            <option value=8>東日本大震災(地震速報)</option>
+          </select>
+          <input type="button" id="tb" value="実行" onClick="tempRef();"><br>-->
+          <br>最大震度:
+          <form name="siHform">
+            <select name="siH">
+              <option value=1>1</option>
+              <option value=2>2</option>
+              <option value=3>3</option>
+              <option value=4>4</option>
+              <option value=6>5弱</option>
+              <option value=7>5強</option>
+              <option value=8>6弱</option>
+              <option value=9>6強</option>
+              <option value=10>7</option>
+            </select>
+          </form>
+          M
+          <input type="text" id="mag">
+          深さ(km):
+          <input type="text" id="dep">
+          震源:
+          <input type="text" id="epi">
+        </div>
+        <div>
+          <input type="text" id="year">
+          年
+          <input type="text" id="month">
+          月
+          <input type="text" id="day">
+          日
+          <input type="text" id="hour">
+          時
+          <input type="text" id="minute">
+          分
+        </div>
+        <span class="c-1" n=1>震度1</span>
+        <span class="c-2"><input type="text" id="1" style="width:400px"></span><br>
+        <span class="c-1" n=2>震度2</span>
+        <span class="c-2"><input type="text" id="2" style="width:400px"></span><br>
+        <span class="c-1" n=3>震度3</span>
+        <span class="c-2"><input type="text" id="3" style="width:400px"></span><br>
+        <span class="c-1" n=4>震度4</span>
+        <span class="c-2"><input type="text" id="4" style="width:400px"></span><br>
+        <span class="c-1" n=0>震度5弱以上と推定</span>
+        <span class="c-2"><input type="text" id="5弱以上と推定" style="width:400px"></span><br>
+        <span class="c-1" n=5>震度5弱</span>
+        <span class="c-2"><input type="text" id="5弱" style="width:400px"></span><br>
+        <span class="c-1" n=5.5>震度5強</span>
+        <span class="c-2"><input type="text" id="5強" style="width:400px"></span><br>
+        <span class="c-1" n=6>震度6弱</span>
+        <span class="c-2"><input type="text" id="6弱" style="width:400px"></span><br>
+        <span class="c-1" n=6.5>震度6強</span>
+        <span class="c-2"><input type="text" id="6強" style="width:400px"></span><br>
+        <span class="c-1" n=7>震度7</span>
+        <span class="c-2"><input type="text" id="7" style="width:400px"></span><br>
+        <span class="c-1" n=1>追加情報</span>
+        <span class="c-2"><input type="text" id="ps" style="width:400px"></span><br>
+        <div id="triangle"></div>
+        <input type="button" id="ref" value="反映" onClick="reflect(1);">
+      </div>
+      <div class="tab">
+        タイトル　　：<input type="text" id="BNtitle" style="width:300px;"><br>
+        サブタイトル：<input type="text" id="BNtext1" style="width:700px;"><br>
+        テキスト　　：<input type="text" id="BNtext2" style="width:700px;"><br>
+        <input type="button" onclick="BNref();" value="反映">
+        <p></p>
+      </div>
+      <div class="tab">
+        <button type="button" onclick="sorabtn_view();">ソラボタン 表示</button>
+        <button type="button" onclick="sorabtn_open();">ソラボタン オープン</button>
+        <button type="button" onclick="sorabtn_close();">ソラボタン 表示終了</button><br>
+        ソラボタン 表示切り替え: <input type="checkbox" id="isSoraview" onclick="isSoraview = document.getElementById('isSoraview').checked;" checked>
+      </div>
+      <div class="tab">
+        <input type="text" id="movieSrc">
+        <button type="button" onclick="movieChange();">切り替え</button>
+        <video controls id="v" preload="auto" style="display: none;">
+          <source src="" />
+        </video>
+        <p id="movietime">
+          movieCurrentTime --　　0:00.00
+          movieDuration --　　0:00.00
+        </p>
+        <button type="button" onclick="movie(0);">Start</button>
+        <button type="button" onclick="movie(1);">Stop</button>
+        <button type="button" onclick="movie(2);">Reset</button>
+        <button type="button" onclick="mode = 4;">表示</button>
+        <button type="button" onclick="document.getElementById('v').volume!=0?document.getElementById('v').volume=0:document.getElementById('v').volume=1;">消音切り替え</button>
+      </div>
+    </div>
+    <div id="menu">
+      <div class="eiList" aria-label="地震情報一覧" id="eiList" style="">
+        <button type="button" onclick="aa=0" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">茨城県沖 最大震度1 20時31分ごろ発生</button>
+        <button type="button" onclick="aa=1" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">山形県置賜地方 最大震度1 16時15分ごろ発生</button>
+        <button type="button" onclick="aa=2" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">奄美大島近海 最大震度1 10時24分ごろ発生</button>
+        <button type="button" onclick="aa=3" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">福井県嶺北 最大震度1 19時13分ごろ発生</button>
+        <button type="button" onclick="aa=4" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">与那国島近海 最大震度1 16時18分ごろ発生</button>
+        <button type="button" onclick="aa=5" id="eiList_button" style="background-color:#00aaff; color:#000" class="eiList-button">千葉県東方沖 最大震度2 15時33分ごろ発生</button>
+        <button type="button" onclick="aa=6" id="eiList_button" style="background-color:#fae696; color:#000" class="eiList-button">千葉県北東部 最大震度4 12時53分ごろ発生</button>
+        <button type="button" onclick="aa=7" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">長野県南部 最大震度1 04時57分ごろ発生</button>
+        <button type="button" onclick="aa=8" id="eiList_button" style="background-color:#1441ff; color:#fff" class="eiList-button">北海道釧路地方中南部 最大震度3 00時50分ごろ発生</button>
+        <button type="button" onclick="aa=9" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">福島県中通り 最大震度1 23時58分ごろ発生</button>
+        <button type="button" onclick="aa=10" id="eiList_button" style="background-color:#1441ff; color:#fff" class="eiList-button">福島県中通り 最大震度3 21時53分ごろ発生</button>
+        <button type="button" onclick="aa=11" id="eiList_button" style="background-color:#00aaff; color:#000" class="eiList-button">熊本県熊本地方 最大震度2 04時15分ごろ発生</button>
+        <button type="button" onclick="aa=12" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">北海道胆振地方中東部 最大震度1 03時35分ごろ発生</button>
+        <button type="button" onclick="aa=13" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">浦河沖 最大震度1 14時35分ごろ発生</button>
+        <button type="button" onclick="aa=14" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">種子島南東沖 最大震度1 12時45分ごろ発生</button>
+        <button type="button" onclick="aa=15" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">岩手県沖 最大震度1 11時08分ごろ発生</button>
+        <button type="button" onclick="aa=16" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">伊予灘 最大震度1 14時32分ごろ発生</button>
+        <button type="button" onclick="aa=17" id="eiList_button" style="background-color:#1441ff; color:#fff" class="eiList-button">茨城県南部 最大震度3 12時40分ごろ発生</button>
+        <button type="button" onclick="aa=18" id="eiList_button" style="background-color:#00aaff; color:#000" class="eiList-button">神奈川県東部 最大震度2 00時39分ごろ発生</button>
+        <button type="button" onclick="aa=19" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">安芸灘 最大震度1 23時32分ごろ発生</button>
+        <button type="button" onclick="aa=20" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">国後島付近 最大震度1 22時46分ごろ発生</button>
+        <button type="button" onclick="aa=21" id="eiList_button" style="background-color:#f2f2ff; color:#000" class="eiList-button">茨城県北部 最大震度1 16時54分ごろ発生</button>
+        <button type="button" onclick="aa=22" id="eiList_button" style="background-color:#00aaff; color:#000" class="eiList-button">熊本県熊本地方 最大震度2 09時14分ごろ発生</button>
+      </div>
+      <div class="eiTitle" aria-label="地震情報のタイトル" id="eiTitle"></div>
+      <div class="eiwind" aria-label="地震情報の本文" id="eiwind"></div>
+      <div class="tsunamiList" aria-label="津波情報" id="tsunamiList"></div>
+      <div class="dataList" aria-label="使用させてもらったデータ" id="dataList">
+        <a href="https://www.data.jma.go.jp/developer/multilingual.html" target="_blank">出典：気象庁ホームページ／多言語辞書データ</a><br>
+        <a href="https://www.nhk.or.jp/kishou-saigai/earthquake/" target="_blank" charset="utf-8">NHK地震情報 xml</a><br>
+        <a href="https://data.svir.jp/intens-st/api/v3/" target="_blank" charset="utf-8">震度観測地点位置JSON API(v3)</a><br>
+        <a href="https://www.p2pquake.net/dev/json-api/" target="_blank" charset="utf-8">P2P地震情報 JSON API</a><br>
+        <a href="https://dic.nicovideo.jp/a/mスケール" target="_blank" charset="utf-8">Weathenews Mｽｹｰﾙ</a><br>
+        <a href="http://weathernews.com/ja/nc/press/2010/100114.html" target="_blank" charset="utf-8">Weathernews ｿﾗﾎﾞﾀﾝ情報</a><br>
+        <a href="https://weathernews.jp/s/info/rain/prec_detail.html" target="_blank" charset="utf-8">Weathernews ｱﾒﾀﾞｽTop10</a><br>
+        <a href="https://www.p2pquake.net/develop/api-v2/" target="_blank" charset="utf-8">P2P地震情報 API(津波情報)</a><br>
+        <a href="https://weathernews.jp/s/topics/map/river_level.html" target="_blank" charset="uft-8">Weathernews 河川情報</a><br><br>
+        <a href="javascript:void(0)" onclick="window.open('http://weathernews.jp/world/')">Check! > Weathernews 世界天気Ch.</a><br><br><br><br>
+        <a href="javascript:vold(0)" onclick="testStart();">Starting the test</a>
+      </div>
+      <div class="box">
+        <div><button aria-label="地震情報を表示するボタン" type="button">地震情報一覧表示</button></div>
+        <div><button aria-label="津波情報を表示するボタン" type="button">津波情報表示</button></div>
+        <div><button aria-label="使用させてもらったデータを表示するボタン" type="button">使用したデータ</button></div>
+        <div><button aria-label="設定を表示するボタン" type="button">設定</button></div>
+        <div><button aria-label="自分のアカウントを表示するボタン(つまり宣伝)" type="button">宣伝()</button></div>
+      </div>
+      <image src="https://icooon-mono.com/i/icon_00001/icon_000010_32.png" alt="settings" class="icon" />
+    </div>
+  </body>
+  <!--
+  地震速報リスト:
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193817.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193846.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193908.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212193918.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212194008.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193641_20200212194016.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193732_20200212194056.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200212193732_20200212194217.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200122185244_20200122185429.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200122185244_20200122185523.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116184023.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183757.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183847.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200116183617_20200116183857.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121191939.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121192038.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200121191802_20200121192049.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032543.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032640.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0200103032400_20200103032808.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152325.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152408.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191219152143_20191219152530.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191218083524_20191218083702.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191218083524_20191218083817.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212011130.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212011352.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191212010954_20191212030054.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191204193509_20191204193750.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180653.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180751.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191122180517_20191122180912.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191117200537_20191117200830.xml
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191117200537_20191117200714.xml
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191116181709_20191116181850.xml
+  (https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191116181709_20191116182024.xml)
+
+  https://www3.nhk.or.jp/sokuho/jishin/data/JSA0191112215546_20191112215723.xml
+  -->
+  <!--
+  Mac Safari 13.0.5
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15
+
+  Mac Chrome
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Google Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+
+  iPhone LINE browser
+  navigator.language = ja-JP
+  navigator.playform = iPhone
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Geoko) Mobile/15E148 Safari Line/10.1.1
+
+  iPad Safari
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Geoko) Version/13.0.5 Safari/605.1.15
+
+  iPhone あんしん(フィルタリング有)
+  navigator.language = ja-JP
+  navigator.playform = iPhone
+  navigator.product = Geoko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozila/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Geoko) Version/13.0 Mobile/15E148 Safari/605.1.15 i-filter/sbm-safety/1.00.08.0004
+
+  Mac Firefox
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20100101
+  navigator.vendor =
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:72.0) Gecko/20100101 Firefox/72.0
+
+  Mac Opera
+  navigator.language = ja
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Google Inc.
+  navigator.userAgent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 OPR/66.0.3515.72
+
+  iPhone Safari 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  iPod touch 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPod; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  iPad 12.1.3 (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (iPad; CPU iPhone OS 12_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1
+
+  Microsoft Edge (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299
+
+  Windows Google Chrome (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+  Windows Firefox (in Mac Safari)
+  navigator.language = ja-JP
+  navigator.playform = MacIntel
+  navigator.product = Gecko
+  navigator.productSub = 20030107
+  navigator.vendor = Apple Computer, Inc.
+  navigator.userAgent = Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0
+  -->
+</html>

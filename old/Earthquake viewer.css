@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap');
+
+.Ntitle {
+  width: 140px;
+}
+.Ntext {
+  width: 900px;
+  resize: horizontal;
+}
+
+.tmp-box {
+  height: 130px;
+  width: 204px;
+  background: skyblue;
+  border: solid 2px red;
+  overflow: scroll;
+}
+.c-1 {
+  display: inline-block;
+  width: 145px;
+}
+.c-2 {
+  display: inline-block;
+  width: 300px;
+}
+body {
+  width: 1232px;
+  height: 500px;
+}
+canvas {
+  cursor: none !important;
+}
+.temp-tx {
+  font-size: 65%;
+  background-color: aqua;
+  border: groove 2px blue;
+}
+.speed-tx {
+  font-size: 65%;
+  background-color: aqua;
+  border: ridge 2px blue;
+}
+span[n="1"] {
+  background: linear-gradient(transparent 70%, #a0a0a0 0%);
+}
+span[n="2"] {
+  background: linear-gradient(transparent 70%, #51dbf0 0%);
+}
+span[n="3"] {
+  background: linear-gradient(transparent 70%, #8181f7 0%);
+}
+span[n="4"] {
+  background: linear-gradient(transparent 70%, #42fc57 0%);
+}
+span[n="5"] {
+  background: linear-gradient(transparent 70%, #facd5c 0%);
+}
+span[n="5.5"] {
+  background: linear-gradient(transparent 70%, #f5851d 0%);
+}
+span[n="6"] {
+  background: linear-gradient(transparent 70%, #f7382a 0%);
+}
+span[n="6.5"] {
+  background: linear-gradient(transparent 70%, #f5317f 0%);
+}
+span[n="7"] {
+  background: linear-gradient(transparent 70%, #e01fc3 0%);
+}
+span[n="0"]{
+  background: linear-gradient(transparent 70%, #eafa11 0%);
+}
+#triangle{
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-bottom-width: 16px;
+  border-top-width: 0px;
+  border-left: 16px solid black;
+}
+.tmp-btn {
+  width: 204px;
+  height: 40px;
+  background: lightgreen;
+  border: black 2px solid;
+  cursor: pointer;
+}
+.switchable-tab {
+  border: double 2px red;
+}
+.icon{
+  position: fixed;
+  bottom: 0px;
+  border: 1px solid #23232330;
+  right: 0px;
+  height: 32px;
+  width: 32px;
+}
+.box{
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  height: 34px;
+  width: 34px;
+  background-color: #ff7f0070;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  transition-duration: 300ms;
+  transition-property: all;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+}
+.activeSettings{
+  background-color: #ff4040e0;
+  width: 98.876%;
+  height: 50px;
+}
+.inline-block {
+  vertical-align: top;
+}
+
+#menu .box div {
+  margin: 7px;
+  text-align: center;
+}
+
+#menu .box div button {
+  color: black;
+  padding: 1px;
+  background-color: #00000000;
+  font-size: 18px;
+  width: 150px;
+  height: 36px;
+  visibility: hidden;
+  transition: all 300ms 0s ease;
+}
+#menu .box div button:hover {
+  background: #000;
+  color: white;
+}
+
+#menu .box.activeSettings div button {
+  visibility: visible;
+}
+
+#menu .eiList {
+  position: fixed;
+  font-family: sans-serif;
+  bottom: 52px;
+  right: 414px;
+  height: 146px;
+  width: 400px;
+  background-color: #cfd63bff;
+  border: #000 2px solid;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /*-ms-overflow-style: none;*//* iPadのSafariでなぜかこれを有効にすると正常に表示されなくなる */
+  color: #b2bb8e;
+}
+#menu .eiList-button:active {
+  color: #f00;
+}
+#menu .eiList .eiList-button {
+  width: 400px;
+  height: 32px;
+  background: #ff8a32;
+  border: blue 2px solid;
+  cursor: pointer;
+  font-size: 16.5px;
+}
+
+#menu .eiwind {
+  position: fixed;
+  font-family: sans-serif;
+  color: #ffff;
+  bottom: 52px;
+  right: 10px;
+  height: 120px;
+  width: 400px;
+  background-color: #000b;
+  border: #000 2px solid;
+  overflow: scroll;
+}
+#menu .eiwind.SI {
+  background-color: #aa00feb8;
+}
+
+#menu .eiTitle {
+  position: fixed;
+  font-family: sans-serif;
+  color: #ffff;
+  bottom: 174px;
+  right: 10px;
+  height: 24px;
+  width: 400px;
+  background-color: #ff3812ff;
+  border: #000 2px solid;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  -ms-overflow-style: none;
+}
+#menu .eiTitle::-webkit-scrollbar {
+  display: none;
+}
+
+#menu .tsunamiList {
+  position: fixed;
+  font-family: sans-serif;
+  color: #ffff;
+  bottom: 52px;
+  right: 10px;
+  height: 120px;
+  width: 400px;
+  background-color: #000b;
+  border: #000 2px solid;
+  overflow: scroll;
+}
+
+#menu .dataList {
+  position: fixed;
+  font-family: sans-serif;
+  color: #ffff;
+  bottom: 52px;
+  right: 10px;
+  height: 120px;
+  width: 400px;
+  background-color: #00f7;
+  border: #000 2px solid;
+  overflow: scroll;
+}
+.dataList a:link,
+.dataList a:visited,
+.dataList a:active {
+  color: #11ffc2;
+}
+.dataList a:hover {
+  color: #ff0;
+}
+
+#movietime {
+  font-family: sans-serif;
+  font-size: 18px;
+}
