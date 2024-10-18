@@ -13,7 +13,7 @@ body {
 #map {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(#1d78b6, #15327e);
+  background: linear-gradient(#3d7aa5, #1b3065);
 }
 #title {
   position: absolute;
@@ -138,6 +138,15 @@ body {
 #menu_quake_button.hide {
   bottom: 20px;
 }
+#color-select {
+  position: absolute;
+  left: 15px;
+  bottom: 59px;
+  font-size: 15px;
+  z-index: 950;
+  color: #fffd;
+  background: #000a;
+}
 
 .maplibregl-ctrl-attrib.maplibregl-compact {
   margin: 0;
@@ -168,15 +177,25 @@ body {
 }
 .bottom-menulist > * {
   display: block;
-  color: #333;
-  background-color: #fffd;
+  color: #fff;
+  background-color: #222d;
   padding: 3px 7px;
+  border: solid 1px #999;
 }
-@media (prefers-color-scheme: dark){
-  .bottom-menulist > * {
-    background-color: #222d;
-    color: #fff;
-  }
+.bottom-menulist > button {
+  font-size: 14px;
+}
+.info-bar {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  z-index: 950;
+  color: #fffd;
+  background: #0004;
+  padding: 3px;
 }
     </style>
   </head>
@@ -190,11 +209,18 @@ body {
       </div>
       <div id="occurred-time">08/32 00:00頃発生</div>
       <div id="shindo-list"></div>
+      <select id="color-select"><option value="dark">暗め</option><option value="light">明るめ</option></select>
       <div class="bottom-menulist">
         <button type="button" id="zoom_whole">全体</button>
         <button type="button" id="zoom_japan">全国</button>
         <label class="auto_update_container"><input type="checkbox" id="auto_update" checked>自動更新(10秒)</label>
         <label class="view_every_area_container"><input type="checkbox" id="view_every_area">地域毎表示</label>
+      </div>
+      <div class="info-bar">
+        <div>JMA QuakeMap v2.1.0</div>
+        <div id="mapzoom-log">MapZoom: 12</div>
+        <div id="maprotate-log">MapZoom: 12</div>
+        <div id="maptilt-log">MapZoom: 12</div>
       </div>
       <div id="control_container">
         <!-- <div id="quake_reports"></div> -->
@@ -208,7 +234,6 @@ body {
     <script src="./js/jquery-3.6.0.min.js" charset="utf-8"></script>
     <script>
 var intervalID = 0;
-const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 const map = new maplibregl.Map({
   container: "map",
   center: [139.42, 35.69],
@@ -275,7 +300,7 @@ const map = new maplibregl.Map({
         "source-layer": "緊急地震速報／府県予報区",
         type: "fill",
         paint: {
-          "fill-color": isDarkMode ? "#333" : "#fff"
+          "fill-color": "#fff"
         }
       },
       {
@@ -291,7 +316,7 @@ const map = new maplibregl.Map({
             5, 0.5,
             10, 1
           ],
-          "line-color": isDarkMode ? "#888" : "#404040"
+          "line-color": "#404040"
         }
       }
     ]
@@ -308,10 +333,19 @@ const int_list = ["1","2","3","4","unknown","5l","5h","6l","6h","7"];
 const jmaToView = {"1": "1", "2": "2", "3": "3", "4": "4", "震度５弱以上未入電": "未入電", "5-": "5弱", "5+": "5強", "6-": "6弱", "6+": "6強", "7": "7"};
 const regionList = {"石狩地方北部":[43.45,141.53],"石狩地方中部":[42.97,141.24],"石狩地方南部":[42.84,141.56],"後志地方北部":[43.12,140.8],"後志地方東部":[42.8,140.9],"後志地方西部":[42.73,140.37],"空知地方北部":[43.11,141.98],"空知地方中部":[43.47,142],"空知地方南部":[43.83,142.02],"渡島地方北部":[42.18,140.19],"渡島地方東部":[41.94,140.66],"渡島地方西部":[41.61,140.32],"檜山地方":[41.84,140.26],"北海道奥尻島":[42.16,139.47],"胆振地方西部":[42.6,140.83],"胆振地方中東部":[42.65,141.63],"日高地方西部":[42.7,142.39],"日高地方中部":[42.47,142.62],"日高地方東部":[42.21,142.97],"上川地方北部":[43.38,143.39],"上川地方中部":[42.96,143.29],"上川地方南部":[42.43,143.19],"留萌地方中北部":[44.54,141.92],"留萌地方南部":[43.95,141.75],"宗谷地方北部":[45.21,141.91],"宗谷地方南部":[44.86,142.47],"網走地方":[43.8,144.39],"北見地方":[43.85,143.86],"紋別地方":[44.19,143.19],"十勝地方北部":[43.42,143.31],"十勝地方中部":[43,143.32],"十勝地方南部":[42.46,143.2],"釧路地方北部":[43.55,144.39],"釧路地方中南部":[43.17,144.36],"根室地方北部":[43.79,144.98],"根室地方中部":[43.41,144.99],"根室地方南部":[43.35,145.66],"青森県津軽北部":[40.97,140.49],"青森県津軽南部":[40.57,140.23],"青森県三八上北":[40.59,141.18],"青森県下北":[41.34,141.03],"岩手県沿岸北部":[39.88,141.66],"岩手県沿岸南部":[39.2,141.62],"岩手県内陸北部":[39.89,141.23],"岩手県内陸南部":[39.3,141.15],"宮城県北部":[38.65,141],"宮城県中部":[38.34,140.84],"宮城県南部":[38.12,140.68],"秋田県沿岸北部":[40.16,140.13],"秋田県沿岸南部":[39.51,140.22],"秋田県内陸北部":[40.17,140.59],"秋田県内陸南部":[39.42,140.52],"山形県庄内":[38.72,139.87],"山形県最上":[38.74,140.33],"山形県村山":[38.4,140.31],"山形県置賜":[38.04,139.93],"福島県中通り":[37.43,140.24],"福島県浜通り":[37.32,140.84],"福島県会津":[37.41,139.74],"茨城県北部":[36.52,140.43],"茨城県南部":[36.11,140.27],"栃木県北部":[36.87,139.83],"栃木県南部":[36.55,139.85],"群馬県北部":[36.74,139.07],"群馬県南部":[36.45,138.97],"埼玉県北部":[36.1,139.37],"埼玉県南部":[35.91,139.62],"埼玉県秩父":[35.99,139.02],"千葉県北東部":[35.73,140.53],"千葉県北西部":[35.72,140.2],"千葉県南部":[35.24,140.1],"東京都２３区":[35.68,139.71],"東京都多摩東部":[35.68,139.45],"東京都多摩西部":[35.77,139.17],"伊豆大島":[34.73,139.4],"新島":[34.38,139.26],"神津島":[34.21,139.14],"三宅島":[34.07,139.52],"八丈島":[33.11,139.8],"小笠原":[27.07,142.2],"神奈川県東部":[35.45,139.5],"神奈川県西部":[35.44,139.2],"新潟県上越":[38.04,139.52],"新潟県中越":[37.21,138.84],"新潟県下越":[37.02,138.11],"新潟県佐渡":[38.04,138.38],"富山県東部":[36.62,137.44],"富山県西部":[36.55,136.96],"石川県能登":[37.3,136.9],"石川県加賀":[36.43,136.63],"福井県嶺北":[35.96,136.35],"福井県嶺南":[35.56,135.96],"山梨県中・西部":[35.68,138.5],"山梨県東部・富士五湖":[35.61,138.86],"長野県北部":[36.64,138.21],"長野県中部":[36.16,137.92],"長野県南部":[35.69,137.87],"岐阜県飛騨":[36.16,137.24],"岐阜県美濃東部":[35.55,137.18],"岐阜県美濃中西部":[36.61,136.73],"静岡県伊豆":[34.88,138.92],"静岡県東部":[35.25,138.78],"静岡県中部":[35.13,138.23],"静岡県西部":[34.87,137.89],"愛知県東部":[35.03,137.53],"愛知県西部":[35.1,137.05],"三重県北部":[34.97,136.51],"三重県中部":[34.7,136.33],"三重県南部":[34.3,136.33],"滋賀県北部":[35.42,136.18],"滋賀県南部":[35.05,136.11],"京都府北部":[35.4,135.23],"京都府南部":[35.02,135.7],"大阪府北部":[34.8,135.54],"大阪府南部":[34.49,135.57],"兵庫県北部":[35.46,134.71],"兵庫県南東部":[34.94,135.07],"兵庫県南西部":[35.03,134.58],"兵庫県淡路島":[34.334,134.8],"奈良県":[34.33,135.9],"和歌山県北部":[34.08,135.36],"和歌山県南部":[33.74,135.64],"鳥取県東部":[35.38,134.25],"鳥取県中部":[35.41,133.8],"鳥取県西部":[35.28,133.42],"島根県東部":[35.25,132.91],"島根県西部":[34.86,132.2],"島根県隠岐":[36.16,133.16],"岡山県北部":[35.13,133.79],"岡山県南部":[34.85,133.82],"広島県北部":[34.79,132.84],"広島県南東部":[34.59,133.12],"広島県南西部":[34.49,132.47],"山口県北部":[34.4,131.51],"山口県東部":[34.1,132.06],"山口県中部":[34.18,131.66],"山口県西部":[34.15,131.12],"徳島県北部":[34.03,134.13],"徳島県南部":[33.77,134.31],"香川県東部":[34.24,134.13],"香川県西部":[34.18,133.84],"愛媛県東予":[33.86,133.15],"愛媛県中予":[33.68,132.88],"愛媛県南予":[33.39,132.67],"高知県東部":[33.51,134.08],"高知県中部":[33.68,133.45],"高知県西部":[33.15,132.96],"福岡県福岡":[33.55,130.54],"福岡県北九州":[33.71,130.9],"福岡県筑豊":[33.51,130.78],"福岡県筑後":[33.25,130.61],"佐賀県北部":[33.33,129.93],"佐賀県南部":[33.22,130.19],"長崎県北部":[33.17,129.76],"長崎県南西部":[32.81,129.83],"長崎県島原半島":[32.7,130.25],"長崎県対馬":[34.44,129.34],"長崎県壱岐":[33.78,129.71],"長崎県五島":[32.82,128.89],"熊本県阿蘇":[32.96,131.1],"熊本県熊本":[32.83,130.78],"熊本県球磨":[32.26,130.89],"熊本県天草・芦北":[32.39,130.12],"大分県北部":[33.51,131.37],"大分県中部":[33.16,131.54],"大分県南部":[32.86,131.6],"大分県西部":[33.22,131.05],"宮崎県北部平野部":[32.44,131.56],"宮崎県北部山沿い":[32.57,131.28],"宮崎県南部平野部":[31.91,131.32],"宮崎県南部山沿い":[32.05,131.1],"鹿児島県薩摩":[31.77,130.43],"鹿児島県大隅":[31.41,130.91],"鹿児島県十島村":[29.85,129.87],"鹿児島県甑島":[31.76,129.79],"鹿児島県種子島":[30.335,130.51],"鹿児島県奄美北部":[28.33,129.4],"鹿児島県奄美南部":[27.76,128.95],"沖縄本島北部":[26.66,128.13],"沖縄本島中南部":[26.33,127.78],"沖縄県久米島":[26.35,126.77],"沖縄県大東島":[25.91,131.27],"沖縄県宮古島":[24.76,125.31],"沖縄県石垣島":[24.41,124.21],"沖縄県与那国島":[24.45,122.98],"沖縄県西表島":[24.32,123.81]};
 
+const MapZoom = document.getElementById("mapzoom-log");
+const MapRotate = document.getElementById("maprotate-log");
+const MapTilt = document.getElementById("maptilt-log");
+const ColorSelect = document.getElementById("color-select");
 const popup = new maplibregl.Popup({
   closeButton: false,
   closeOnClick: false
 });
+if (window.matchMedia('(prefers-color-scheme: dark)').matches === true){
+  ColorSelect.value = "dark";
+} else {
+  ColorSelect.value = "light";
+}
 map.on("load", async () => {
   const mousemove = e => {
     map.getCanvas().style.cursor = "pointer";
@@ -326,7 +360,28 @@ map.on("load", async () => {
   const mouseleave = e => {
     map.getCanvas().style.cursor = "";
     popup.remove();
-  }
+  };
+  const zoomevent = () => {
+    const zoom = map.getZoom();
+    MapZoom.textContent = "Zoom: " + zoom.toFixed(2);
+  };
+  const rotateevent = () => {
+    const rotate = map.getBearing();
+    MapRotate.textContent = "Rotate: " + ((rotate + 360) % 360).toFixed(0);
+  };
+  const tiltevent = () => {
+    const tilt = map.getPitch();
+    MapTilt.textContent = "Tilt: " + tilt.toFixed(0);
+  };
+  const changeColor = () => {
+    if (ColorSelect.value === "light"){
+      map.setPaintProperty("japan-fill", "fill-color", "#fff");
+      map.setPaintProperty("japan-line", "line-color", "#404040");
+    } else {
+      map.setPaintProperty("japan-fill", "fill-color", "#333");
+      map.setPaintProperty("japan-line", "line-color", "#888");
+    }
+  };
 
   for (const index in int_list){
     const shindo = shindo_list[index];
@@ -368,6 +423,14 @@ map.on("load", async () => {
     map.on("mouseleave", "shindo-layer-" + int, mouseleave);
     map.on("mousemove", "area-layer-" + int, mousemove);
     map.on("mouseleave", "area-layer-" + int, mouseleave);
+    map.on("zoom", zoomevent);
+    map.on("rotate", rotateevent);
+    map.on("pitch", tiltevent);
+    ColorSelect.addEventListener("input", changeColor);
+    zoomevent();
+    rotateevent();
+    tiltevent();
+    changeColor();
   }
   map.addSource("epicenter-point", { type: "geojson", data: { type: "FeatureCollection", features: [] }});
   map.addLayer({
