@@ -42,7 +42,7 @@ body {
 }
 #com_maxint {
   font-size: 30px;
-  margin: 10px;
+  margin: 0 10px;
 }
 #com-addition {
   font-size: 20px;
@@ -201,8 +201,8 @@ body {
       <div id="map"></div>
       <div id="title">地震情報</div>
       <div id="comment">
-        <span id="com_maxint"></span><br>
-        <span id="com-addition"></span>
+        <div id="com_maxint"></div>
+        <div id="com-addition"></div>
       </div>
       <div id="occurred-time">08/32 00:00頃発生</div>
       <div id="shindo-list"></div>
@@ -214,7 +214,7 @@ body {
         <label class="view_every_area_container"><input type="checkbox" id="view_every_area">地域毎表示</label>
       </div>
       <div class="info-bar">
-        <div>JMA QuakeMap v2.1.0</div>
+        <div>JMA QuakeMap v2.1.1</div>
         <div id="mapzoom-log">MapZoom: 12</div>
         <div id="maprotate-log">MapZoom: 12</div>
         <div id="maptilt-log">MapZoom: 12</div>
@@ -555,7 +555,8 @@ function handleQuake(url, type = 3){
     /* ここから地域毎表示を考慮 */
     if (document.getElementById("view_every_area").checked && type === 3) type = 1;
     if (type !== 2){
-      for (const pref of data.Body.Intensity.Observation.Pref){
+      const isIntensity0 = !data.Body.Intensity;
+      for (const pref of (data.Body.Intensity?.Observation?.Pref || [])){
       for (const area of pref.Area){
         if (type === 3){
         for (const city of area.City){
@@ -606,23 +607,27 @@ function handleQuake(url, type = 3){
       }
 
       /* 文を作成 */
-      const shindoMaxLines = Math.floor((window.innerHeight - 245) / 30);
-      document.getElementById("shindo-list").innerText = "各都道府県で\n震度" + jmaToView[data.Body.Intensity.Observation.MaxInt] + "\nを観測";
-      for (let stage = 0; stage < 3; stage++){
-        let shindoCount = 0;
-        for (const shindo of JSON.parse(JSON.stringify(shindo_list)).reverse()){
-          if (shindoStage[stage][shindo]){
-            shindoCount ++;
-            if (shindoMaxLines < shindoStage[stage][shindo].length + shindoStageText[stage].lineCount() - 1){
-              if (shindoCount === 1) shindoStageText[stage] = "";
-              break;
+      if (!isIntensity0){
+        const shindoMaxLines = Math.floor((window.innerHeight - 245) / 30);
+        document.getElementById("shindo-list").innerText = "各都道府県で\n震度" + jmaToView[data.Body.Intensity.Observation.MaxInt] + "\nを観測";
+        for (let stage = 0; stage < 3; stage++){
+          let shindoCount = 0;
+          for (const shindo of JSON.parse(JSON.stringify(shindo_list)).reverse()){
+            if (shindoStage[stage][shindo]){
+              shindoCount ++;
+              if (shindoMaxLines < shindoStage[stage][shindo].length + shindoStageText[stage].lineCount() - 1){
+                if (shindoCount === 1) shindoStageText[stage] = "";
+                break;
+              }
+              if (shindoCount === 2) shindoStageText[stage] += "\n\n";
+              shindoStageText[stage] += "【震度" + jmaToView[shindo] + "】\n" + shindoStage[stage][shindo].join("\n");
+              if (shindoCount === 2) break;
             }
-            if (shindoCount === 2) shindoStageText[stage] += "\n\n";
-            shindoStageText[stage] += "【震度" + jmaToView[shindo] + "】\n" + shindoStage[stage][shindo].join("\n");
-            if (shindoCount === 2) break;
           }
+          if (shindoStageText[stage]) document.getElementById("shindo-list").innerText = shindoStageText[stage];
         }
-        if (shindoStageText[stage]) document.getElementById("shindo-list").innerText = shindoStageText[stage];
+      } else {
+        document.getElementById("shindo-list").innerText = "震度情報なし";
       }
 
       /* アイコン反映 */
@@ -637,7 +642,7 @@ function handleQuake(url, type = 3){
           map.getSource("area-point-" + int).setData({ type: "FeatureCollection", features: []});
         }
       }
-      document.getElementById("com_maxint").innerText = "最大震度　" + jmaToView[data.Body.Intensity.Observation.MaxInt];
+      document.getElementById("com_maxint").innerText = isIntensity0 ? "" : "最大震度　" + jmaToView[data.Body.Intensity.Observation.MaxInt];
     }
     fitBounds(viewBounds);
     lastEventID = data.Head.EventID;
