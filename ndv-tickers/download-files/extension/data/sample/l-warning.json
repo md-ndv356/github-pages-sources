@@ -1,0 +1,21 @@
+{
+  "request_time": "123456123456",
+  "request_hypo_type": "eew",
+  "report_num": "12",
+  "report_id": "test",
+  "report_time": "20240101000000",
+  "origin_time": "20240101000000",
+  "longitude": "135",
+  "latitude": "35",
+  "depth": "120km",
+  "magunitude": "8.0",
+  "region_code": "412",
+  "region_name": "山梨県東部・富士五湖",
+  "calcintensity": "5弱",
+  "alertflg": "警報",
+  "is_final": true,
+  "is_training": false,
+  "is_cancel": false,
+  "result": { "a": "ここわからない" },
+  "security": { "a": "ここわからない" }
+}

@@ -1,0 +1,88 @@
+{
+  "ParseStatus":"Success",
+  "Title":{
+    "Code":36,
+    "String":"緊急地震速報（予報）",
+    "Detail":"マグニチュード、最大予測震度及び主要動到達予測時刻の緊急地震速報（発表パターン2： B-Δ法、テリトリ法）"
+  },
+  "Source":{
+    "Code":4,
+    "String":"大阪"
+  },
+  "Status":{
+    "Code":"00",
+    "String":"通常",
+    "Detail":"通常"
+  },
+  "AnnouncedTime":{
+    "String":"2021/09/14 07:48:16",
+    "UnixTime":1631573296,
+    "RFC1123":"Mon, 13 Sep 2021 22:48:16 UTC"
+  },
+  "OriginTime":{
+    "String":"2021/09/14 07:48:04",
+    "UnixTime":1631573284,
+    "RFC1123":"Mon, 13 Sep 2021 22:48:04 UTC"
+  },
+  "EventID":"20210914074806",
+  "Type":{
+    "Code":0,
+    "String":"発表",
+    "Detail":"発表(予報)"
+  },
+  "Serial":2,
+  "Hypocenter":{
+    "Code":350,
+    "Name":"東京都２３区",
+    "isAssumption":true,
+    "Location":{
+      "Lat":35.7,
+      "Long":139.8,
+      "Depth":{
+        "Int":10,
+        "String":"約10km"
+      }
+    },
+    "Magnitude":{
+      "Float":1,
+      "String":"M1.0",
+      "LongString":"M1.0"
+    },
+    "Accuracy":{
+      "Epicenter":{
+        "Code":1,
+        "String":"P波/S波レベル越え、またはIPF法(1点)、または仮定震源要素の場合",
+        "Rank2":1,
+        "String2":"P波/S波レベル越え、またはIPF法(1点)、または仮定震源要素の場合"
+      },
+      "Depth":{
+        "Code":1,
+        "String":"P波/S波レベル越え、またはIPF法(1点)、または仮定震源要素"
+      },
+      "Magnitude":{
+        "Code":8,
+        "String":"P波/S波レベル越え、または仮定震源要素の場合"
+      },
+      "NumberOfMagnitudeCalculation":1
+    },
+    "isSea":false
+  },
+  "MaxIntensity":{
+    "From":"3",
+    "To":"3",
+    "String":"3",
+    "LongString":"3程度"
+  },
+  "Warn":false,
+  "Option":{
+    "Change":{
+      "Code":0,
+      "String":"ほとんど変化なし",
+      "Reason":{
+        "Code":0,
+        "String":"不明"
+      }
+    }
+  },
+  "OriginalText":"36 04 00 210914074816 C11 210914074804 ND20210914074806 NCN002 JD////////////// JN002 350 N357 E1398 010 10 03 RK11811 RT/09// RC0//// 9999="
+}
