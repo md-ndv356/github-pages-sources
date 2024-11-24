@@ -1,4 +1,0 @@
-texts と texture 逆説
-
-texts: 普通の画像
-texture: 文字列
