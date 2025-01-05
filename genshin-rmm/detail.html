@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原神 幾千のメロディー 譜面保管所 詳細</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #3b4252;
+      color: #fff;
+      font-family: "Noto Serif JP";
+      font-size: 16px;
+      text-align: center;
+      margin: 8px;
+      margin-top: 43px;
+    }
+    header {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100dvw;
+      box-sizing: border-box;
+      background: #0c0f13;
+      font-size: 15px;
+      padding: 6px 20px;
+      text-align: start;
+    }
+    header a {
+      text-decoration: none;
+      color: #fff;
+    }
+    .tap {
+      background-color: #eabd59;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div style="flex: 1;"><a href="." id="headtitle" i18n="headtitle">譜面保管所</a></div>
+  <div><select id="langselect">
+    <option value="ja">日本語</option>
+    <option value="en">English</option>
+    <option value="cn">中文</option>
+    <option value="de">Deutsch</option>
+    <option value="fr">Français</option>
+  </select></div>
+</header>
+<main>
+  <div>
+    <div class="title"></div>
+  </div>
+</main>
+<footer>
+  <p>製作中だあよ</p>
+</footer>
+</body>
+<script>
+const query = location.search.slice(1).split(".");
+const langText = query[0] || "ja";
+if (["cn"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
+const langId = ((["en", "ja", "cn", "fr", "de"].indexOf(langText) + 1) || 2) - 1;
+document.getElementById("headtitle").href = "./?" + langText;
+
+const langselect = document.getElementById("langselect");
+langselect.value = langText;
+langselect.addEventListener("change", event => {
+  query[0] = event.target.value;
+  window.location = "?" + query.join(".");
+});
+
+function init ([i18n, musicData]){
+  // Internationalization
+  for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
+    const id = item.getAttribute("i18n");
+    const text = i18n[id]?.[langText];
+    if (text) item.innerText = text;
+  }
+
+  // View Score Data
+  const tap       = ["1", "2", "3", "4", "5", "6"];
+  const holdStart = ["q", "w", "e", "r", "t", "y"];
+  const holdEnd   = ["a", "s", "d", "f", "g", "h"];
+  let notesCount = 0;
+  let notesAA = "";
+  const holdStartPos = [null, null, null, null, null, null];
+  for (let barI=0, barL=musicData.score.length; barI<barL; barI++){
+    const bar = musicData.score[barI];
+    const lines = bar.split(",");
+    for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
+      const line = lines[lineI];
+      const position = barI + lineI / lineL;
+      for (const note of line.split("")){
+        const tapIndex = tap.indexOf(note);
+        const holdStartIndex = holdStart.indexOf(note);
+        const holdEndIndex = holdEnd.indexOf(note);
+        if (tapIndex !== -1) notes[tapIndex] = 1;
+        if (holdStartIndex !== -1) notes[holdStartIndex] = 1;
+        // if (holdEndIndex !== 1) notesCount++;
+      }
+    }
+  }
+}
+
+(async () => {
+  Promise.all([
+    fetch("./i18n.json").then(res => res.json()),
+    fetch("./music/" + query[1] + "." + query[2] + ".json").then(res => res.json())
+  ]).then(init);
+})();
+</script>
+</html>

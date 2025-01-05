@@ -1,0 +1,23 @@
+{
+  "headtitle": {
+    "ja": "譜面保管所",
+    "en": "Score Database",
+    "cn": "乐谱仓库",
+    "de": "Notenarchiv",
+    "fr": "Archive des partitions"
+  },
+  "pagetitle": {
+    "ja": "原神 幾千のメロディー 譜面保管所",
+    "en": "Genshin Impact - Repertoire of Myriad Melodies - Score Database",
+    "cn": "原神 千音雅集 乐谱仓库",
+    "de": "Genshin Impact - Melodien-Repertoire - Notenarchiv",
+    "fr": "Genshin Impact - Répertoire aux mille mélodies - Archive des partitions"
+  },
+  "statement": {
+    "ja": "当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。",
+    "en": "This site is an unofficial personal website and is not affiliated with the official Genshin Impact in any way.",
+    "cn": "本网站是个人的非官方网站，与原神官方无任何关联。\n本网站使用 ChatGPT 实现多语言支持。",
+    "de": "Diese Website ist eine inoffizielle persönliche Website und steht in keiner Verbindung zu Genshin Impact.\nDiese Website unterstützt mehrere Sprachen mit Hilfe von ChatGPT.",
+    "fr": "Ce site est un site personnel non officiel et n'est aucunement affilié à Genshin Impact.\nCe site prend en charge plusieurs langues grâce à ChatGPT."
+  }
+}

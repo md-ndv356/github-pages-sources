@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>原神 幾千のメロディー 譜面保管所</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
   <style>
   body {
-    background: #0c0f13;
+    background: #3b4252;
     color: #fff;
     font-family: "Noto Serif JP";
+    font-size: 16px;
     text-align: center;
     margin: 8px;
+    margin-top: 43px;
+  }
+  header {
+    display: flex;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100dvw;
+    box-sizing: border-box;
+    background: #0c0f13;
+    font-size: 15px;
+    padding: 6px 20px;
+    text-align: start;
+  }
+  header a {
+    text-decoration: none;
+    color: #ddd;
+  }
+  h1 {
+    color: #eee;
+    font-size: 24px;
   }
   main {
     display: flex;
@@ -27,108 +49,116 @@
     padding: 5px 8px;
     background: linear-gradient(270deg, #fc897e, #f79a2f);
     width: calc(100dvw - 32px);
-    max-width: 450px;
+    max-width: 520px;
     border-radius: 10px;
+  }
+  .bpm {
+    font-size: 14px;
+    margin: 0;
+  }
+  .bpm::before {
+    display: inline-block;
+    padding-right: 3px;
+    font-size: 12px;
+    content: "BPM";
   }
   .title {
     flex: 1;
+    margin: 0 8px;
   }
   .levels {
     display: flex;
-    gap: 4px;
-    margin-left: 16px;
-    margin-right: 16px;
+    gap: 5px;
+    margin: 0;
   }
   .easy, .normal, .hard, .legend {
     padding: 0 8px;
   }
+  main a[href] {
+    color: #2c13b7;
+  }
   </style>
 </head>
 <body>
-<h1>原神 幾千のメロディー 譜面保管所</h1>
+<header>
+  <div style="flex: 1;"><a href="." id="headtitle" i18n="headtitle">譜面保管所</a></div>
+  <div><select id="langselect">
+    <option value="ja">日本語</option>
+    <option value="en">English</option>
+    <option value="cn">中文</option>
+    <option value="de">Deutsch</option>
+    <option value="fr">Français</option>
+  </select></div>
+</header>
+<h1 i18n="pagetitle">原神 幾千のメロディー 譜面保管所</h1>
 <main id="musiclist"></main>
 <footer>
-  <p>当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。</p>
+  <p i18n="statement">当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。</p>
 </footer>
 </body>
 <script>
+const langText = location.search.slice(1).split(".")[0] || "ja";
+if (["cn"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
+const langId = ((["en", "ja", "cn", "fr", "de"].indexOf(langText) + 1) || 2) - 1;
+document.getElementById("headtitle").href = "./?" + langText;
+
+const langselect = document.getElementById("langselect");
+langselect.value = langText;
+langselect.addEventListener("change", event => {
+  window.location = "?" + event.target.value;
+});
+
 const musiclist = document.getElementById("musiclist");
-function init (){
-  for (const music of musicTable){
+function init ([i18n, musicTable, scoreList]){
+  // Internationalization
+  for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
+    const id = item.getAttribute("i18n");
+    const text = i18n[id]?.[langText];
+    if (text) item.innerText = text;
+  }
+
+  // Music List
+  for (let i=0, l=musicTable.length; i<l; i++){
+    const music = musicTable[i];
     musiclist.insertAdjacentHTML("beforeend", `<div class="item">
-<div class="title">${music[1]}</div>
+<div class="bpm">${music[8]}</div>
+<div class="title">${music[langId]}</div>
 <div class="levels">
-<div class="easy">${music[9]}</div>
-<div class="normal">${music[11]}</div>
-<div class="hard">${music[13]}</div>
-<div class="legend">${music[15]}</div>
+<a` + (scoreList[i]?.[0] ? ` href="./detail.html?${langText}.${i}.0"` : "") + `><div class="easy">${music[9]}</div></a>
+<a` + (scoreList[i]?.[1] ? ` href="./detail.html?${langText}.${i}.1"` : "") + `><div class="normal">${music[11]}</div></a>
+<a` + (scoreList[i]?.[2] ? ` href="./detail.html?${langText}.${i}.2"` : "") + `><div class="hard">${music[13]}</div></a>
+<a` + (scoreList[i]?.[3] ? ` href="./detail.html?${langText}.${i}.3"` : "") + `><div class="legend">${music[15]}</div></a>
 </div>
 </div>`);
   }
 }
 
-const musicTable = [
-[ "Bustling Afternoon in Mondstadt", "繁忙なモンドの午後", "蒙德城繁忙的午后", "Bustling Afternoon in Mondstadt", "Bustling Afternoon in Mondstadt", "", "Mondstadt", "1m 48s", 98, 2, 121, 4, 190, 5, 250, 7, 396 ],
-[ "Photon of Fluctuation", "彷徨する輝き", "光辉的涨落", , "Photon of Fluctuation", "", "Mondstadt", "1m 57s", 176, 2, 136, 4, 187, 5, 248, 7, 479 ],
-[ "An Interest2ing Labour", "愉快な挑戦", "有趣的挑战", , "An Interesting Labour", "", "Mondstadt", "1m 26s", 172, 2, 123, 3, 157, 5, 237, 7, 360 ],
-[ "Bard's Adventure", "詩人の仕事", "诗人的工作", "Devoir d'un barde", "Bard's Adventure", "", "Mondstadt", "1m 48s", 136, 1, 103, 2, 136, 5, 230, 7, 335 ],
-[ "Let's Go, Crimson Knight!", "真紅の騎士、出発", "真红骑士，出发！", "Chevalier écarlate en avant !", "Let's Go, Crimson Knight!", "", "Mondstadt", "1m 30s", 129, 2, 134, 4, 161, 5, 207, 7, 287 ],
-[ "Contemplation in Snow", "純白での瞑想", "白皑中的冥想", "Méditation dans la neige", "Contemplation in Snow", "", "Mondstadt", "1m 47s", 135.8, 2, 137, 3, 169, 4, 207, 5, 284 ],
-[ "Dance of Aphros", "波沫の舞", "浪沫起舞", "Danse d'Aphros", "Dance of Aphros", "", "Mondstadt", "1m 52s", 125, 2, 152, 4, 205, 5, 253, 7, 351 ],
-[ "Sieh an, mein Sommernachtgarten!", "夏夜のガーデン", "夏宫灵囿", , "Sieh an, mein Sommernachtgarten!", "", "Mondstadt", "1m 15s", 108, 1, 80, 4, 116, 5, 156, 6, 197 ],
-[ "Exclusive Specialty", "スペシャルドリンク", "独家特调", , "Exclusive Specialty", "", "Mondstadt", "1m 1s", 107, 2, 86, 4, 106, 6, 168, 7, 194 ],
-[ "Symphony of Boreal Wind", "氷封のシンフォニー", "冰封交响曲", , "Symphony of Boreal Wind", "", "Mondstadt", "2m 25s", 106, 2, 174, 4, 248, 7, 357, 8, 384 ],
-[ "Caelestinum Finale Termini", "終焉のフィナーレ", "终天的闭幕曲", "Final séraphique", "Caelestinum Finale Termini", "", "Mondstadt", "2m 8s", 94, 1, 133, 3, 225, 6, 312, 7, 404 ],
-[ "Invitation of Windblume", "風花の招待", "风花的邀约", "Invitation des alizées", "Invitation of Windblume", "", "Mondstadt", "1m 26s", 118, 1, 81, 4, 134, 5, 191, 7, 266 ],
-[ "Liyue", "璃月", "璃月", "Liyue", "Liyue", "", "Liyue", "3m 7s", 120, 2, 218, 3, 275, 4, 385, 7, 503 ],
-[ "Moon in One's Cup", "明月、盃にあり", "杯中明月", "Moon in One's Cup", "Moon in One’s Cup", "", "Liyue", "1m 57s", 120, 2, 141, 4, 194, 5, 280, 6, 409 ],
-[ "Rapid as Wildfires", "烈火の如く", "疾如猛火", , , "", "Liyue", "2m 7s", 116, 1, 138, 3, 189, 5, 260, 7, 474 ],
-[ "Path of Yaksha", "捷疾の業", "捷疾之业", , , "", "Liyue", "1m 47s", 119, 1, 105, 3, 155, 4, 189, 6, 278 ],
-[ "Qilin's Prance", "麟躍幽岩", "麟跃幽岩", , , "", "Liyue", "1m 40s", 154, 2, 132, 4, 168, 5, 215, 6, 314 ],
-[ "Rex Incognito", "浮世閑歩", "尘世闲游", , , "", "Liyue", "1m 49s", 145, 1, 88, 3, 131, 5, 197, 6, 213 ],
-[ "Any Last Words?", "理が集いし処", "尽在吾辈", , , "", "Liyue", "1m 33s", 120, 1, 100, 3, 135, 5, 193, 6, 230 ],
-[ "Chapter of a New Era", "快意なる新章", "快意新词", , , "", "Liyue", "1m 18s", 121, 2, 118, 3, 151, 4, 187, 6, 274 ],
-[ "The Crane Cries", "清唳の響き", "鹤鸣清唳", , , "", "Liyue", "2m 0s", 140, 1, 123, 2, 146, 4, 222, 6, 314 ],
-[ "Rage Beneath the Mountains", "山岳は崩れ", "岩壑之崩", "Grondement des ravins", "Wut unter den Bergen", "", "Liyue", "1m 31s", 136, 1, 88, 3, 126, 6, 210, 8, 359 ],
-[ "Wrath of Monoceros Caeli", "嵐を切り裂く魔鯨", "斩破风暴的魔鲸", , , "", "Liyue", "2m 44s", 140, 2, 209, 4, 262, 6, 370, 7, 595 ],
-[ "Devastation and Redemption", "神女劈観・喚情", "神女劈观・唤情", , , "", "Liyue", "2m 40s", 95, 1, 143, 4, 220, 5, 260, 7, 426 ],
-[ "Inazuma", "稲妻", "稻妻", , , "", "Inazuma", "2m 22s", 149, 1, 136, 3, 237, 4, 283, 6, 463 ],
-[ "Duel in the Mist", "斬霧破竹", "斩雾破竹", , , "", "Inazuma", "2m 33s", 144, 3, 247, 4, 391, 6, 523, 8, 774 ],
-[ "Drifter's Destiny", "荒波に漂う紅葉", "荒波椛叶", "Destin vagabond", "Herbstblätter auf den tosenden Wellen", "", "Inazuma", "1m 28s", 168, 1, 82, 4, 123, 6, 164, 7, 280 ],
-[ "Blossoms of Summer Night", "満開の焔硝", "硝华流焰", "Fleuraison estivale", "Feuerwerk in voller Blüte", "", "Inazuma", "1m 37s", 145, 2, 113, 4, 164, 5, 246, 6, 311 ],
-[ "Devotion of the Keeper", "忠魂義胆", "赤胆昭忠", "Dévotion protectrice", "Loyalität und Furchtlosigkeit", "", "Inazuma", "1m 4s", 143, 2, 89, 4, 120, 5, 164, 7, 257 ],
-[ "Termination of Desires", "妄念と執念", "何妄何执", "Fin des désirs", "Wahnvorstellung und Sehnsucht", "", "Inazuma", "1m 23s", 144, 2, 122, 4, 191, 5, 240, 7, 315 ],
-[ "Time to Shine", "腕の見せ所", "高光时刻", "Instant d'éclat", "Zeit zu glänzen", "", "Inazuma", "1m 29s", 150, 1, 78, 2, 105, 4, 157, 7, 232 ],
-[ "Nothing but Trickery", "天狐の幻術", "天狐外道", , , "", "Inazuma", "2m 44s", 136, 1, 88, 2, 133, 3, 159, 6, 301 ],
-[ "Storm Chaser", "疾風追跡", "蹑风捕迹", , , "", "Inazuma", "1m 23s", 122, 2, 112, 4, 139, 5, 186, 7, 276 ],
-[ "No Turning Back", "背水の陣", "背水一战", , , "", "Inazuma", "2m 5s", 178, 1, 94, 2, 156, 5, 331, 7, 636 ],
-[ "Saltatio Favillae", "燼滅の舞", "燃烬之舞", , , "", "Inazuma", "3m 2s", 181, 2, 208, 4, 349, 5, 450, 8, 634 ],
-[ "The Almighty Violet Thunder", "稲光神鳴", "稻光神鸣", , , "", "Inazuma", "3m 28s", 132, 2, 214, 5, 337, 7, 441, 8, 729 ],
-[ "Sumeru", "スメール", "须弥", , , "", "Sumeru", "2m 16s", 148, 3, 222, 4, 311, 5, 391, 7, 492 ],
-[ "Hustle and Bustle of Ormos", "賑やかな港", "喧繁之港", "Hustle and Bustle of Ormos", "Hustle and Bustle of Ormos", "", "Sumeru", "1m 48s", 95, 2, 171, 3, 233, 5, 275, 7, 335 ],
-[ "Gilded Runner", "疾駆流金", "流金疾驰", , , "", "Sumeru", "2m 15s", 136, 1, 141, 2, 214, 3, 266, 7, 467 ],
-[ "Melody of Distant Green Fields", "広がる緑地のメロディー", "绿野纤绵的曲调", , , "", "Sumeru", "1m 48s", 110, 1, 109, 4, 146, 6, 208, 7, 302 ],
-[ "Caprice of the Leaves", "移り気な葉っぱたち", "撷翠漫想", "Caprice des feuilles", "Im Grün erwacht", "", "Sumeru", "1m 11s", 97, 1, 78, 3, 114, 5, 151, 7, 295 ],
-[ "Winding Through Avidya", "アビディアを巡る風", "绰巡林风", "Vents d'Avidya", "Wachgang im Avidya-Wald", "", "Sumeru", "2m 11s", 103, 2, 165, 4, 215, 5, 327, 7, 452 ],
-[ "Surasthana Fantasia", "スラサタンナ幻想曲", "净善的遐歌", "Fantaisie de Surasthana", "Surasthana Fantasia", "", "Sumeru", "1m 35s", 168, 1, 90, 2, 140, 5, 170, 6, 231 ],
-[ "Cogitation of Epochs", "千載の時を継ぐ想い", "思接千载", , , "", "Sumeru", "2m 52s", 128, 2, 245, 4, 322, 6, 431, 8, 663 ],
-[ "Order of Silence", "緘秘の戒律", "缄秘的行律", , , "", "Sumeru", "2m 4s", 120, 1, 123, 3, 178, 6, 247, 7, 392 ],
-[ "Whirling of Vairambhaka", "旋藍の舞", "旋蓝之舞", , , "", "Sumeru", "1m 12s", 130, 1, 78, 2, 105, 5, 183, 7, 330 ],
-[ "Polumnia Omnia", "三千娑界の御詠歌", "三千娑世御咏歌", , , "", "Sumeru", "3m 20s", 160, 2, 204, 4, 307, 7, 431, 8, 721 ],
-[ "God-Devouring Mania", "神喰らう巨蛇の乱舞", "噬神巨蛇的狂舞", , , "", "Sumeru", "3m 38s", 110, 2, 256, 4, 383, 6, 552, 8, 848 ],
-[ "Fontaine", "フォンテーヌ", "枫丹", "Fontaine", , "", "Fontaine", "2m 48s", 180, 2, 168, 2, 228, 5, 312, 7, 486 ],
-[ "Rondeau des fleurs et des rapieres", "花と剣の輪舞", "花与剑的轮舞", "Rondeau des fleurs et des rapières", , "", "Fontaine", "3m 6s", 183, 3, 268, 4, 370, 6, 464, 7, 620 ],
-[ "Lamentation et Triomphe", "嘆きと凱旋", "咏歌与凯旋", "Lamentation et triomphe", , "", "Fontaine", "2m 59s", 178, 2, 235, 3, 314, 5, 456, 7, 698 ],
-[ "Lustrous Trick", "幻光のトリック", "幻光漫戏", "Lustrous Trick", "Lustrous Trick", "", "Fontaine", "1m 47s", 115, 1, 106, 3, 152, 5, 198, 6, 277 ],
-[ "Nippy Bout", "霜烈の競争", "霜烈竞逐", "Nippy Bout", , "", "Fontaine", "2m 13s", 128, 1, 129, 3, 158, 5, 239, 7, 432 ],
-[ "Parousia Diluvi", "古海が再び湧き上がる時", "古海复涌之时", "Parousia Diluvi", , "", "Fontaine", "1m 43s", 152, 1, 74, 4, 130, 5, 176, 7, 252 ],
-[ "Se mettre sur son trente-et-un !", "旅への誘い", "邀欢同游", "Se mettre sur son trente-et-un !", , "", "Fontaine", "2m 22s", 110, 1, 120, 3, 172, 4, 196, 7, 418 ],
-[ "Offertorium of Fortuitum", "未だ響かぬ奉献唱", "未始的供献颂", "Offertorium of Fortuitum", , "", "Fontaine", "2m 45s", 150, 2, 202, 4, 273, 5, 339, 7, 508 ],
-[ "Largo alla donzella", "お嬢様のお出まし", "船明伞彩", "Largo alla donzella", , "", "Fontaine", "2m 24s", 114, 1, 146, 3, 243, 5, 302, 6, 432 ],
-[ "Absolutio Absoluta Absolutissime", "終末の赦祷式", "终末的赦祷颂", "Absolutio Absoluta Absolutissime", , "", "Fontaine", "2m 45s", 140, 2, 183, 4, 270, 5, 349, 7, 529 ],
-[ "Silhouette of Catastrophe", "カタストロフの残影", "灾蚀的痕影", "Silhouette of Catastrophe", , "", "Fontaine", "1m 45s", 150, 2, 156, 4, 194, 5, 244, 7, 377 ],
-[ "La vaguelette", "さざ波", "轻涟", "La vaguelette", "La vaguelette", "", "Fontaine", "2m 29s", 110, 1, 130, 3, 188, 5, 266, 7, 418 ],
-];
-init();
+(async () => {
+  Promise.all([
+    fetch("./i18n.json").then(res => res.json()),
+    fetch("./musictable.json").then(res => res.json()),
+    fetch("./scorelist.json").then(res => res.json()),
+  ]).then(init);
+})();
+
+/* musictable.json def.
+  00: English Title
+  01: Japanese Title
+  02: Chinese (Simplified) Title
+  03: French Title
+  04: German Title
+  05: Reserved
+  06: Area Name
+  07: Duration
+  08: BPM
+  09: Normal Level
+  10: Normal Notes
+  11: Hard Level
+  12: Hard Notes
+  13: Pro Level
+  14: Pro Notes
+  15: Legendary Level
+  16: Legendary Notes
+*/
 </script>
 </html>
