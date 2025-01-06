@@ -14,11 +14,11 @@
     "fr": "Genshin Impact - Répertoire aux mille mélodies - Archive des partitions"
   },
   "statement": {
-    "ja": "当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。",
-    "en": "This site is an unofficial personal website and is not affiliated with the official Genshin Impact in any way.",
-    "cn": "本网站是个人的非官方网站，与原神官方无任何关联。\n本网站使用 ChatGPT 实现多语言支持。",
-    "de": "Diese Website ist eine inoffizielle persönliche Website und steht in keiner Verbindung zu Genshin Impact.\nDiese Website unterstützt mehrere Sprachen mit Hilfe von ChatGPT.",
-    "fr": "Ce site est un site personnel non officiel et n'est aucunement affilié à Genshin Impact.\nCe site prend en charge plusieurs langues grâce à ChatGPT."
+    "ja": "当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。\n多言語の対応はChatGPTで行っています。\n1日一つずつ音ゲー用の譜面を公開していきます。完成は2ヶ月後ですね！",
+    "en": "This site is an unofficial personal website and is not affiliated with the official Genshin Impact in any way.\nMultilingual support is provided using ChatGPT.\nWe publish one rhythm game score sheet daily, and the full collection will be ready in two months!",
+    "cn": "本网站是个人的非官方网站，与原神官方无任何关联。\n多语言支持由 ChatGPT 提供。\n我们每天发布一张音游谱子，预计两个月后全部完成！",
+    "de": "Diese Website ist eine inoffizielle persönliche Website und steht in keiner Verbindung zu Genshin Impact.\nDie Unterstützung für mehrere Sprachen erfolgt mithilfe von ChatGPT.\nWir veröffentlichen täglich ein Rhythmusspiel-Notenblatt, und die Sammlung wird in zwei Monaten fertiggestellt sein!",
+    "fr": "Ce site est un site personnel non officiel et n’est aucunement affilié à Genshin Impact.\nLa prise en charge multilingue est réalisée grâce à ChatGPT.\nNous publions chaque jour une partition pour jeu de rythme, et la collection complète sera prête dans deux mois !"
   },
   "level-0": {
     "ja": "イージー",
