@@ -104,7 +104,7 @@
       border-radius: 2px;
       background-color: #27343a;
     }
-    #ingame-album {
+    #album {
       font-size: 14px;
       color: #ddd;
     }
@@ -181,7 +181,7 @@
 </header>
 <main>
   <div class="information">
-    <div id="ingame-album">Loading...</div>
+    <div id="album">Loading...</div>
     <div id="title">Loading...</div>
     <div class="table-centering"><table id="title-multi"></table></div>
     <div class="difficulty">
@@ -228,7 +228,7 @@ function init ([i18n, musicData]){
   }
 
   // View Music Data
-  document.getElementById("ingame-album").textContent = musicData.country;
+  document.getElementById("album").textContent = musicData.country[langText] + " - " + musicData.album[langText];
   document.getElementById("title").textContent = musicData.title[langText];
   const titleMulti = document.getElementById("title-multi");
   for (const c of ["ja", "cn", "en", "fr", "de"]){

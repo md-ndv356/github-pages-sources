@@ -6,7 +6,20 @@
     "de": "Bustling Afternoon in Mondstadt",
     "fr": "Bustling Afternoon in Mondstadt"
   },
-  "country": "Mondstadt",
+  "country": {
+    "en": "Mondstadt",
+    "ja": "モンド",
+    "cn": "蒙德",
+    "de": "Mondstadt",
+    "fr": "Mondstadt"
+  },
+  "album": {
+    "en": "City of Winds and Idylls",
+    "ja": "風と牧歌の城",
+    "cn": "风与牧歌之城",
+    "de": "City of Winds and Idylls",
+    "fr": "City of Winds and Idylls"
+  },
   "duration": 108,
   "bpm": 98,
   "level": 7,
