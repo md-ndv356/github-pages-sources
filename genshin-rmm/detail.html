@@ -30,6 +30,12 @@
       padding: 6px 20px;
       text-align: start;
     }
+    .lang-en, .lang-ja, .lang-fr, .lang-de {
+      font-family: "Noto Serif JP";
+    }
+    .lang-cn {
+      font-family: "Noto Serif SC";
+    }
     header {
       z-index: 999;
     }
@@ -91,6 +97,73 @@
       background-color: #ffffff80;
       z-index: 1;
     }
+    .information {
+      margin: 8px 12px 28px;
+      padding: 8px;
+      border: solid 2px #888;
+      border-radius: 2px;
+      background-color: #27343a;
+    }
+    #ingame-album {
+      font-size: 14px;
+      color: #ddd;
+    }
+    #title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+    .table-centering {
+      display: flex;
+      justify-content: center;
+    }
+    #title-multi {
+      vertical-align: middle;
+      border-collapse: collapse;
+    }
+    #title-multi tr, #title-multi td {
+      margin: 0;
+    }
+    .titlesublang {
+      padding: 0 6px 0 0;
+      font-size: 13px;
+      color: #ddd;
+    }
+    .titlesub {
+      padding: 0;
+      font-size: 15px;
+      text-align: start;
+    }
+    .others {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-size: 15px;
+      color: #eee;
+    }
+    #bpm::before {
+      content: "BPM";
+      color: #ddd;
+      font-size: 13px;
+      margin-right: 4px;
+    }
+    #duration::before {
+      content: "Duration";
+      color: #ddd;
+      font-size: 13px;
+      margin-right: 4px;
+    }
+    #notes::after {
+      content: "Notes";
+      color: #ddd;
+      font-size: 13px;
+      margin-left: 4px;
+    }
+    .difficulty {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -106,7 +179,17 @@
 </header>
 <main>
   <div class="information">
-    <div class="title"></div>
+    <div id="ingame-album">Loading...</div>
+    <div id="title">Loading...</div>
+    <div class="table-centering"><table id="title-multi"></table></div>
+    <div class="difficulty">
+      <div id="level-0" i18n="level-normal" style="display: none;">イージー</div>
+      <div id="level-1" i18n="level-hard" style="display: none;">ノーマル</div>
+      <div id="level-2" i18n="level-pro" style="display: none;">ハード</div>
+      <div id="level-3" i18n="level-legendary" style="display: none;">レジェンド</div>
+      <div id="level-count">★★★★★★☆☆☆☆</div>
+    </div>
+    <div class="others"><div id="bpm">32~259</div><div id="duration">2:01</div><div id="notes">1636</div></div>
   </div>
   <div id="chart"></div>
 </main>
@@ -117,7 +200,7 @@
 <script>
 const query = location.search.slice(1).split(".");
 const langText = query[0] || "ja";
-if (["cn"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
+document.body.classList.add("lang-" + langText);
 const langId = ((["en", "ja", "cn", "fr", "de"].indexOf(langText) + 1) || 2) - 1;
 document.getElementById("headtitle").href = "./?" + langText;
 
@@ -137,6 +220,19 @@ function init ([i18n, musicData]){
     const text = i18n[id]?.[langText];
     if (text) item.innerText = text;
   }
+  
+  // View Music Data
+  document.getElementById("ingame-album").textContent = musicData.country;
+  document.getElementById("title").textContent = musicData.title[langText];
+  const titleMulti = document.getElementById("title-multi");
+  for (const c of ["ja", "cn", "en", "fr", "de"]){
+    if (c === langText) continue;
+    titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">[` + c.toUpperCase() + `]</td><td class="titlesub lang-` + c + `">` + musicData.title[c] + `</td></tr>`);
+  }
+  document.getElementById("bpm").textContent = musicData.bpm;
+  document.getElementById("duration").textContent = Math.floor(musicData.duration / 60) + ":" + ("0" +(musicData.duration % 60)).slice(-2);
+  document.getElementById("level-"+query[2]).style.display = "block";
+  document.getElementById("level-count").textContent = "★".repeat(musicData.level) + "☆".repeat(10-musicData.level);
 
   // Analyze Chart
   const tap       = ["1", "2", "3", "4", "5", "6"];
@@ -168,6 +264,7 @@ function init ([i18n, musicData]){
   }
   
   // View Notes
+  document.getElementById("notes").textContent = notesList.length;
   const chartBase = document.getElementById("chart");
   const height = notesList.at(-1).pos * speed;
   chartBase.style.height = (height + 35) + "px";
@@ -197,7 +294,9 @@ function init ([i18n, musicData]){
   Promise.all([
     fetch("./i18n.json").then(res => res.json()),
     fetch("./music/" + query[1] + "." + query[2] + ".json").then(res => res.json())
-  ]).then(init);
+  ]).then(init).catch(() => {
+    document.getElementById("title").textContent = "Loading Error";
+  });
 })();
 </script>
 </html>
