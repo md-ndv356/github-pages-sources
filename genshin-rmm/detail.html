@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
   <style>
     body {
       background: #3b4252;
@@ -36,8 +37,11 @@
       text-decoration: none;
       color: #ddd;
     }
-    .chart {
+    #chart {
       position: relative;
+      display: inline-block;
+      text-align: center;
+      width: 415px;
     }
     .tap {
       position: absolute;
@@ -58,10 +62,34 @@
     .longmid {
       position: absolute;
       width: 20px;
-      opacity: 0.7;
-      background-color: #8f6eff;
+      background-color: #8f6effb3;
       translate: 5px 15px;
       z-index: 6;
+    }
+    .barline {
+      position: absolute;
+      font-family: "Micro 5", serif;
+      font-size: 20px;
+      translate: 0 4px;
+      width: 24px;
+      padding-right: 1px;
+      text-align: end;
+    }
+    .barline::after {
+      position: absolute;
+      top: 0px; left: 25px;
+      content: "";
+      display: block;
+      width: 390px; height: 2px;
+      background-color: #ffffff80;
+      z-index: 2;
+      translate: 0 10px;
+    }
+    .laneline {
+      position: absolute;
+      top: 0px; width: 1px;
+      background-color: #ffffff80;
+      z-index: 1;
     }
   </style>
 </head>
@@ -77,18 +105,13 @@
   </select></div>
 </header>
 <main>
-  <div>
+  <div class="information">
     <div class="title"></div>
   </div>
-  <div class="chart">
-    <div class="tap" style="top: 0px; left: 70px;"></div>
-    <div class="longedge" style="top: 0px; left: 0px;"></div>
-    <div class="longmid" style="top: 0px; left: 0px; height: 120px;"></div>
-    <div class="longedge" style="top: 120px; left: 0px;"></div>
-  </div>
+  <div id="chart"></div>
 </main>
 <footer>
-  <p>製作中だあよ</p>
+  <p></p>
 </footer>
 </body>
 <script>
@@ -104,6 +127,8 @@ langselect.addEventListener("change", event => {
   query[0] = event.target.value;
   window.location = "?" + query.join(".");
 });
+
+const speed = 200;
 
 function init ([i18n, musicData]){
   // Internationalization
@@ -121,7 +146,8 @@ function init ([i18n, musicData]){
   let notesAA = "";
   const holdStartPos = [null, null, null, null, null, null];
   const notesList = [];
-  for (let barI=0, barL=musicData.score.length; barI<barL; barI++){
+  const measureCount = musicData.score.length;
+  for (let barI=0, barL=measureCount; barI<barL; barI++){
     const bar = musicData.score[barI];
     const lines = bar.split(",");
     for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
@@ -131,18 +157,40 @@ function init ([i18n, musicData]){
         const tapIndex = tap.indexOf(note);
         const holdStartIndex = holdStart.indexOf(note);
         const holdEndIndex = holdEnd.indexOf(note);
-        if (tapIndex !== -1) notesList.push({type: "tap", pos: position});
+        if (tapIndex !== -1) notesList.push({type: "tap", pos: position, lane: tapIndex});
         if (holdStartIndex !== -1) holdStartPos[holdStartIndex] = position;
-        if (holdEndIndex !== 1){
+        if (holdEndIndex !== -1){
           const length = position - holdStartPos[holdEndIndex];
-          notesList.push({type: "hold", pos: position, length});
+          notesList.push({type: "hold", pos: position, length, lane: holdEndIndex});
         }
       }
     }
   }
   
   // View Notes
-  
+  const chartBase = document.getElementById("chart");
+  const height = notesList.at(-1).pos * speed;
+  chartBase.style.height = (height + 35) + "px";
+  for (let i=0; i<6; i++){
+    chartBase.insertAdjacentHTML("beforeend", `<div class="laneline" style="left: ${44.5 + i * 70}px; height: ${height + 35}px;"></div>`);
+  }
+  for (let i=0; i<measureCount; i++){
+    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - i * speed}px; left: 0px;">${i + 1}</div>`);
+  }
+  for (const note of notesList){
+    const lanePos = 30 + note.lane * 70;
+    if (note.type === "tap"){
+      chartBase.insertAdjacentHTML("beforeend", `
+<div class="tap" style="top: ${height - note.pos * speed}px; left: ${lanePos}px;"></div>`);
+    } else if (note.type === "hold"){
+      const holdStart = height - (note.pos - note.length) * speed;
+      const holdEnd = height - note.pos * speed;
+      chartBase.insertAdjacentHTML("beforeend", `
+<div class="longedge" style="top: ${holdStart}px; left: ${lanePos}px;"></div>
+<div class="longmid" style="top: ${holdEnd}px; left: ${lanePos}px; height: ${note.length * speed}px;"></div>
+<div class="longedge" style="top: ${holdEnd}px; left: ${lanePos}px;"></div>`);
+    }
+  }
 }
 
 (async () => {
