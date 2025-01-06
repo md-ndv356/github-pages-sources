@@ -10,12 +10,7 @@
   "duration": 108,
   "bpm": 98,
   "a": [ "Mondstadt", "1m 48s", 98, 2, 121, 4, 190, 5, 250, 7, 396 ],
-  "difficulty": {
-    "n": { "level": 2, "notes": 121 },
-    "h": { "level": 4, "notes": 190 },
-    "p": { "level": 5, "notes": 250 },
-    "l": { "level": 7, "notes": 396 }
-  },
+  "level": 7,
   "base": 0.062,
   "score": [
     "0,3,0,2",
