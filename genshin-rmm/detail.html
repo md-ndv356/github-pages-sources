@@ -141,20 +141,17 @@
       font-size: 15px;
       color: #eee;
     }
-    #bpm::before {
-      content: "BPM";
+    .bpm {
       color: #ddd;
       font-size: 13px;
       margin-right: 4px;
     }
-    #duration::before {
-      content: "Duration";
+    .duration {
       color: #ddd;
       font-size: 13px;
       margin-right: 4px;
     }
-    #notes::after {
-      content: "Notes";
+    .notes {
       color: #ddd;
       font-size: 13px;
       margin-left: 4px;
@@ -163,6 +160,11 @@
       display: flex;
       justify-content: center;
       gap: 10px;
+      margin: 5px 0 3px;
+    }
+    .flex {
+      display: flex;
+      align-items: baseline;
     }
   </style>
 </head>
@@ -183,13 +185,17 @@
     <div id="title">Loading...</div>
     <div class="table-centering"><table id="title-multi"></table></div>
     <div class="difficulty">
-      <div id="level-0" i18n="level-normal" style="display: none;">イージー</div>
-      <div id="level-1" i18n="level-hard" style="display: none;">ノーマル</div>
-      <div id="level-2" i18n="level-pro" style="display: none;">ハード</div>
-      <div id="level-3" i18n="level-legendary" style="display: none;">レジェンド</div>
+      <div id="level-0" i18n="level-0" style="display: none;">イージー</div>
+      <div id="level-1" i18n="level-1" style="display: none;">ノーマル</div>
+      <div id="level-2" i18n="level-2" style="display: none;">ハード</div>
+      <div id="level-3" i18n="level-3" style="display: none;">レジェンド</div>
       <div id="level-count">☆☆☆☆☆☆☆☆☆☆</div>
     </div>
-    <div class="others"><div id="bpm">32~259</div><div id="duration">2:01</div><div id="notes">1636</div></div>
+    <div class="others">
+      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div></div>
+      <div class="flex"><div i18n="duration" class="duration">Duration</div><div id="duration">2:01</div></div>
+      <div class="flex"><div id="notes">1636</div><div i18n="notes" class="notes">Notes</div></div>
+    </div>
   </div>
   <div id="chart"></div>
 </main>
@@ -220,7 +226,7 @@ function init ([i18n, musicData]){
     const text = i18n[id]?.[langText];
     if (text) item.innerText = text;
   }
-  
+
   // View Music Data
   document.getElementById("ingame-album").textContent = musicData.country;
   document.getElementById("title").textContent = musicData.title[langText];
@@ -262,7 +268,7 @@ function init ([i18n, musicData]){
       }
     }
   }
-  
+
   // View Notes
   document.getElementById("notes").textContent = notesList.length;
   const chartBase = document.getElementById("chart");

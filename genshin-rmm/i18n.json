@@ -19,5 +19,54 @@
     "cn": "本网站是个人的非官方网站，与原神官方无任何关联。\n本网站使用 ChatGPT 实现多语言支持。",
     "de": "Diese Website ist eine inoffizielle persönliche Website und steht in keiner Verbindung zu Genshin Impact.\nDiese Website unterstützt mehrere Sprachen mit Hilfe von ChatGPT.",
     "fr": "Ce site est un site personnel non officiel et n'est aucunement affilié à Genshin Impact.\nCe site prend en charge plusieurs langues grâce à ChatGPT."
+  },
+  "level-0": {
+    "ja": "イージー",
+    "en": "Normal",
+    "cn": "普通",
+    "de": "Normal",
+    "fr": "Normal"
+  },
+  "level-1": {
+    "ja": "ノーマル",
+    "en": "Hard",
+    "cn": "困难",
+    "de": "Schwierig",
+    "fr": "Difficile"
+  },
+  "level-2": {
+    "ja": "ハード",
+    "en": "Pro",
+    "cn": "大师",
+    "de": "Experte",
+    "fr": "Pro"
+  },
+  "level-3": {
+    "ja": "レジェンド",
+    "en": "Legendary",
+    "cn": "传说",
+    "de": "Legende",
+    "fr": "Légende"
+  },
+  "bpm": {
+    "ja": "BPM",
+    "en": "BPM",
+    "cn": "BPM",
+    "de": "BPM",
+    "fr": "BPM"
+  },
+  "duration": {
+    "ja": "Duration",
+    "en": "Duration",
+    "cn": "时长",
+    "de": "Dauer",
+    "fr": "Durée"
+  },
+  "notes": {
+    "ja": "Notes",
+    "en": "Notes",
+    "cn": "音符",
+    "de": "Noten",
+    "fr": "Notes"
   }
 }
