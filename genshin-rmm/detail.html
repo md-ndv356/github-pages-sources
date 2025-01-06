@@ -29,12 +29,39 @@
       padding: 6px 20px;
       text-align: start;
     }
+    header {
+      z-index: 999;
+    }
     header a {
       text-decoration: none;
       color: #ddd;
     }
+    .chart {
+      position: relative;
+    }
     .tap {
+      position: absolute;
+      width: 26px; height: 26px;
+      border-radius: 15px;
+      border: solid 2px #ddd;
       background-color: #eabd59;
+      z-index: 10;
+    }
+    .longedge {
+      position: absolute;
+      width: 26px; height: 26px;
+      border-radius: 15px;
+      border: solid 2px #ddd;
+      background-color: #8f6eff;
+      z-index: 10;
+    }
+    .longmid {
+      position: absolute;
+      width: 20px;
+      opacity: 0.7;
+      background-color: #8f6eff;
+      translate: 5px 15px;
+      z-index: 6;
     }
   </style>
 </head>
@@ -52,6 +79,12 @@
 <main>
   <div>
     <div class="title"></div>
+  </div>
+  <div class="chart">
+    <div class="tap" style="top: 0px; left: 70px;"></div>
+    <div class="longedge" style="top: 0px; left: 0px;"></div>
+    <div class="longmid" style="top: 0px; left: 0px; height: 120px;"></div>
+    <div class="longedge" style="top: 120px; left: 0px;"></div>
   </div>
 </main>
 <footer>
@@ -80,13 +113,14 @@ function init ([i18n, musicData]){
     if (text) item.innerText = text;
   }
 
-  // View Score Data
+  // Analyze Chart
   const tap       = ["1", "2", "3", "4", "5", "6"];
   const holdStart = ["q", "w", "e", "r", "t", "y"];
   const holdEnd   = ["a", "s", "d", "f", "g", "h"];
   let notesCount = 0;
   let notesAA = "";
   const holdStartPos = [null, null, null, null, null, null];
+  const notesList = [];
   for (let barI=0, barL=musicData.score.length; barI<barL; barI++){
     const bar = musicData.score[barI];
     const lines = bar.split(",");
@@ -97,12 +131,18 @@ function init ([i18n, musicData]){
         const tapIndex = tap.indexOf(note);
         const holdStartIndex = holdStart.indexOf(note);
         const holdEndIndex = holdEnd.indexOf(note);
-        if (tapIndex !== -1) notes[tapIndex] = 1;
-        if (holdStartIndex !== -1) notes[holdStartIndex] = 1;
-        // if (holdEndIndex !== 1) notesCount++;
+        if (tapIndex !== -1) notesList.push({type: "tap", pos: position});
+        if (holdStartIndex !== -1) holdStartPos[holdStartIndex] = position;
+        if (holdEndIndex !== 1){
+          const length = position - holdStartPos[holdEndIndex];
+          notesList.push({type: "hold", pos: position, length});
+        }
       }
     }
   }
+  
+  // View Notes
+  
 }
 
 (async () => {
