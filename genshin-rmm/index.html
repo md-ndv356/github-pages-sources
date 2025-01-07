@@ -7,77 +7,76 @@
   <meta name="description" content="原神の音ゲーの譜面保管所（仮）（作ってみたかっただけ）">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
+  <link href="./fonts/font.css" rel="stylesheet">
   <style>
-  body {
-    background: #3b4252;
-    color: #fff;
-    font-family: "Noto Serif JP";
-    font-size: 16px;
-    text-align: center;
-    margin: 8px;
-    margin-top: 43px;
-  }
-  header {
-    display: flex;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100dvw;
-    box-sizing: border-box;
-    background: #0c0f13;
-    font-size: 15px;
-    padding: 6px 20px;
-    text-align: start;
-  }
-  header a {
-    text-decoration: none;
-    color: #ddd;
-  }
-  h1 {
-    color: #eee;
-    font-size: 24px;
-  }
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .item {
-    display: flex;
-    color: #111520;
-    margin: 3px 0;
-    padding: 5px 8px;
-    background: linear-gradient(270deg, #fc897e, #f79a2f);
-    width: calc(100dvw - 32px);
-    max-width: 520px;
-    border-radius: 10px;
-  }
-  .bpm {
-    font-size: 14px;
-    margin: 0;
-  }
-  .bpm::before {
-    display: inline-block;
-    padding-right: 3px;
-    font-size: 12px;
-    content: "BPM";
-  }
-  .title {
-    flex: 1;
-    margin: 0 8px;
-  }
-  .levels {
-    display: flex;
-    gap: 5px;
-    margin: 0;
-  }
-  .easy, .normal, .hard, .legend {
-    padding: 0 8px;
-  }
-  main a[href] {
-    color: #2c13b7;
-  }
+    body {
+      background: #3b4252;
+      color: #fff;
+      font-family: "Noto Serif JP";
+      font-size: 16px;
+      text-align: center;
+      margin: 8px;
+      margin-top: 43px;
+    }
+    header {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100dvw;
+      box-sizing: border-box;
+      background: #0c0f13;
+      font-size: 15px;
+      padding: 6px 20px;
+      text-align: start;
+    }
+    header a {
+      text-decoration: none;
+      color: #ddd;
+    }
+    h1 {
+      color: #eee;
+      font-size: 24px;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .item {
+      display: flex;
+      color: #111520;
+      margin: 3px 0;
+      padding: 5px 8px;
+      background: linear-gradient(270deg, #fc897e, #f79a2f);
+      width: calc(100dvw - 32px);
+      max-width: 520px;
+      border-radius: 10px;
+    }
+    .bpm {
+      font-size: 14px;
+      margin: 0;
+    }
+    .bpm::before {
+      display: inline-block;
+      padding-right: 3px;
+      font-size: 12px;
+      content: "BPM";
+    }
+    .title {
+      flex: 1;
+      margin: 0 8px;
+    }
+    .levels {
+      display: flex;
+      gap: 5px;
+      margin: 0;
+    }
+    .easy, .normal, .hard, .legend {
+      padding: 0 8px;
+    }
+    main a[href] {
+      color: #2c13b7;
+    }
   </style>
 </head>
 <body>
@@ -111,6 +110,8 @@ langselect.addEventListener("change", event => {
 
 const musiclist = document.getElementById("musiclist");
 function init ([i18n, musicTable, scoreList]){
+  document.title = i18n.pagetitle[langText];
+
   // Internationalization
   for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
     const id = item.getAttribute("i18n");

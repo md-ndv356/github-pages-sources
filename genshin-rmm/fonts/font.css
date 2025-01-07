@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Noto Serif JP";
+  font-weight: 400;
+  src: url(./Noto_Serif_JP-400.woff2);
+}
+@font-face {
+  font-family: "Noto Serif JP";
+  font-weight: 700;
+  src: url(./Noto_Serif_JP-700.woff2);
+}
+@font-face {
+  font-family: "Noto Serif SC";
+  font-weight: 400;
+  src: url(./Noto_Serif_SC-400.woff2);
+}
+@font-face {
+  font-family: "Noto Serif SC";
+  font-weight: 700;
+  src: url(./Noto_Serif_SC-700.woff2);
+}
+@font-face {
+  font-family: "Micro 5";
+  font-weight: 400;
+  src: url(./Micro-5-400.woff2);
+}

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>原神 幾千のメロディー 譜面保管所 詳細</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+  <link href="./fonts/font.css" rel="stylesheet">
   <style>
     body {
       background: #3b4252;
@@ -217,9 +215,11 @@ langselect.addEventListener("change", event => {
   window.location = "?" + query.join(".");
 });
 
-const speed = 200;
+const speed = 150;
 
 function init ([i18n, musicData]){
+  document.title = musicData.title[langText] + " - " + i18n.pagetitle[langText];
+
   // Internationalization
   for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
     const id = item.getAttribute("i18n");
@@ -294,7 +294,18 @@ function init ([i18n, musicData]){
 <div class="longedge" style="top: ${holdEnd}px; left: ${lanePos}px;"></div>`);
     }
   }
+  play.bpm = musicData.bpm;
 }
+
+// for debug purpose
+function play (){
+  const currentTime = Date.now();
+  scrollTo(0, play.startPos - (currentTime - play.startTime) * (play.bpm / 60000) * speed);
+  if (!play.pause) requestAnimationFrame(play);
+}
+// play.startTime = Date.now();
+// play.startPos = document.querySelector("#chart").getBoundingClientRect().bottom;
+// play();
 
 (async () => {
   Promise.all([
