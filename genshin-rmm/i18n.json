@@ -78,11 +78,11 @@
       "fr": "Im Spiel angezeigtes BPM"
     },
     "bpm-est": {
-      "ja": "時間から推定したBPM",
-      "en": "Estimated BPM based on time",
-      "cn": "根据时间推测的 BPM",
-      "de": "BPM estimé à partir du temps",
-      "fr": "Geschätztes BPM basierend auf der Zeit"
+      "ja": "作者が推定したBPM",
+      "en": "BPM estimated by the author",
+      "cn": "作者推测的 BPM",
+      "de": "BPM estimé par l'auteur",
+      "fr": "Vom Autor geschätztes BPM"
     },
     "album": {
       "ja": "収録アルバム名",
