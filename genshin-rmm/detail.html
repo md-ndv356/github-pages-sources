@@ -215,7 +215,7 @@ langselect.addEventListener("change", event => {
   window.location = "?" + query.join(".");
 });
 
-const speed = 150;
+const speed = 200;
 
 function init ([i18n, musicData]){
   document.title = musicData.title[langText] + " - " + i18n.pagetitle[langText];
@@ -304,7 +304,7 @@ function play (){
   if (!play.pause) requestAnimationFrame(play);
 }
 // play.startTime = Date.now();
-// play.startPos = document.querySelector("#chart").getBoundingClientRect().bottom;
+// play.startPos = document.querySelector("#chart").getBoundingClientRect().bottom + window.scrollY;
 // play();
 
 (async () => {
