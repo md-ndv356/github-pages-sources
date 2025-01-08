@@ -143,7 +143,12 @@
     .bpm {
       color: #ddd;
       font-size: 13px;
-      margin-right: 4px;
+    }
+    #bpm {
+      margin: 0 4px;
+    }
+    #bpm-est {
+      font-size: 13px;
     }
     .duration {
       color: #ddd;
@@ -191,7 +196,7 @@
       <div id="level-count">☆☆☆☆☆☆☆☆☆☆</div>
     </div>
     <div class="others">
-      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div></div>
+      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-est"></div></div>
       <div class="flex"><div i18n="duration" class="duration">Duration</div><div id="duration">2:01</div></div>
       <div class="flex"><div id="notes">1636</div><div i18n="notes" class="notes">Notes</div></div>
     </div>
@@ -227,6 +232,11 @@ function init ([i18n, musicData]){
     const text = i18n[id]?.[langText];
     if (text) item.innerText = text;
   }
+  for (const id in i18n.__attr_title__){
+    const element = document.getElementById(id);
+    if (!element) continue;
+    element.title = i18n.__attr_title__[id][langText];
+  }
 
   // View Music Data
   document.getElementById("album").textContent = musicData.country[langText] + " - " + musicData.album[langText];
@@ -237,6 +247,7 @@ function init ([i18n, musicData]){
     titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">[` + c.toUpperCase() + `]</td><td class="titlesub lang-` + c + `">` + musicData.title[c] + `</td></tr>`);
   }
   document.getElementById("bpm").textContent = musicData.bpm;
+  if (musicData.bpm_est) document.getElementById("bpm-est").textContent = "(" + musicData.bpm_est + ")";
   document.getElementById("duration").textContent = Math.floor(musicData.duration / 60) + ":" + ("0" +(musicData.duration % 60)).slice(-2);
   document.getElementById("level-"+query[2]).style.display = "block";
   document.getElementById("level-count").textContent = "★".repeat(musicData.level) + "☆".repeat(10-musicData.level);
@@ -249,25 +260,30 @@ function init ([i18n, musicData]){
   let notesAA = "";
   const holdStartPos = [null, null, null, null, null, null];
   const notesList = [];
+  const barlineList = [];
+  let basePosition = 0;
   const measureCount = musicData.score.length;
   for (let barI=0, barL=measureCount; barI<barL; barI++){
+    const measureLength = musicData.measure?.[barI] ? musicData.measure[barI][0] / musicData.measure[barI][1] : 1;
     const bar = musicData.score[barI];
     const lines = bar.split(",");
+    barlineList.push({ pos: basePosition, count: barI + 1 });
     for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
       const line = lines[lineI];
-      const position = barI + lineI / lineL;
+      const notePosition = basePosition + lineI / lineL * measureLength;
       for (const note of line.split("")){
         const tapIndex = tap.indexOf(note);
         const holdStartIndex = holdStart.indexOf(note);
         const holdEndIndex = holdEnd.indexOf(note);
-        if (tapIndex !== -1) notesList.push({type: "tap", pos: position, lane: tapIndex});
-        if (holdStartIndex !== -1) holdStartPos[holdStartIndex] = position;
+        if (tapIndex !== -1) notesList.push({type: "tap", pos: notePosition, lane: tapIndex});
+        if (holdStartIndex !== -1) holdStartPos[holdStartIndex] = notePosition;
         if (holdEndIndex !== -1){
-          const length = position - holdStartPos[holdEndIndex];
-          notesList.push({type: "hold", pos: position, length, lane: holdEndIndex});
+          const length = notePosition - holdStartPos[holdEndIndex];
+          notesList.push({type: "hold", pos: notePosition, length, lane: holdEndIndex});
         }
       }
     }
+    basePosition += measureLength;
   }
 
   // View Notes
@@ -278,8 +294,8 @@ function init ([i18n, musicData]){
   for (let i=0; i<6; i++){
     chartBase.insertAdjacentHTML("beforeend", `<div class="laneline" style="left: ${44.5 + i * 70}px; height: ${height + 35}px;"></div>`);
   }
-  for (let i=0; i<measureCount; i++){
-    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - i * speed}px; left: 0px;">${i + 1}</div>`);
+  for (const barline of barlineList){
+    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - barline.pos * speed}px; left: 0px;">${barline.count}</div>`);
   }
   for (const note of notesList){
     const lanePos = 30 + note.lane * 70;
@@ -295,7 +311,9 @@ function init ([i18n, musicData]){
 <div class="longedge" style="top: ${holdEnd}px; left: ${lanePos}px;"></div>`);
     }
   }
-  play.bpm = musicData.bpm;
+  play.bpm = musicData.bpm_est ?? musicData.bpm;
+
+  // debugger;
 }
 
 // for debug purpose
@@ -312,8 +330,9 @@ function play (){
   Promise.all([
     fetch("./i18n.json").then(res => res.json()),
     fetch("./music/" + query[1] + "." + query[2] + ".json").then(res => res.json())
-  ]).then(init).catch(() => {
+  ]).then(init).catch(error => {
     document.getElementById("title").textContent = "Loading Error";
+    console.error(error);
   });
 })();
 </script>
