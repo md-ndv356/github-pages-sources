@@ -120,6 +120,15 @@
       font-weight: bold;
       margin: 4px 0;
     }
+    #title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+    #title a {
+      color: #b9ebfa;
+      text-decoration: none;
+    }
     .table-centering {
       display: flex;
       justify-content: center;
@@ -252,7 +261,16 @@ function init ([i18n, musicData]){
 
   // View Music Data
   document.getElementById("album").textContent = musicData.country[langText] + " - " + musicData.album[langText];
-  document.getElementById("title").textContent = musicData.title[langText];
+  if (musicData.link_ytmusic){
+    const a = document.createElement("a");
+    a.href = "https://youtu.be/" + musicData.link_ytmusic;
+    a.textContent = musicData.title[langText];
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.getElementById("title").innerHTML = a.outerHTML;
+  } else {
+    document.getElementById("title").textContent = musicData.title[langText];
+  }
   const titleMulti = document.getElementById("title-multi");
   for (const c of ["ja", "cn", "en", "fr", "de"]){
     if (c === langText) continue;

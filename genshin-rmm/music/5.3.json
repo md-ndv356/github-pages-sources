@@ -14,12 +14,13 @@
     "fr": "Mondstadt"
   },
   "album": {
-    "en": "City of Winds and Idylls",
-    "ja": "風と牧歌の城",
-    "cn": "风与牧歌之城",
-    "de": "City of Winds and Idylls",
-    "fr": "City of Winds and Idylls"
+    "en": "The Stellar Moments (Albedo)",
+    "ja": "輝く星々（アルベド）",
+    "cn": "闪耀的群星（阿贝多）",
+    "de": "The Stellar Moments (Albedo)",
+    "fr": "The Stellar Moments ( Albedo )"
   },
+  "link_ytmusic": "BhDT66CcTco",
   "duration": 107,
   "bpm": 135.8,
   "level": 5,

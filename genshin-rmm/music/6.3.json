@@ -14,12 +14,13 @@
     "fr": "Mondstadt"
   },
   "album": {
-    "en": "City of Winds and Idylls",
-    "ja": "風と牧歌の城",
-    "cn": "风与牧歌之城",
-    "de": "City of Winds and Idylls",
-    "fr": "City of Winds and Idylls"
+    "en": "The Stellar Moments (Eula)",
+    "ja": "輝く星々（エウルア）",
+    "cn": "闪耀的群星（优菈）",
+    "de": "The Stellar Moments (Eula)",
+    "fr": "The Stellar Moments ( Eula )"
   },
+  "link_ytmusic": "V-UKFWeCk90",
   "duration": 112,
   "bpm": 125,
   "level": 7,

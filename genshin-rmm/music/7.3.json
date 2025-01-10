@@ -14,12 +14,13 @@
     "fr": "Mondstadt"
   },
   "album": {
-    "en": "City of Winds and Idylls",
-    "ja": "風と牧歌の城",
-    "cn": "风与牧歌之城",
-    "de": "City of Winds and Idylls",
-    "fr": "City of Winds and Idylls"
+    "en": "The Stellar Moments (Fischl)",
+    "ja": "輝く星々（フィッシュル）",
+    "cn": "闪耀的群星（菲谢尔）",
+    "de": "The Stellar Moments (Fischl)",
+    "fr": "The Stellar Moments ( Fischl )"
   },
+  "link_ytmusic": "t3bCXDm1lg0",
   "duration": 75,
   "bpm": 108,
   "level": 6,

@@ -14,12 +14,13 @@
     "fr": "Mondstadt"
   },
   "album": {
-    "en": "The Stellar Moments (Venti)",
-    "ja": "輝く星々（ウェンティ）",
-    "cn": "闪耀的群星（温迪）",
-    "de": "The Stellar Moments (Venti)",
-    "fr": "The Stellar Moments ( Venti )"
+    "en": "The Stellar Moments (Klee)",
+    "ja": "輝く星々（クレー）",
+    "cn": "闪耀的群星（可莉）",
+    "de": "The Stellar Moments (Klee)",
+    "fr": "The Stellar Moments ( Klee )"
   },
+  "link_ytmusic": "4x0RoMXoHwg",
   "duration": 90,
   "bpm": 129,
   "level": 7,
