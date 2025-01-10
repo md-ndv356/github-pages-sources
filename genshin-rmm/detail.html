@@ -294,7 +294,7 @@ function init ([i18n, musicData]){
     barlineList.push({ pos: basePosition, index: barI });
     for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
       const line = lines[lineI];
-      const notePosition = basePosition + lineI / lineL * measureLength;
+      const notePosition = basePosition + lineI / lineL;
       for (const note of line.split("")){
         const tapIndex = tap.indexOf(note);
         const holdStartIndex = holdStart.indexOf(note);
