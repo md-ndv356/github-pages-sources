@@ -70,6 +70,15 @@
       translate: 5px 15px;
       z-index: 6;
     }
+    .barline::before {
+      position: absolute;
+      right: 0;
+      top: -14px;
+      display: block;
+      text-align: end;
+      color: #6ef78f;
+      content: attr(data-bpm);
+    }
     .barline {
       position: absolute;
       font-family: "Micro 5", serif;
@@ -146,7 +155,7 @@
     #bpm {
       margin: 0 4px;
     }
-    #bpm-est {
+    #bpm-act {
       font-size: 13px;
     }
     .duration {
@@ -164,6 +173,9 @@
       justify-content: center;
       gap: 10px;
       margin: 5px 0 3px;
+    }
+    #bpm-notice {
+      color: #ddd;
     }
     .flex {
       display: flex;
@@ -195,11 +207,12 @@
       <div id="level-count">☆☆☆☆☆☆☆☆☆☆</div>
     </div>
     <div class="others">
-      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-est"></div></div>
+      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-act"></div></div>
       <div class="flex"><div i18n="duration" class="duration">Duration</div><div id="duration">2:01</div></div>
       <div class="flex"><div id="notes">1636</div><div i18n="notes" class="notes">Notes</div></div>
     </div>
   </div>
+  <p id="bpm-notice" i18n="bpm-notice" style="display: none;">BPM変化を表す緑数字は、<wbr>作者が勝手に推測したものです。</p>
   <div id="chart"></div>
 </main>
 <footer>
@@ -246,7 +259,19 @@ function init ([i18n, musicData]){
     titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">[` + c.toUpperCase() + `]</td><td class="titlesub lang-` + c + `">` + musicData.title[c] + `</td></tr>`);
   }
   document.getElementById("bpm").textContent = musicData.bpm;
-  if (musicData.bpm_est) document.getElementById("bpm-est").textContent = "(" + musicData.bpm_est + ")";
+  if (musicData.bpm_act){
+    const bpmList = [];
+    for (const change of Object.entries(musicData.bpm_act)) bpmList.push(change[1]);
+    if (bpmList.length === 1){
+      document.getElementById("bpm-act").textContent = "(" + bpmList[0] + ")";
+      musicData.bpm_act = {};
+    } else {
+      document.getElementById("bpm-act").textContent = "(" + Math.min(...bpmList) + "-" + Math.max(...bpmList) + ")";
+      document.getElementById("bpm-notice").style.display = "block";
+    }
+  } else {
+    musicData.bpm_act = {};
+  }
   document.getElementById("duration").textContent = Math.floor(musicData.duration / 60) + ":" + ("0" +(musicData.duration % 60)).slice(-2);
   document.getElementById("level-"+query[2]).style.display = "block";
   document.getElementById("level-count").textContent = "★".repeat(musicData.level) + "☆".repeat(10-musicData.level);
@@ -266,7 +291,7 @@ function init ([i18n, musicData]){
     const measureLength = musicData.measure?.[barI] ? musicData.measure[barI][0] / musicData.measure[barI][1] : 1;
     const bar = musicData.score[barI];
     const lines = bar.split(",");
-    barlineList.push({ pos: basePosition, count: barI + 1 });
+    barlineList.push({ pos: basePosition, index: barI });
     for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
       const line = lines[lineI];
       const notePosition = basePosition + lineI / lineL * measureLength;
@@ -294,7 +319,7 @@ function init ([i18n, musicData]){
     chartBase.insertAdjacentHTML("beforeend", `<div class="laneline" style="left: ${44.5 + i * 70}px; height: ${height + 35}px;"></div>`);
   }
   for (const barline of barlineList){
-    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - barline.pos * speed}px; left: 0px;">${barline.count}</div>`);
+    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - barline.pos * speed}px; left: 0px;" data-bpm="${musicData.bpm_act[barline.index] ?? ""}">${barline.index + 1}</div>`);
   }
   for (const note of notesList){
     const lanePos = 30 + note.lane * 70;

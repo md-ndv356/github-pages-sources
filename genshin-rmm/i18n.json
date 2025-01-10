@@ -69,6 +69,13 @@
     "de": "Noten",
     "fr": "Notes"
   },
+  "bpm-notice": {
+    "ja": "BPM変化を表す緑数字は、\u200b作者が推測したものです。",
+    "en": "The green numbers representing BPM changes are estimated by the author.",
+    "cn": "表示 BPM 变化的绿色数字是作者推测的。",
+    "de": "Les chiffres verts indiquant les changements de BPM sont estimés par l'auteur.",
+    "fr": "Die grünen Zahlen, die BPM-Änderungen anzeigen, wurden vom Autor geschätzt."
+  },
   "__attr_title__": {
     "bpm": {
       "ja": "ゲーム内表記のBPM",
@@ -77,7 +84,7 @@
       "de": "BPM affiché dans le jeu",
       "fr": "Im Spiel angezeigtes BPM"
     },
-    "bpm-est": {
+    "bpm-act": {
       "ja": "作者が推定したBPM",
       "en": "BPM estimated by the author",
       "cn": "作者推测的 BPM",
