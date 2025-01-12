@@ -98,6 +98,9 @@
       z-index: 2;
       translate: 0 10px;
     }
+    .barline.bpmchange::after {
+      background-color: #7eff9c80;
+    }
     .laneline {
       position: absolute;
       top: 0px; width: 1px;
@@ -337,7 +340,7 @@ function init ([i18n, musicData]){
     chartBase.insertAdjacentHTML("beforeend", `<div class="laneline" style="left: ${44.5 + i * 70}px; height: ${height + 35}px;"></div>`);
   }
   for (const barline of barlineList){
-    chartBase.insertAdjacentHTML("beforeend", `<div class="barline" style="top: ${height - barline.pos * speed}px; left: 0px;" data-bpm="${musicData.bpm_act[barline.index] ?? ""}">${barline.index + 1}</div>`);
+    chartBase.insertAdjacentHTML("beforeend", `<div class="barline${musicData.bpm_act[barline.index] ? " bpmchange" : ""}" style="top: ${height - barline.pos * speed}px; left: 0px;" data-bpm="${musicData.bpm_act[barline.index] ?? ""}">${barline.index + 1}</div>`);
   }
   for (const note of notesList){
     const lanePos = 30 + note.lane * 70;

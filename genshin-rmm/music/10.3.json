@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Caelestinum Finale Termini",
+    "ja": "終焉のフィナーレ",
+    "cn": "终天的闭幕曲",
+    "de": "Caelestinum Finale Termini",
+    "fr": "Caelestinum Finale Termini"
+  },
+  "country": {
+    "en": "Mondstadt",
+    "ja": "モンド",
+    "cn": "蒙德",
+    "de": "Mondstadt",
+    "fr": "Mondstadt"
+  },
+  "album": {
+    "en": "The Wind and The Star Traveler",
+    "ja": "風と異邦人",
+    "cn": "风与异乡人",
+    "de": "Le Vent et les Enfants des étoiles",
+    "fr": "Le Vent et les Enfants des étoiles"
+  },
+  "link_ytmusic": "Ui7L0VZqAT0",
+  "duration": 128,
+  "bpm": 94,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}
