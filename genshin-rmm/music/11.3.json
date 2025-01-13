@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Invitation of Windblume",
+    "ja": "風花の招待",
+    "cn": "风花的邀约",
+    "de": "Invitation of Windblume",
+    "fr": "Invitation of Windblume"
+  },
+  "country": {
+    "en": "Mondstadt",
+    "ja": "モンド",
+    "cn": "蒙德",
+    "de": "Mondstadt",
+    "fr": "Mondstadt"
+  },
+  "album": {
+    "en": "Footprints of the Traveler",
+    "ja": "流星の軌跡",
+    "cn": "流星的轨迹",
+    "de": "Footprints of the Traveler",
+    "fr": "Footprints of the Traveler"
+  },
+  "link_ytmusic": "MYqsfjhj3c4",
+  "duration": 86,
+  "bpm": 118,
+  "level": 7,
+  "base": 0.020,
+  "score": [
+  ],
+  "measure": {},
+  "bpm_act": {}
+}
