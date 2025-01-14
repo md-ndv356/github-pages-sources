@@ -101,6 +101,11 @@ const langText = location.search.slice(1).split(".")[0] || "ja";
 if (["cn"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
 const langId = ((["en", "ja", "cn", "fr", "de"].indexOf(langText) + 1) || 2) - 1;
 document.getElementById("headtitle").href = "./?" + langText;
+/** Create Canonical URL */
+const canonicalLink = document.createElement("link");
+canonicalLink.rel = "canonical";
+canonicalLink.href = "https://md-ndv356.github.io/genshin-rmm/?" + langText;
+document.head.appendChild(canonicalLink);
 
 const langselect = document.getElementById("langselect");
 langselect.value = langText;
