@@ -147,6 +147,7 @@
       padding: 0 6px 0 0;
       font-size: 13px;
       color: #ddd;
+      text-align: end;
     }
     .titlesub {
       padding: 0;
@@ -279,10 +280,16 @@ function init ([i18n, musicData]){
   } else {
     document.getElementById("title").textContent = musicData.title[langText];
   }
+  const langDict = {};
   const titleMulti = document.getElementById("title-multi");
   for (const c of ["ja", "cn", "en", "fr", "de"]){
     if (c === langText) continue;
-    titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">[` + c.toUpperCase() + `]</td><td class="titlesub lang-` + c + `">` + musicData.title[c] + `</td></tr>`);
+    if (!langDict[musicData.title[c]]) langDict[musicData.title[c]] = [];
+    langDict[musicData.title[c]].push(c);
+  }
+  for (const item of Object.entries(langDict)){
+    const langList = item[1].map(c => "[" + c.toUpperCase() + "]").join("");
+    titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">${langList}</td><td class="titlesub lang-${item[1][0]}">${item[0]}</td></tr>`);
   }
   document.getElementById("bpm").textContent = musicData.bpm;
   if (musicData.bpm_act){
