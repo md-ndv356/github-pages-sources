@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "country": {
+    "en": "Moon in One's Cup",
+    "ja": "明月、盃にあり",
+    "cn": "杯中明月",
+    "de": "Moon in One's Cup",
+    "fr": "Moon in One's Cup"
+  },
+  "album": {
+    "en": "Jade Moon Upon a Sea of Clouds",
+    "ja": "皎月雲間の夢",
+    "cn": "皎月云间之梦",
+    "de": "Jade Moon Upon a Sea of Clouds",
+    "fr": "Jade Moon Upon a Sea of Clouds"
+  },
+  "link_ytmusic": "",
+  "duration": 117,
+  "bpm": 120,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}
