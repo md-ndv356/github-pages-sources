@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "The Crane Cries",
+    "ja": "清唳の響き",
+    "cn": "鹤鸣清唳",
+    "de": "The Crane Cries",
+    "fr": "The Crane Cries"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 3 (Shenhe)",
+    "ja": "輝く星々Vol.3（申鶴）",
+    "cn": "闪耀的群星3（申鹤）",
+    "de": "The Stellar Moments Vol. 3 (Shenhe)",
+    "fr": "The Stellar Moments Vol. 3 ( Shenhe )"
+  },
+  "link_ytmusic": "",
+  "duration": 120,
+  "bpm": 140,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Path of Yaksha",
+    "ja": "捷疾の業",
+    "cn": "捷疾之业",
+    "de": "Path of Yaksha",
+    "fr": "Path of Yaksha"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 2 (Xiao)",
+    "ja": "輝く星々Vol.2（魈）",
+    "cn": "闪耀的群星2（魈）",
+    "de": "The Stellar Moments Vol. 2 (Xiao)",
+    "fr": "The Stellar Moments Vol. 2 ( Xiao )"
+  },
+  "link_ytmusic": "",
+  "duration": 107,
+  "bpm": 119,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

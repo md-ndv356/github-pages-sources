@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Rage Beneath the Mountains",
+    "ja": "山岳は崩れ",
+    "cn": "岩壑之崩",
+    "de": "Rage Beneath the Mountains",
+    "fr": "Rage Beneath the Mountains"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Shimmering Voyage",
+    "ja": "真珠の歌",
+    "cn": "珍珠之歌",
+    "de": "The Shimmering Voyage",
+    "fr": "The Shimmering"
+  },
+  "link_ytmusic": "",
+  "duration": 91,
+  "bpm": 136,
+  "level": 8,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

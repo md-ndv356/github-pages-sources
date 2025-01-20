@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Blossoms of Summer Night",
+    "ja": "満開の焔硝",
+    "cn": "硝华流焰",
+    "de": "Blossoms of Summer Night",
+    "fr": "Blossoms of Summer Night"
+  },
+  "country": {
+    "en": "Inazuma",
+    "ja": "稲妻",
+    "cn": "稻妻",
+    "de": "Inazuma",
+    "fr": "Inazuma"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 2 (Kaedehara Kazuha)",
+    "ja": "輝く星々Vol.2（楓原萬葉）",
+    "cn": "闪耀的群星2（枫原万叶）",
+    "de": "The Stellar Moments Vol. 2 (Kaedehara Kazuha)",
+    "fr": "The Stellar Moments Vol. 2 ( Kaedehara Kazuha )"
+  },
+  "link_ytmusic": "",
+  "duration": 97,
+  "bpm": 145,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

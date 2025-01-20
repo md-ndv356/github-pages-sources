@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Any Last Words?",
+    "ja": "理が集いし処",
+    "cn": "尽在吾辈",
+    "de": "Any Last Words?",
+    "fr": "Any Last Words?"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 2 (Hu Tao)",
+    "ja": "輝く星々Vol.2（胡桃）",
+    "cn": "闪耀的群星2（胡桃）",
+    "de": "The Stellar Moments Vol. 2 (Hu Tao)",
+    "fr": "The Stellar Moments Vol. 2 ( Hu Tao )"
+  },
+  "link_ytmusic": "",
+  "duration": 93,
+  "bpm": 120,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

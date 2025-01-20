@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "No Turning Back",
+    "ja": "疾風追跡",
+    "cn": "蹑风捕迹",
+    "de": "No Turning Back",
+    "fr": "No Turning Back"
+  },
+  "country": {
+    "en": "Inazuma",
+    "ja": "稲妻",
+    "cn": "稻妻",
+    "de": "Inazuma",
+    "fr": "Inazuma"
+  },
+  "album": {
+    "en": "No Turning Back",
+    "ja": "遺失と忘却の島",
+    "cn": "佚落迁忘之岛",
+    "de": "No Turning Back",
+    "fr": "No Turning Back"
+  },
+  "link_ytmusic": "",
+  "duration": 145,
+  "bpm": 178,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

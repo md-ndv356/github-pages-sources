@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Chapter of a New Era",
+    "ja": "快意なる新章",
+    "cn": "快意新词",
+    "de": "Chapter of a New Era",
+    "fr": "Chapter of a New Era"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 3 (Yun Jin)",
+    "ja": "輝く星々Vol.3（雲菫）",
+    "cn": "闪耀的群星3（云堇）",
+    "de": "The Stellar Moments Vol. 3 (Yun Jin)",
+    "fr": "The Stellar Moments Vol. 3 ( Yun Jin )"
+  },
+  "link_ytmusic": "",
+  "duration": 78,
+  "bpm": 121,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

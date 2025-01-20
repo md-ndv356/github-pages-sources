@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Qilin's Prance",
+    "ja": "麟躍幽岩",
+    "cn": "麟跃幽岩",
+    "de": "Qilin's Prance",
+    "fr": "Qilin's Prance"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "The Stellar Moments (Ganyu)",
+    "ja": "輝く星々（甘雨）",
+    "cn": "闪耀的群星（甘雨）",
+    "de": "The Stellar Moments (Ganyu)",
+    "fr": "The Stellar Moments ( Ganyu )"
+  },
+  "link_ytmusic": "",
+  "duration": 100,
+  "bpm": 154,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Devastation and Redemption",
+    "ja": "神女劈観・喚情",
+    "cn": "神女劈观・唤情",
+    "de": "Devastation and Redemption",
+    "fr": "Devastation and Redemption"
+  },
+  "country": {
+    "en": "Liyue",
+    "ja": "璃月",
+    "cn": "璃月",
+    "de": "Liyue",
+    "fr": "Liyue"
+  },
+  "album": {
+    "en": "Fleeting Colors in Flight",
+    "ja": "流るる星霜、華咲きて",
+    "cn": "飞彩镌流年",
+    "de": "Fleeting Colors in Flight",
+    "fr": "Fleeting Colors in Flight"
+  },
+  "link_ytmusic": "",
+  "duration": 160,
+  "bpm": 95,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

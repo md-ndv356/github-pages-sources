@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Inazuma",
+    "ja": "稲妻",
+    "cn": "稻妻",
+    "de": "Inazuma",
+    "fr": "Inazuma"
+  },
+  "country": {
+    "en": "Inazuma",
+    "ja": "稲妻",
+    "cn": "稻妻",
+    "de": "Inazuma",
+    "fr": "Inazuma"
+  },
+  "album": {
+    "en": "Realm of Tranquil Eternity",
+    "ja": "寂々たる無妄の国",
+    "cn": "寂远无妄之国",
+    "de": "Realm of Tranquil Eternity",
+    "fr": "Realm of Tranquil Eternity"
+  },
+  "link_ytmusic": "",
+  "duration": 142,
+  "bpm": 149,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}
