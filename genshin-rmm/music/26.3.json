@@ -26,5 +26,9 @@
   "level": 7,
   "base": 0.020,
   "score": [],
-  "measure": {}
+  "measure": {},
+  "bpm_act": {
+    "0": 168,
+    "0-1": 170
+  }
 }

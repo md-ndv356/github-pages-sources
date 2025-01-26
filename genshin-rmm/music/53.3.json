@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Parousia Diluvi",
+    "ja": "古海が再び湧き上がる時",
+    "cn": "古海复涌之时",
+    "de": "Parousia Diluvi",
+    "fr": "Parousia Diluvi"
+  },
+  "country": {
+    "en": "Fontaine",
+    "ja": "フォンテーヌ",
+    "cn": "枫丹",
+    "de": "Fontaine",
+    "fr": "Fontaine"
+  },
+  "album": {
+    "en": "The Stellar Moments Vol. 4 (Neuvillette)",
+    "ja": "輝く星々Vol.4（ヌヴィレット）",
+    "cn": "闪耀的群星4（那维莱特）",
+    "de": "The Stellar Moments Vol. 4 (Neuvillette)",
+    "fr": "The Stellar Moments Vol. 4 ( Neuvillette )"
+  },
+  "link_ytmusic": "",
+  "duration": 103,
+  "bpm": 152,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

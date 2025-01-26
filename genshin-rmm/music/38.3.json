@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Gilded Runner",
+    "ja": "疾駆流金",
+    "cn": "流金疾驰",
+    "de": "Gilded Runner",
+    "fr": "Gilded Runner"
+  },
+  "country": {
+    "en": "Sumeru",
+    "ja": "スメール",
+    "cn": "须弥",
+    "de": "Sumeru",
+    "fr": "Sumeru"
+  },
+  "album": {
+    "en": "Forest of Jnana and Vidya",
+    "ja": "ジュニャーナとヴィディヤーの森",
+    "cn": "智妙明论之林",
+    "de": "Forest of Jnana and Vidya",
+    "fr": "Forest of Jnana and Vidya"
+  },
+  "link_ytmusic": "",
+  "duration": 135,
+  "bpm": 136,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

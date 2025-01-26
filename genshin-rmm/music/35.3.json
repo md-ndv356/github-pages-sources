@@ -1,10 +1,10 @@
 {
   "title": {
-    "en": "No Turning Back",
-    "ja": "背水の陣",
-    "cn": "背水一战",
-    "de": "No Turning Back",
-    "fr": "No Turning Back"
+    "en": "The Almighty Violet Thunder",
+    "ja": "稲光神鳴",
+    "cn": "稻光神鸣",
+    "de": "The Almighty Violet Thunder",
+    "fr": "The Almighty Violet Thunder"
   },
   "country": {
     "en": "Inazuma",
@@ -21,9 +21,9 @@
     "fr": "Islands of the Lost and Forgotten"
   },
   "link_ytmusic": "",
-  "duration": 145,
-  "bpm": 178,
-  "level": 7,
+  "duration": 208,
+  "bpm": 132,
+  "level": 8,
   "base": 0.020,
   "score": [],
   "measure": {}

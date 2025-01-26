@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Rondeau des fleurs et des rapieres",
+    "ja": "花と剣の輪舞",
+    "cn": "花与剑的轮舞",
+    "de": "Rondeau des fleurs et des rapières",
+    "fr": "Rondeau des fleurs et des rapières"
+  },
+  "country": {
+    "en": "Fontaine",
+    "ja": "フォンテーヌ",
+    "cn": "枫丹",
+    "de": "Fontaine",
+    "fr": "Fontaine"
+  },
+  "album": {
+    "en": "Fountain of Belleau",
+    "ja": "白露澄明の泉",
+    "cn": "白露澈明之泉",
+    "de": "Fountain of Belleau",
+    "fr": "Fountain of Belleau"
+  },
+  "link_ytmusic": "",
+  "duration": 186,
+  "bpm": 183,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}
