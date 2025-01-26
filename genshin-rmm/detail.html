@@ -285,8 +285,9 @@ function init ([i18n, musicData]){
   const titleMulti = document.getElementById("title-multi");
   for (const c of ["ja", "cn", "en", "fr", "de"]){
     if (c === langText) continue;
-    if (!langDict[musicData.title[c]]) langDict[musicData.title[c]] = [];
-    langDict[musicData.title[c]].push(c);
+    const key = musicData.title[c] + ("cn" === c ? "\u200c" : "");
+    if (!langDict[key]) langDict[key] = [];
+    langDict[key].push(c);
   }
   for (const item of Object.entries(langDict)){
     const langList = item[1].map(c => "[" + c.toUpperCase() + "]").join("");
