@@ -300,6 +300,7 @@ function init ([i18n, musicData]){
       musicData.bpm_act = {};
     } else {
       document.getElementById("bpm-act").textContent = "(" + Math.min(...bpmList) + "-" + Math.max(...bpmList) + ")";
+      document.getElementById("bpm-act").title = Object.values(musicData.bpm_act).join(" - ");
       document.getElementById("bpm-notice").style.display = "block";
     }
   } else {
