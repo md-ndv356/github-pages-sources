@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Time to Shine",
+    "ja_jp": "腕の見せ所",
+    "zh_cn": "高光时刻",
+    "de_de": "Time to Shine",
+    "fr_fr": "Time to Shine"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Arataki Itto)",
+    "ja_jp": "輝く星々Vol.3（荒瀧一斗）",
+    "zh_cn": "闪耀的群星3（荒泷一斗）",
+    "de_de": "The Stellar Moments Vol. 3 (Arataki Itto)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Arataki Itto )"
+  },
+  "link_ytmusic": "",
+  "duration": 89,
+  "bpm": 150,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

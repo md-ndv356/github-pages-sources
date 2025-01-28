@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Blossoms of Summer Night",
+    "ja_jp": "満開の焔硝",
+    "zh_cn": "硝华流焰",
+    "de_de": "Blossoms of Summer Night",
+    "fr_fr": "Blossoms of Summer Night"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "ja_jp": "輝く星々Vol.2（宵宮）",
+    "zh_cn": "闪耀的群星2（宵宫）",
+    "de_de": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Yoimiya )"
+  },
+  "link_ytmusic": "",
+  "duration": 97,
+  "bpm": 145,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

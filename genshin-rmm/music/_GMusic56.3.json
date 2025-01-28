@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Offertorium of Fortuitum",
+    "ja_jp": "未だ響かぬ奉献唱",
+    "zh_cn": "未始的供献颂",
+    "de_de": "Offertorium of Fortuitum",
+    "fr_fr": "Offertorium of Fortuitum"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 5 (Arlecchino)",
+    "ja_jp": "輝く星々Vol.5（アルレッキーノ）",
+    "zh_cn": "闪耀的群星5（阿蕾奇诺）",
+    "de_de": "The Stellar Moments Vol. 5 (Arlecchino)",
+    "fr_fr": "The Stellar Moments Vol. 5 ( Arlecchino )"
+  },
+  "link_ytmusic": "",
+  "duration": 165,
+  "bpm": 150,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

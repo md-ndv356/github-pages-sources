@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原神 幾千のメロディー 譜面保管所 詳細</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="../fonts/font.css" rel="stylesheet">
+  <style>
+    body {
+      background: #3b4252;
+      color: #fff;
+      font-family: "Noto Serif JP";
+      font-size: 16px;
+      text-align: center;
+      margin: 8px;
+      margin-top: 43px;
+    }
+    header {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100dvw;
+      box-sizing: border-box;
+      background: #0c0f13;
+      font-size: 15px;
+      padding: 6px 20px;
+      text-align: start;
+    }
+    .lang-en_us, .lang-ja_jp, .lang-fr_fr, .lang-de_de {
+      font-family: "Noto Serif JP";
+    }
+    .lang-zh_cn, .lang-zh_tw {
+      font-family: "Noto Serif SC";
+    }
+    header {
+      z-index: 999;
+    }
+    header a {
+      text-decoration: none;
+      color: #ddd;
+    }
+    #chart {
+      position: relative;
+      display: inline-block;
+      text-align: center;
+      width: 415px;
+    }
+    .tap {
+      position: absolute;
+      width: 26px; height: 26px;
+      border-radius: 15px;
+      border: solid 2px #ddd;
+      background-color: #eabd59;
+      z-index: 10;
+    }
+    .longedge {
+      position: absolute;
+      width: 26px; height: 26px;
+      border-radius: 15px;
+      border: solid 2px #ddd;
+      background-color: #8f6eff;
+      z-index: 10;
+    }
+    .longmid {
+      position: absolute;
+      width: 20px;
+      background-color: #8f6effb3;
+      translate: 5px 15px;
+      z-index: 6;
+    }
+    .barline::before {
+      position: absolute;
+      right: 0;
+      top: -14px;
+      display: block;
+      text-align: end;
+      color: #6ef78f;
+      content: attr(data-bpm);
+    }
+    .barline {
+      position: absolute;
+      font-family: "Micro 5", serif;
+      font-size: 20px;
+      translate: 0 4px;
+      width: 24px;
+      padding-right: 1px;
+      text-align: end;
+    }
+    .barline::after {
+      position: absolute;
+      top: 0px; left: 25px;
+      content: "";
+      display: block;
+      width: 390px; height: 2px;
+      background-color: #ffffff80;
+      z-index: 2;
+      translate: 0 10px;
+    }
+    .barline.bpmchange::after {
+      background-color: #7eff9c80;
+    }
+    .laneline {
+      position: absolute;
+      top: 0px; width: 1px;
+      background-color: #ffffff80;
+      z-index: 1;
+    }
+    .information {
+      margin: 8px 12px 28px;
+      padding: 8px;
+      border: solid 2px #888;
+      border-radius: 2px;
+      background-color: #27343a;
+    }
+    #album {
+      font-size: 14px;
+      color: #ddd;
+    }
+    #title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+    #title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+    #title a {
+      color: #b9ebfa;
+      text-decoration: none;
+    }
+    .table-centering {
+      display: flex;
+      justify-content: center;
+    }
+    #title-multi {
+      vertical-align: middle;
+      border-collapse: collapse;
+    }
+    #title-multi tr, #title-multi td {
+      margin: 0;
+    }
+    .titlesublang {
+      padding: 0 6px 0 0;
+      font-size: 13px;
+      color: #ddd;
+      text-align: end;
+    }
+    .titlesub {
+      padding: 0;
+      font-size: 15px;
+      text-align: start;
+    }
+    .others {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-size: 15px;
+      color: #eee;
+    }
+    .bpm {
+      color: #ddd;
+      font-size: 13px;
+    }
+    #bpm {
+      margin: 0 4px;
+    }
+    #bpm-act {
+      font-size: 13px;
+    }
+    .duration {
+      color: #ddd;
+      font-size: 13px;
+      margin-right: 4px;
+    }
+    .notes {
+      color: #ddd;
+      font-size: 13px;
+      margin-left: 4px;
+    }
+    .difficulty {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 5px 0 3px;
+    }
+    #bpm-notice {
+      font-size: 14px;
+      color: #ddd;
+    }
+    .flex {
+      display: flex;
+      align-items: baseline;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div style="flex: 1;"><a href="." id="headtitle" i18n="headtitle">譜面保管所</a></div>
+  <div><select id="langselect">
+    <option value="ja_jp">日本語</option>
+    <option value="en_us">English</option>
+    <option value="zh_cn">中文（简体）</option><!-- 繁體 -->
+    <option value="de_de">Deutsch</option>
+    <option value="fr_fr">Français</option>
+  </select></div>
+</header>
+<main>
+  <div class="information">
+    <div id="album">Loading...</div>
+    <div id="title">Loading...</div>
+    <div class="table-centering"><table id="title-multi"></table></div>
+    <div class="difficulty">
+      <div id="level-0" i18n="level-0" style="display: none;">イージー</div>
+      <div id="level-1" i18n="level-1" style="display: none;">ノーマル</div>
+      <div id="level-2" i18n="level-2" style="display: none;">ハード</div>
+      <div id="level-3" i18n="level-3" style="display: none;">レジェンド</div>
+      <div id="level-count">☆☆☆☆☆☆☆☆☆☆</div>
+    </div>
+    <div class="others">
+      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-act"></div></div>
+      <div class="flex"><div i18n="duration" class="duration">Duration</div><div id="duration">2:01</div></div>
+      <div class="flex"><div id="notes">1636</div><div i18n="notes" class="notes">Notes</div></div>
+    </div>
+  </div>
+  <p id="bpm-notice" i18n="bpm-notice" style="display: none;">BPM変化を表す緑数字は、<wbr>作者が勝手に推測したものです。</p>
+  <div id="chart"></div>
+</main>
+<footer>
+  <p></p>
+</footer>
+</body>
+<script>
+const query = location.search.slice(1).split("/");
+const langText = query[0] || "ja_jp";
+document.body.classList.add("lang-" + langText);
+document.getElementById("headtitle").href = "../?" + langText;
+/** Create Canonical URL */
+const canonicalLink = document.createElement("link");
+canonicalLink.rel = "canonical";
+canonicalLink.href = "https://md-ndv356.github.io/genshin-rmm/detail/?" + langText + "/" + query[1] + "/" + query[2];
+document.head.appendChild(canonicalLink);
+
+const langselect = document.getElementById("langselect");
+langselect.value = langText;
+langselect.addEventListener("change", event => {
+  query[0] = event.target.value;
+  window.location = "?" + query.join("/");
+});
+
+const speed = 200;
+
+function init ([i18n, musicData]){
+  document.title = musicData.title[langText] + " - " + i18n.pagetitle[langText];
+
+  // Internationalization
+  for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
+    const id = item.getAttribute("i18n");
+    const text = i18n[id]?.[langText];
+    if (text) item.innerText = text;
+  }
+  for (const id in i18n.__attr_title__){
+    const element = document.getElementById(id);
+    if (!element) continue;
+    element.title = i18n.__attr_title__[id][langText];
+  }
+
+  // View Music Data
+  document.getElementById("album").textContent = musicData.country[langText] + " - " + musicData.album[langText];
+  if (musicData.link_ytmusic){
+    const a = document.createElement("a");
+    a.href = "https://youtu.be/" + musicData.link_ytmusic;
+    a.textContent = musicData.title[langText];
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.getElementById("title").innerHTML = a.outerHTML;
+  } else {
+    document.getElementById("title").textContent = musicData.title[langText];
+  }
+  const langDict = {};
+  const titleMulti = document.getElementById("title-multi");
+  for (const c of ["ja_jp", "zh_cn", "en_us", "fr_fr", "de_de"]){
+    if (c === langText) continue;
+    const key = musicData.title[c] + ("cn" === c ? "\u200c" : "");
+    if (!langDict[key]) langDict[key] = [];
+    langDict[key].push(c);
+  }
+  for (const item of Object.entries(langDict)){
+    const langList = item[1].map(c => "[" + c.slice(0, 2).toUpperCase() + "]").join("");
+    titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">${langList}</td><td class="titlesub lang-${item[1][0]}">${item[0]}</td></tr>`);
+  }
+  document.getElementById("bpm").textContent = musicData.bpm;
+  if (musicData.bpm_act){
+    const bpmList = [];
+    for (const change of Object.entries(musicData.bpm_act)) bpmList.push(change[1]);
+    if (bpmList.length === 1){
+      document.getElementById("bpm-act").textContent = "(" + bpmList[0] + ")";
+      musicData.bpm_act = {};
+    } else {
+      document.getElementById("bpm-act").textContent = "(" + Math.min(...bpmList) + "-" + Math.max(...bpmList) + ")";
+      document.getElementById("bpm-act").title = Object.values(musicData.bpm_act).join(" - ");
+      document.getElementById("bpm-notice").style.display = "block";
+    }
+  } else {
+    musicData.bpm_act = {};
+  }
+  document.getElementById("duration").textContent = Math.floor(musicData.duration / 60) + ":" + ("0" +(musicData.duration % 60)).slice(-2);
+  document.getElementById("level-"+query[2]).style.display = "block";
+  document.getElementById("level-count").textContent = "★".repeat(musicData.level) + "☆".repeat(10-musicData.level);
+
+  // Analyze Chart
+  const tap       = ["1", "2", "3", "4", "5", "6"];
+  const holdStart = ["q", "w", "e", "r", "t", "y"];
+  const holdEnd   = ["a", "s", "d", "f", "g", "h"];
+  let notesCount = 0;
+  let notesAA = "";
+  const holdStartPos = [null, null, null, null, null, null];
+  const notesList = [];
+  const barlineList = [];
+  let basePosition = 0;
+  const measureCount = musicData.score.length;
+  for (let barI=0, barL=measureCount; barI<barL; barI++){
+    const measureLength = musicData.measure?.[barI] ? musicData.measure[barI][0] / musicData.measure[barI][1] : 1;
+    const bar = musicData.score[barI];
+    const lines = bar.split(",");
+    barlineList.push({ pos: basePosition, index: barI });
+    for (let lineI=0, lineL=lines.length; lineI<lineL; lineI++){
+      const line = lines[lineI];
+      const notePosition = basePosition + lineI / lineL;
+      for (const note of line.split("")){
+        const tapIndex = tap.indexOf(note);
+        const holdStartIndex = holdStart.indexOf(note);
+        const holdEndIndex = holdEnd.indexOf(note);
+        if (tapIndex !== -1) notesList.push({type: "tap", pos: notePosition, lane: tapIndex});
+        if (holdStartIndex !== -1) holdStartPos[holdStartIndex] = notePosition;
+        if (holdEndIndex !== -1){
+          const length = notePosition - holdStartPos[holdEndIndex];
+          notesList.push({type: "hold", pos: notePosition, length, lane: holdEndIndex});
+        }
+      }
+    }
+    basePosition += measureLength;
+  }
+
+  // View Notes
+  document.getElementById("notes").textContent = notesList.length;
+  const chartBase = document.getElementById("chart");
+  const height = notesList.at(-1).pos * speed;
+  chartBase.style.height = (height + 35) + "px";
+  for (let i=0; i<6; i++){
+    chartBase.insertAdjacentHTML("beforeend", `<div class="laneline" style="left: ${44.5 + i * 70}px; height: ${height + 35}px;"></div>`);
+  }
+  for (const barline of barlineList){
+    chartBase.insertAdjacentHTML("beforeend", `<div class="barline${musicData.bpm_act[barline.index] ? " bpmchange" : ""}" style="top: ${height - barline.pos * speed}px; left: 0px;" data-bpm="${musicData.bpm_act[barline.index] ?? ""}">${barline.index + 1}</div>`);
+  }
+  for (const note of notesList){
+    const lanePos = 30 + note.lane * 70;
+    if (note.type === "tap"){
+      chartBase.insertAdjacentHTML("beforeend", `
+<div class="tap" style="top: ${height - note.pos * speed}px; left: ${lanePos}px;"></div>`);
+    } else if (note.type === "hold"){
+      const holdStart = height - (note.pos - note.length) * speed;
+      const holdEnd = height - note.pos * speed;
+      chartBase.insertAdjacentHTML("beforeend", `
+<div class="longedge" style="top: ${holdStart}px; left: ${lanePos}px;"></div>
+<div class="longmid" style="top: ${holdEnd}px; left: ${lanePos}px; height: ${note.length * speed}px;"></div>
+<div class="longedge" style="top: ${holdEnd}px; left: ${lanePos}px;"></div>`);
+    }
+  }
+  play.bpm = musicData.bpm_est ?? musicData.bpm;
+
+  // debugger;
+}
+
+// for debug purpose
+function play (){
+  const currentTime = Date.now();
+  scrollTo(0, play.startPos - (currentTime - play.startTime) * (play.bpm / 60000) * speed);
+  if (!play.pause) requestAnimationFrame(play);
+}
+// play.startTime = Date.now();
+// play.startPos = document.querySelector("#chart").getBoundingClientRect().bottom + window.scrollY;
+// play();
+
+(async () => {
+  Promise.all([
+    fetch("../i18n-v2.json").then(res => res.json()),
+    fetch("../music/" + query[1] + "." + query[2] + ".json").then(res => res.json())
+  ]).then(init).catch(error => {
+    document.getElementById("title").textContent = "Loading Error";
+    console.error(error);
+  });
+})();
+</script>
+</html>

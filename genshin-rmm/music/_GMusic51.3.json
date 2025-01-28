@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Polumnia Omnia",
+    "ja_jp": "三千娑界の御詠歌",
+    "zh_cn": "三千娑世御咏歌",
+    "de_de": "Polumnia Omnia",
+    "fr_fr": "Polumnia Omnia"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Unfathomable Sand Dunes",
+    "ja_jp": "流変の砂、さやさやと",
+    "zh_cn": "啁哳流变之砂",
+    "de_de": "The Unfathomable Sand Dunes",
+    "fr_fr": "The Unfathomable Sand Dunes"
+  },
+  "link_ytmusic": "",
+  "duration": 200,
+  "bpm": 160,
+  "level": 8,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

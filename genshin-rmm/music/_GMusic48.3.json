@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Cogitation of Epochs",
+    "ja_jp": "千載の時を継ぐ想い",
+    "zh_cn": "思接千载",
+    "de_de": "Cogitation of Epochs",
+    "fr_fr": "Cogitation of Epochs"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 4 (Alhaitham)",
+    "ja_jp": "輝く星々Vol.4（アルハイゼン）",
+    "zh_cn": "闪耀的群星4（艾尔海森）",
+    "de_de": "The Stellar Moments Vol. 4 (Alhaitham)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Alhaitham )"
+  },
+  "link_ytmusic": "",
+  "duration": 172,
+  "bpm": 128,
+  "level": 8,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

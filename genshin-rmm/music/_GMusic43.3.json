@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "The Almighty Violet Thunder",
+    "ja_jp": "稲光神鳴",
+    "zh_cn": "稻光神鸣",
+    "de_de": "The Almighty Violet Thunder",
+    "fr_fr": "The Almighty Violet Thunder"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "Islands of the Lost and Forgotten",
+    "ja_jp": "遺失と忘却の島",
+    "zh_cn": "佚落迁忘之岛",
+    "de_de": "Islands of the Lost and Forgotten",
+    "fr_fr": "Islands of the Lost and Forgotten"
+  },
+  "link_ytmusic": "",
+  "duration": 208,
+  "bpm": 132,
+  "level": 8,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

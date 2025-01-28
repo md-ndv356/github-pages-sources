@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Silhouette of Catastrophe",
+    "ja_jp": "カタストロフの残影",
+    "zh_cn": "灾蚀的痕影",
+    "de_de": "Silhouette of Catastrophe",
+    "fr_fr": "Silhouette of Catastrophe"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "Pelagic Primaevality",
+    "ja_jp": "万水の源なる海",
+    "zh_cn": "万流始源之海",
+    "de_de": "Pelagic Primaevality",
+    "fr_fr": "Pelagic Primaevality"
+  },
+  "link_ytmusic": "",
+  "duration": 105,
+  "bpm": 150,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

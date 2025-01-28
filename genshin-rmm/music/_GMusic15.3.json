@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Lustrous Trick",
+    "ja_jp": "幻光のトリック",
+    "zh_cn": "幻光漫戏",
+    "de_de": "Lustrous Trick",
+    "fr_fr": "Lustrous Trick"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 4 (Lyney)",
+    "ja_jp": "輝く星々Vol.4（リネ）",
+    "zh_cn": "闪耀的群星4（林尼）",
+    "de_de": "The Stellar Moments Vol. 4 (Lyney)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Lyney )"
+  },
+  "link_ytmusic": "",
+  "duration": 107,
+  "bpm": 115,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

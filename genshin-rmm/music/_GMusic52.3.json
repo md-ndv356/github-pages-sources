@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "God-Devouring Mania",
+    "ja_jp": "神喰らう巨蛇の乱舞",
+    "zh_cn": "噬神巨蛇的狂舞",
+    "de_de": "God-Devouring Mania",
+    "fr_fr": "God-Devouring Mania"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Unfathomable Sand Dunes",
+    "ja_jp": "流変の砂、さやさやと",
+    "zh_cn": "啁哳流变之砂",
+    "de_de": "The Unfathomable Sand Dunes",
+    "fr_fr": "The Unfathomable Sand Dunes"
+  },
+  "link_ytmusic": "",
+  "duration": 218,
+  "bpm": 110,
+  "level": 8,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

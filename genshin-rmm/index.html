@@ -83,11 +83,11 @@
 <header>
   <div style="flex: 1;"><a href="." id="headtitle" i18n="headtitle">譜面保管所</a></div>
   <div><select id="langselect">
-    <option value="ja">日本語</option>
-    <option value="en">English</option>
-    <option value="cn">中文</option>
-    <option value="de">Deutsch</option>
-    <option value="fr">Français</option>
+    <option value="ja_jp">日本語</option>
+    <option value="en_us">English</option>
+    <option value="zh_cn">中文</option>
+    <option value="de_de">Deutsch</option>
+    <option value="fr_fr">Français</option>
   </select></div>
 </header>
 <h1 i18n="pagetitle">原神 幾千のメロディー 譜面保管所</h1>
@@ -97,9 +97,11 @@
 </footer>
 </body>
 <script>
-const langText = location.search.slice(1).split(".")[0] || "ja";
-if (["cn"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
-const langId = ((["en", "ja", "cn", "fr", "de"].indexOf(langText) + 1) || 2) - 1;
+const ct2ln = ({"cn": "zh_cn", "tw": "zh_tw", "de": "de_de", "en": "en_us", "es": "es_es", "fr": "fr_fr", "id": "id_id", "ja": "ja_jp", "ko": "ko_kr", "pt": "pt_pt", "ru": "ru_ru", "th": "th_th", "vi": "vi_vn"});
+const param0 = location.search.slice(1).split("/")[0];
+const langText = (ct2ln[param0] ?? param0) || "ja_jp";
+if (param0 !== langText) window.location = "./?" + langText;
+if (["zh_cn", "zh_tw"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
 document.getElementById("headtitle").href = "./?" + langText;
 /** Create Canonical URL */
 const canonicalLink = document.createElement("link");
@@ -125,16 +127,15 @@ function init ([i18n, musicTable, scoreList]){
   }
 
   // Music List
-  for (let i=0, l=musicTable.length; i<l; i++){
-    const music = musicTable[i];
+  for (const music of Object.entries(musicTable).sort((a, b) => a[1].sortkey - b[1].sortkey)){
     musiclist.insertAdjacentHTML("beforeend", `<div class="item">
-<div class="bpm">${music[8]}</div>
-<div class="title">${music[langId]}</div>
+<div class="bpm">${music[1].bpm}</div>
+<div class="title">${music[1].title[langText]}</div>
 <div class="levels">
-<a` + (scoreList[i]?.[0] ? ` href="./detail.html?${langText}.${i}.0"` : "") + `><div class="easy">${music[9]}</div></a>
-<a` + (scoreList[i]?.[1] ? ` href="./detail.html?${langText}.${i}.1"` : "") + `><div class="normal">${music[11]}</div></a>
-<a` + (scoreList[i]?.[2] ? ` href="./detail.html?${langText}.${i}.2"` : "") + `><div class="hard">${music[13]}</div></a>
-<a` + (scoreList[i]?.[3] ? ` href="./detail.html?${langText}.${i}.3"` : "") + `><div class="legend">${music[15]}</div></a>
+<a` + (scoreList[music[0]]?.[0] ? ` href="./detail/?${langText}/${music[0]}/0"` : "") + `><div class="easy">${music[1].score.n_level}</div></a>
+<a` + (scoreList[music[0]]?.[1] ? ` href="./detail/?${langText}/${music[0]}/1"` : "") + `><div class="normal">${music[1].score.h_level}</div></a>
+<a` + (scoreList[music[0]]?.[2] ? ` href="./detail/?${langText}/${music[0]}/2"` : "") + `><div class="hard">${music[1].score.p_level}</div></a>
+<a` + (scoreList[music[0]]?.[3] ? ` href="./detail/?${langText}/${music[0]}/3"` : "") + `><div class="legend">${music[1].score.l_level}</div></a>
 </div>
 </div>`);
   }
@@ -142,9 +143,9 @@ function init ([i18n, musicTable, scoreList]){
 
 (async () => {
   Promise.all([
-    fetch("./i18n.json").then(res => res.json()),
-    fetch("./musictable.json").then(res => res.json()),
-    fetch("./scorelist.json").then(res => res.json()),
+    fetch("./i18n-v2.json").then(res => res.json()),
+    fetch("./musictable-v2.json").then(res => res.json()),
+    fetch("./scorelist-v2.json").then(res => res.json()),
   ]).then(init);
 })();
 

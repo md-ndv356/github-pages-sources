@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Whirling of Vairambhaka",
+    "ja_jp": "旋藍の舞",
+    "zh_cn": "旋蓝之舞",
+    "de_de": "Whirling of Vairambhaka",
+    "fr_fr": "Whirling of Vairambhaka"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 4 (Faruzan)",
+    "ja_jp": "輝く星々Vol.4（ファルザン）",
+    "zh_cn": "闪耀的群星4（珐露珊）",
+    "de_de": "The Stellar Moments Vol. 4 (Faruzan)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Faruzan )"
+  },
+  "link_ytmusic": "",
+  "duration": 72,
+  "bpm": 130,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

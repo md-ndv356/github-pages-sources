@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Duel in the Mist",
+    "ja_jp": "斬霧破竹",
+    "zh_cn": "斩雾破竹",
+    "de_de": "Duel in the Mist",
+    "fr_fr": "Duel in the Mist"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "Realm of Tranquil Eternity",
+    "ja_jp": "寂々たる無妄の国",
+    "zh_cn": "寂远无妄之国",
+    "de_de": "Realm of Tranquil Eternity",
+    "fr_fr": "Realm of Tranquil Eternity"
+  },
+  "link_ytmusic": "",
+  "duration": 153,
+  "bpm": 144,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

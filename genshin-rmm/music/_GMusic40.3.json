@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Storm Chaser",
+    "ja_jp": "疾風追跡",
+    "zh_cn": "蹑风捕迹",
+    "de_de": "Storm Chaser",
+    "fr_fr": "Storm Chaser"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Shikanoin Heizou)",
+    "ja_jp": "輝く星々Vol.3（鹿野院平蔵）",
+    "zh_cn": "闪耀的群星3（鹿野院平藏）",
+    "de_de": "The Stellar Moments Vol. 3 (Shikanoin Heizou)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Shikanoin Heizou )"
+  },
+  "link_ytmusic": "",
+  "duration": 83,
+  "bpm": 122,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

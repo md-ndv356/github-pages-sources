@@ -1,0 +1,38 @@
+{
+  "title": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "Forest of Jnana and Vidya",
+    "ja_jp": "ジュニャーナとヴィディヤーの森",
+    "zh_cn": "智妙明论之林",
+    "de_de": "Forest of Jnana and Vidya",
+    "fr_fr": "Forest of Jnana and Vidya"
+  },
+  "link_ytmusic": "",
+  "duration": 136,
+  "bpm": 148,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {},
+  "bpm_act": {
+    "0": 148,
+    "0-1": 146,
+    "0-2": 144,
+    "0-3": 147,
+    "0-4": 144,
+    "0-5": "最後よくわかんない"
+  }
+}

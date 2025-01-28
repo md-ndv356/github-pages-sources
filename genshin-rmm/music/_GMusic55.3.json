@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Lamentation et triomphe",
+    "ja_jp": "嘆きと凱旋",
+    "zh_cn": "咏歌与凯旋",
+    "de_de": "Lamentation et triomphe",
+    "fr_fr": "Lamentation et triomphe"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "Fountain of Belleau",
+    "ja_jp": "白露澄明の泉",
+    "zh_cn": "白露澈明之泉",
+    "de_de": "Fountain of Belleau",
+    "fr_fr": "Fountain of Belleau"
+  },
+  "link_ytmusic": "",
+  "duration": 179,
+  "bpm": 178,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

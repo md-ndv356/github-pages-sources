@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Se mettre sur son trente-et-un !",
+    "ja_jp": "旅への誘い",
+    "zh_cn": "邀欢同游",
+    "de_de": "Se mettre sur son trente-et-un!",
+    "fr_fr": "Se mettre sur son trente-et-un !"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 4 (Furina)",
+    "ja_jp": "輝く星々Vol.4（フリーナ）",
+    "zh_cn": "闪耀的群星4（芙宁娜）",
+    "de_de": "The Stellar Moments Vol. 4 (Furina)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Furina )"
+  },
+  "link_ytmusic": "",
+  "duration": 142,
+  "bpm": 110,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}
