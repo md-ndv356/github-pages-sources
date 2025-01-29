@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Blossoms of Summer Night",
-    "ja_jp": "満開の焔硝",
     "zh_cn": "硝华流焰",
+    "zh_tw": "硝華流焰",
+    "en_us": "Blossoms of Summer Night",
+    "ko_kr": "Blossoms of Summer Night",
+    "ja_jp": "満開の焔硝",
+    "es_es": "Blossoms of Summer Night",
+    "fr_fr": "Blossoms of Summer Night",
+    "ru_ru": "Blossoms of Summer Night",
+    "th_th": "Blossoms of Summer Night",
+    "vi_vn": "Blossoms of Summer Night",
     "de_de": "Blossoms of Summer Night",
-    "fr_fr": "Blossoms of Summer Night"
+    "id_id": "Blossoms of Summer Night",
+    "pt_pt": "Blossoms of Summer Night"
   },
   "country": {
-    "en_us": "Inazuma",
-    "ja_jp": "稲妻",
     "zh_cn": "稻妻",
+    "zh_tw": "稻妻",
+    "en_us": "Inazuma",
+    "ko_kr": "이나즈마",
+    "ja_jp": "稲妻",
+    "es_es": "Inazuma",
+    "fr_fr": "Inazuma",
+    "ru_ru": "Инадзума",
+    "th_th": "Inazuma",
+    "vi_vn": "Inazuma",
     "de_de": "Inazuma",
-    "fr_fr": "Inazuma"
+    "id_id": "Inazuma",
+    "pt_pt": "Inazuma",
+    "tr_tr": "Inazuma",
+    "it_it": "Inazuma"
   },
   "album": {
-    "en_us": "The Stellar Moments Vol. 2 (Yoimiya)",
-    "ja_jp": "輝く星々Vol.2（宵宮）",
     "zh_cn": "闪耀的群星2（宵宫）",
+    "zh_tw": "閃耀的群星2（宵宮）",
+    "en_us": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "ko_kr": "빛나는 뭇별2（요이미야）",
+    "ja_jp": "輝く星々Vol.2（宵宮）",
+    "es_es": "Los momentos estelares 2 (Yoimiya)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Yoimiya )",
+    "ru_ru": "The Stellar Moments Vol. 2 (Ёимия)",
+    "th_th": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "vi_vn": "The Stellar Moments Vol. 2 (Yoimiya)",
     "de_de": "The Stellar Moments Vol. 2 (Yoimiya)",
-    "fr_fr": "The Stellar Moments Vol. 2 ( Yoimiya )"
+    "id_id": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "pt_pt": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "tr_tr": "The Stellar Moments Vol. 2 (Yoimiya)",
+    "it_it": "The Stellar Moments Vol. 2 (Yoimiya)"
   },
   "link_ytmusic": "",
   "duration": 97,
   "bpm": 145,
   "level": 6,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

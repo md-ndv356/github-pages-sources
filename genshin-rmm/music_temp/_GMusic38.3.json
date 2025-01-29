@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Duel in the Mist",
-    "ja_jp": "斬霧破竹",
     "zh_cn": "斩雾破竹",
+    "zh_tw": "斬霧破竹",
+    "en_us": "Duel in the Mist",
+    "ko_kr": "Duel in the Mist",
+    "ja_jp": "斬霧破竹",
+    "es_es": "Duel in the Mist",
+    "fr_fr": "Duel in the Mist",
+    "ru_ru": "Duel in the Mist",
+    "th_th": "Duel in the Mist",
+    "vi_vn": "Duel in the Mist",
     "de_de": "Duel in the Mist",
-    "fr_fr": "Duel in the Mist"
+    "id_id": "Duel in the Mist",
+    "pt_pt": "Duel in the Mist"
   },
   "country": {
-    "en_us": "Inazuma",
-    "ja_jp": "稲妻",
     "zh_cn": "稻妻",
+    "zh_tw": "稻妻",
+    "en_us": "Inazuma",
+    "ko_kr": "이나즈마",
+    "ja_jp": "稲妻",
+    "es_es": "Inazuma",
+    "fr_fr": "Inazuma",
+    "ru_ru": "Инадзума",
+    "th_th": "Inazuma",
+    "vi_vn": "Inazuma",
     "de_de": "Inazuma",
-    "fr_fr": "Inazuma"
+    "id_id": "Inazuma",
+    "pt_pt": "Inazuma",
+    "tr_tr": "Inazuma",
+    "it_it": "Inazuma"
   },
   "album": {
-    "en_us": "Realm of Tranquil Eternity",
-    "ja_jp": "寂々たる無妄の国",
     "zh_cn": "寂远无妄之国",
+    "zh_tw": "寂遠無妄之國",
+    "en_us": "Realm of Tranquil Eternity",
+    "ko_kr": "고요한 무망의 국가",
+    "ja_jp": "寂々たる無妄の国",
+    "es_es": "Mundo de calma eterna",
+    "fr_fr": "Realm of Tranquil Eternity",
+    "ru_ru": "Realm of Tranquil Eternity",
+    "th_th": "Realm of Tranquil Eternity",
+    "vi_vn": "Realm of Tranquil Eternity",
     "de_de": "Realm of Tranquil Eternity",
-    "fr_fr": "Realm of Tranquil Eternity"
+    "id_id": "Realm of Tranquil Eternity",
+    "pt_pt": "Realm of Tranquil Eternity",
+    "tr_tr": "Realm of Tranquil Eternity",
+    "it_it": "Realm of Tranquil Eternity"
   },
   "link_ytmusic": "",
   "duration": 153,
   "bpm": 144,
   "level": 6,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

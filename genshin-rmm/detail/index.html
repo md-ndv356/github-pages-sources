@@ -273,13 +273,22 @@ function init ([i18n, musicData]){
   const langDict = {};
   const titleMulti = document.getElementById("title-multi");
   const langItem = {
-    "ja_jp": "JA",
     "zh_cn": "CN",
     "zh_tw": "TW",
     "en_us": "EN",
+    "ko_kr": "KR",
+    "ja_jp": "JP",
+    "es_es": "ES",
     "fr_fr": "FR",
-    "de_de": "DE"
-  };
+    "ru_ru": "RU",
+    "th_th": "TH",
+    "vi_vn": "VI",
+    "de_de": "DE",
+    "id_id": "ID",
+    "pt_pt": "PT",
+    "tr_tr": "TR",
+    "it_it": "IT"
+  }
   for (const c of Object.keys(langItem)){
     if (c === langText) continue;
     const key = musicData.title[c] + ("zh_cn" === c ? "\u200c" : "") + ("zh_tw" === c ? "\u200c\u200c" : "");

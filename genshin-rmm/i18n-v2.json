@@ -35,10 +35,20 @@
   },
   "headtitle": {
     "zh_cn": "乐谱仓库",
+    "zh_tw": "樂譜倉庫",
     "en_us": "Score Database",
+    "ko_kr": "악보 보관소",
     "ja_jp": "譜面保管所",
+    "es_es": "Archivo de partituras",
     "fr_fr": "Archive des partitions",
-    "de_de": "Notenarchiv"
+    "ru_ru": "Архив партитур",
+    "th_th": "คลังโน้ตเพลง",
+    "vi_vn": "Kho bản nhạc",
+    "de_de": "Notenarchiv",
+    "id_id": "Arsip Partitur",
+    "pt_pt": "Arquivo de partituras",
+    "tr_tr": "Nota Arşivi",
+    "it_it": "Archivio spartiti"
   },
   "pagetitle": {
     "zh_cn": "原神 千音雅集 乐谱仓库",
