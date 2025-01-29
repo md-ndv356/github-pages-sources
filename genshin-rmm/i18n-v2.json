@@ -42,17 +42,37 @@
   },
   "pagetitle": {
     "zh_cn": "原神 千音雅集 乐谱仓库",
+    "zh_tw": "原神 韆音雅集 樂譜倉庫",
     "en_us": "Score Database - Genshin Impact \"Repertoire of Myriad Melodies\"",
+    "ko_kr": "원신 선율이 흐르는 악보 - 악보 보관소",
     "ja_jp": "原神 幾千のメロディー 譜面保管所",
+    "es_es": "Base de datos de partituras - Genshin Impact «Repertorio melodioso»",
+    "fr_fr": "Archive des partitions - Genshin Impact « Répertoire aux mille mélodies »",
+    "ru_ru": "База данных партитур - Genshin Impact «Репертуар мириад мелодий»",
+    "th_th": "ฐานข้อมูลโน้ตเพลง - Genshin Impact \"ท่วงทำนองสรรพเสียง\"",
+    "vi_vn": "Kho dữ liệu bản nhạc - Genshin Impact \"Thiên Âm Nhã Tập\"",
     "de_de": "Notenarchiv - Genshin Impact „Melodien-Repertoire“",
-    "fr_fr": "Archive des partitions - Genshin Impact « Répertoire aux mille mélodies »"
+    "id_id": "Database Partitur - Genshin Impact \"Kumpulan Melodi Anggun\"",
+    "pt_pt": "Base de dados de partituras - Genshin Impact \"Repertório de Mil Melodias\"",
+    "tr_tr": "Nota Veritabanı - Genshin Impact \"Sayısız Melodiler Repertuvarı\"",
+    "it_it": "Archivio delle partiture - Genshin Impact «Repertorio delle innumerevoli melodie»"
   },
   "statement": {
-    "ja_jp": "当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。\n多言語の対応はChatGPTで行っています。\n1日一つずつ音ゲー用の譜面を公開していきます。完成は2ヶ月後ですね！",
-    "en_us": "This site is an unofficial personal website and is not affiliated with the official Genshin Impact in any way.\nMultilingual support is provided using ChatGPT.\nWe publish one rhythm game score sheet daily, and the full collection will be ready in two months!",
     "zh_cn": "本网站是个人的非官方网站，与原神官方无任何关联。\n多语言支持由 ChatGPT 提供。\n我们每天发布一张音游谱子，预计两个月后全部完成！",
+    "zh_tw": "本网站是个人的非官方网站，与原神官方无任何关联。\n多語言支持由 ChatGPT 提供。\n我們每天發布一張音遊譜子，預計兩個月後全部完成！",
+    "en_us": "This site is an unofficial personal website and is not affiliated with the official Genshin Impact in any way.\nMultilingual support is provided using ChatGPT.\nWe publish one rhythm game score sheet daily, and the full collection will be ready in two months!",
+    "ko_kr": "이 사이트는 개인이 운영하는 비공식 사이트로, 원신 공식과는 전혀 관련이 없습니다.\n다국어 지원은 ChatGPT를 통해 제공됩니다.\n하루에 하나씩 리듬 게임 악보를 공개하며, 두 달 후 모든 악보가 완성됩니다!",
+    "ja_jp": "当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。\n多言語の対応はChatGPTで行っています。\n1日一つずつ音ゲー用の譜面を公開していきます。完成は2ヶ月後ですね！",
+    "es_es": "Este sitio es un sitio web personal no oficial y no está afiliado de ninguna manera al Genshin Impact oficial.\nEl soporte multilingüe es proporcionado utilizando ChatGPT.\nPublicamos una partitura para juego rítmico cada día, ¡y la colección completa estará lista en dos meses!",
+    "fr_fr": "Ce site est un site personnel non officiel et n’est aucunement affilié à Genshin Impact.\nLa prise en charge multilingue est réalisée grâce à ChatGPT.\nNous publions chaque jour une partition pour jeu de rythme, et la collection complète sera prête dans deux mois !",
+    "ru_ru": "Этот сайт является неофициальным личным сайтом и никоим образом не связан с официальным Genshin Impact.\nПоддержка нескольких языков осуществляется с использованием ChatGPT.\nМы публикуем по одной партитуре для ритмической игры ежедневно, и весь сборник будет готов через два месяца!",
+    "th_th": "เว็บไซต์นี้เป็นเว็บไซต์ส่วนตัวที่ไม่เป็นทางการ และไม่ได้มีความเกี่ยวข้องกับ Genshin Impact อย่างเป็นทางการ\nการสนับสนุนหลายภาษาดำเนินการผ่าน ChatGPT\nเราจะเผยแพร่โน้ตเพลงสำหรับเกมจังหวะหนึ่งรายการต่อวัน และคอลเลกชันทั้งหมดจะเสร็จสมบูรณ์ในสองเดือน!",
+    "vi_vn": "Trang web này là trang web cá nhân không chính thức và không liên kết với Genshin Impact chính thức.\nHỗ trợ đa ngôn ngữ được cung cấp bằng ChatGPT.\nChúng tôi sẽ xuất bản một bản nhạc cho trò chơi nhịp điệu mỗi ngày, và toàn bộ bộ sưu tập sẽ hoàn thành sau hai tháng!",
     "de_de": "Diese Website ist eine inoffizielle persönliche Website und steht in keiner Verbindung zu Genshin Impact.\nDie Unterstützung für mehrere Sprachen erfolgt mithilfe von ChatGPT.\nWir veröffentlichen täglich ein Rhythmusspiel-Notenblatt, und die Sammlung wird in zwei Monaten fertiggestellt sein!",
-    "fr_fr": "Ce site est un site personnel non officiel et n’est aucunement affilié à Genshin Impact.\nLa prise en charge multilingue est réalisée grâce à ChatGPT.\nNous publions chaque jour une partition pour jeu de rythme, et la collection complète sera prête dans deux mois !"
+    "id_id": "Situs ini adalah situs web pribadi yang tidak resmi dan tidak terkait dengan Genshin Impact resmi dengan cara apa pun.\nDukungan multibahasa disediakan menggunakan ChatGPT.\nKami menerbitkan satu partitur permainan ritme setiap hari, dan koleksi lengkap akan selesai dalam dua bulan!",
+    "pt_pt": "Este site é um site pessoal não oficial e não está de forma alguma afiliado ao Genshin Impact oficial.\nO suporte multilíngue é fornecido usando o ChatGPT.\nPublicamos uma partitura de jogo rítmico por dia, e a coleção completa estará pronta em dois meses!",
+    "tr_tr": "Bu site, resmi Genshin Impact ile hiçbir şekilde bağlantısı olmayan gayri resmi bir kişisel web sitesidir.\nÇok dilli destek ChatGPT kullanılarak sağlanmaktadır.\nHer gün bir ritim oyunu nota sayfası yayınlıyoruz ve tam koleksiyon iki ay içinde hazır olacak!",
+    "it_it": "Questo sito è un sito personale non ufficiale e non è in alcun modo affiliato a Genshin Impact ufficiale.\nIl supporto multilingue è fornito utilizzando ChatGPT.\nPubblichiamo ogni giorno una partitura per giochi ritmici, e l'intera collezione sarà pronta tra due mesi!"
   },
   "level-0": {
     "ja_jp": "イージー",
@@ -82,55 +102,86 @@
     "de_de": "Legende",
     "fr_fr": "Légende"
   },
-  "bpm": {
-    "ja_jp": "BPM",
-    "en_us": "BPM",
-    "zh_cn": "BPM",
-    "de_de": "BPM",
-    "fr_fr": "BPM"
-  },
   "duration": {
-    "ja_jp": "Duration",
-    "en_us": "Duration",
     "zh_cn": "时长",
+    "zh_tw": "時長",
+    "en_us": "Duration",
+    "ko_kr": "재생 시간",
+    "ja_jp": "Duration",
+    "es_es": "Duración",
+    "fr_fr": "Durée",
+    "ru_ru": "Длительность",
+    "th_th": "ระยะเวลา",
+    "vi_vn": "Thời lượng",
     "de_de": "Dauer",
-    "fr_fr": "Durée"
+    "id_id": "Durasi",
+    "pt_pt": "Duração",
+    "tr_tr": "Süre",
+    "it_it": "Durata"
   },
   "notes": {
-    "ja_jp": "Notes",
-    "en_us": "Notes",
     "zh_cn": "音符",
+    "zh_tw": "音符",
+    "en_us": "Notes",
+    "ko_kr": "음표",
+    "ja_jp": "Notes",
+    "es_es": "Notas",
+    "fr_fr": "Notes",
+    "ru_ru": "Ноты",
+    "th_th": "ตัวโน้ต",
+    "vi_vn": "Nốt",
     "de_de": "Noten",
-    "fr_fr": "Notes"
+    "id_id": "Not",
+    "pt_pt": "Notas",
+    "tr_tr": "Nota",
+    "it_it": "Note"
   },
   "bpm-notice": {
-    "ja_jp": "BPM変化を表す緑数字は、\u200b作者が推測したものです。",
-    "en_us": "The green numbers representing BPM changes are estimated by the author.",
     "zh_cn": "表示 BPM 变化的绿色数字是作者推测的。",
+    "zh_tw": "錶示 BPM 變化的綠色數字是作者推測的。",
+    "en_us": "The green numbers representing BPM changes are estimated by the author.",
+    "ko_kr": "BPM 변경을 나타내는 초록색 숫자는 작성자가 추정한 값입니다.",
+    "ja_jp": "BPM変化を表す緑数字は、\u200b作者が推測したものです。",
+    "es_es": "Los números verdes que representan cambios en el BPM son estimados por el autor.",
+    "fr_fr": "Die grünen Zahlen, die BPM-Änderungen anzeigen, wurden vom Autor geschätzt.",
+    "ru_ru": "Зелёные числа, обозначающие изменения BPM, оценены автором.",
+    "th_th": "ตัวเลขสีเขียวที่แสดงถึงการเปลี่ยนแปลง BPM เป็นค่าที่ผู้เขียนคาดคะเน",
+    "vi_vn": "Các số màu xanh lá biểu thị sự thay đổi BPM được tác giả ước tính.",
     "de_de": "Les chiffres verts indiquant les changements de BPM sont estimés par l'auteur.",
-    "fr_fr": "Die grünen Zahlen, die BPM-Änderungen anzeigen, wurden vom Autor geschätzt."
+    "id_id": "Angka hijau yang menunjukkan perubahan BPM adalah perkiraan dari penulis.",
+    "pt_pt": "Os números verdes que representam mudanças no BPM foram estimados pelo autor.",
+    "tr_tr": "BPM değişikliklerini temsil eden yeşil sayılar, yazar tarafından tahmin edilmiştir.",
+    "it_it": "I numeri verdi che indicano le variazioni del BPM sono stimati dall'autore."
   },
   "__attr_title__": {
     "bpm": {
-      "ja_jp": "ゲーム内表記のBPM",
-      "en_us": "BPM as displayed in the game",
       "zh_cn": "游戏内显示的 BPM",
+      "en_us": "BPM as displayed in the game",
+      "ko_kr": "게임 내 표시된 BPM",
+      "ja_jp": "ゲーム内表記のBPM",
+      "es_es": "BPM tal como se muestra en el juego",
+      "fr_fr": "Im Spiel angezeigtes BPM",
+      "vi_vn": "BPM hiển thị trong trò chơi",
       "de_de": "BPM affiché dans le jeu",
-      "fr_fr": "Im Spiel angezeigtes BPM"
-    },
-    "bpm-act": {
-      "ja_jp": "作者が推定したBPM",
-      "en_us": "BPM estimated by the author",
-      "zh_cn": "作者推测的 BPM",
-      "de_de": "BPM estimé par l'auteur",
-      "fr_fr": "Vom Autor geschätztes BPM"
+      "id_id": "BPM yang ditampilkan dalam game",
+      "pt_pt": "BPM exibido no jogo",
+      "tr_tr": "Oyunda gösterilen BPM",
+      "it_it": "BPM visualizzato nel gioco"
     },
     "album": {
       "ja_jp": "収録アルバム名",
       "en_us": "Album name",
       "zh_cn": "收录专辑名称",
+      "es_es": "Nombre del álbum",
+      "fr_fr": "Name des Albums der Aufnahme",
+      "ru_ru": "Название альбома",
+      "th_th": "ชื่ออัลบั้มที่บรรจุ",
+      "vi_vn": "Tên album",
       "de_de": "Nom de l'album d'inclusion",
-      "fr_fr": "Name des Albums der Aufnahme"
+      "id_id": "Nama album",
+      "pt_pt": "Nome do álbum",
+      "tr_tr": "Albüm adı",
+      "it_it": "Nome dell'album"
     }
   }
 }

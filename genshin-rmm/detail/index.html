@@ -223,7 +223,7 @@
       <div id="level-count">☆☆☆☆☆☆☆☆☆☆</div>
     </div>
     <div class="others">
-      <div class="flex"><div i18n="bpm" class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-act"></div></div>
+      <div class="flex"><div class="bpm">BPM</div><div id="bpm">32~259</div><div id="bpm-act"></div></div>
       <div class="flex"><div i18n="duration" class="duration">Duration</div><div id="duration">2:01</div></div>
       <div class="flex"><div id="notes">1636</div><div i18n="notes" class="notes">Notes</div></div>
     </div>
@@ -396,7 +396,7 @@ function play (){
 (async () => {
   Promise.all([
     fetch("../i18n-v2.json").then(res => res.json()),
-    fetch("../music/" + query[1] + "." + query[2] + ".json").then(res => res.json())
+    fetch("../music/" + query[1].slice(1) + "." + query[2] + ".json").then(res => res.json())
   ]).then(init).catch(error => {
     document.getElementById("title").textContent = "Loading Error";
     console.error(error);
