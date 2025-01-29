@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Se mettre sur son trente-et-un !",
-    "ja_jp": "旅への誘い",
     "zh_cn": "邀欢同游",
+    "zh_tw": "邀歡同遊",
+    "en_us": "Se mettre sur son trente-et-un !",
+    "ko_kr": "Se mettre sur son trente-et-un !",
+    "ja_jp": "旅への誘い",
+    "es_es": "Se mettre sur son trente-et-un !",
+    "fr_fr": "Se mettre sur son trente-et-un !",
+    "ru_ru": "Se mettre sur son trente-et-un !",
+    "th_th": "Se mettre sur son trente-et-un !",
+    "vi_vn": "Se mettre sur son trente-et-un !",
     "de_de": "Se mettre sur son trente-et-un!",
-    "fr_fr": "Se mettre sur son trente-et-un !"
+    "id_id": "Se mettre sur son trente-et-un!",
+    "pt_pt": "Se mettre sur son trente-et-un !"
   },
   "country": {
-    "en_us": "Fontaine",
-    "ja_jp": "フォンテーヌ",
     "zh_cn": "枫丹",
+    "zh_tw": "楓丹",
+    "en_us": "Fontaine",
+    "ko_kr": "폰타인",
+    "ja_jp": "フォンテーヌ",
+    "es_es": "Fontaine",
+    "fr_fr": "Fontaine",
+    "ru_ru": "Фонтейн",
+    "th_th": "Fontaine",
+    "vi_vn": "Fontaine",
     "de_de": "Fontaine",
-    "fr_fr": "Fontaine"
+    "id_id": "Fontaine",
+    "pt_pt": "Fontaine",
+    "tr_tr": "Fontaine",
+    "it_it": "Fontaine"
   },
   "album": {
-    "en_us": "The Stellar Moments Vol. 4 (Furina)",
-    "ja_jp": "輝く星々Vol.4（フリーナ）",
     "zh_cn": "闪耀的群星4（芙宁娜）",
+    "zh_tw": "閃耀的群星4（芙寧娜）",
+    "en_us": "The Stellar Moments Vol. 4 (Furina)",
+    "ko_kr": "빛나는 뭇별4（푸리나）",
+    "ja_jp": "輝く星々Vol.4（フリーナ）",
+    "es_es": "Los momentos estelares 4 (Furina)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Furina )",
+    "ru_ru": "The Stellar Moments Vol. 4 (Фурина)",
+    "th_th": "The Stellar Moments Vol. 4 (Furina)",
+    "vi_vn": "The Stellar Moments Vol. 4 (Furina)",
     "de_de": "The Stellar Moments Vol. 4 (Furina)",
-    "fr_fr": "The Stellar Moments Vol. 4 ( Furina )"
+    "id_id": "The Stellar Moments Vol. 4 (Furina)",
+    "pt_pt": "The Stellar Moments Vol. 4 (Furina)",
+    "tr_tr": "The Stellar Moments Vol. 4 (Furina)",
+    "it_it": "The Stellar Moments Vol. 4 (Furina)"
   },
   "link_ytmusic": "",
   "duration": 142,
   "bpm": 110,
   "level": 7,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

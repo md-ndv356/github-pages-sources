@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Nothing but Trickery",
+    "ja_jp": "天狐の幻術",
+    "zh_cn": "天狐外道",
+    "de_de": "Nothing but Trickery",
+    "fr_fr": "Nothing but Trickery"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "ja_jp": "輝く星々Vol.3（八重神子）",
+    "zh_cn": "闪耀的群星3（八重神子）",
+    "de_de": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Yae Miko )"
+  },
+  "link_ytmusic": "",
+  "duration": 164,
+  "bpm": 136,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

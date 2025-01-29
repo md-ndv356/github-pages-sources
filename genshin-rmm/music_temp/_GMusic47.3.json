@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Melody of Distant Green Fields",
+    "ja_jp": "広がる緑地のメロディー",
+    "zh_cn": "绿野纤绵的曲调",
+    "de_de": "Melody of Distant Green Fields",
+    "fr_fr": "Melody of Distant Green Fields"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "Forest of Jnana and Vidya",
+    "ja_jp": "ジュニャーナとヴィディヤーの森",
+    "zh_cn": "智妙明论之林",
+    "de_de": "Forest of Jnana and Vidya",
+    "fr_fr": "Forest of Jnana and Vidya"
+  },
+  "link_ytmusic": "",
+  "duration": 108,
+  "bpm": 110,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

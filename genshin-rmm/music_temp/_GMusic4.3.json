@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Devotion of the Keeper",
+    "ja_jp": "忠魂義胆",
+    "zh_cn": "赤胆昭忠",
+    "de_de": "Devotion of the Keeper",
+    "fr_fr": "Devotion of the Keeper"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 2 (Thoma)",
+    "ja_jp": "輝く星々Vol.2（トーマ）",
+    "zh_cn": "闪耀的群星2（托马）",
+    "de_de": "The Stellar Moments Vol. 2 (Thoma)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Thoma )"
+  },
+  "link_ytmusic": "",
+  "duration": 64,
+  "bpm": 143,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

@@ -1,15 +1,49 @@
 {
+  "title": {
+    "zh_cn": "原神",
+    "zh_tw": "原神",
+    "en_us": "Genshin Impact",
+    "ko_kr": "원신",
+    "ja_jp": "原神",
+    "es_es": "Genshin Impact",
+    "fr_fr": "Genshin Impact",
+    "ru_ru": "Genshin Impact",
+    "th_th": "Genshin Impact",
+    "vi_vn": "Genshin Impact",
+    "de_de": "Genshin Impact",
+    "id_id": "Genshin Impact",
+    "pt_pt": "Genshin Impact",
+    "tr_tr": "Genshin Impact",
+    "it_it": "Genshin Impact"
+  },
+  "subtitle": {
+    "zh_cn": "千音雅集",
+    "zh_tw": "千音雅集",
+    "en_us": "Repertoire of Myriad Melodies",
+    "ko_kr": "선율이 흐르는 악보",
+    "ja_jp": "幾千のメロディー",
+    "es_es": "Repertorio melodioso",
+    "fr_fr": "Répertoire aux mille mélodies",
+    "ru_ru": "Репертуар мириад мелодий",
+    "th_th": "ท่วงทำนองสรรพเสียง",
+    "vi_vn": "Thiên Âm Nhã Tập",
+    "de_de": "Melodien-Repertoire",
+    "id_id": "Kumpulan Melodi Anggun",
+    "pt_pt": "Repertório de Mil Melodias",
+    "tr_tr": "Sayısız Melodiler Repertuvarı",
+    "it_it": "Repertorio delle innumerevoli melodie"
+  },
   "headtitle": {
-    "ja_jp": "譜面保管所",
-    "en_us": "Score Database",
     "zh_cn": "乐谱仓库",
-    "de_de": "Notenarchiv",
-    "fr_fr": "Archive des partitions"
+    "en_us": "Score Database",
+    "ja_jp": "譜面保管所",
+    "fr_fr": "Archive des partitions",
+    "de_de": "Notenarchiv"
   },
   "pagetitle": {
-    "ja_jp": "原神 幾千のメロディー 譜面保管所",
-    "en_us": "Score Database - Genshin Impact \"Repertoire of Myriad Melodies\"",
     "zh_cn": "原神 千音雅集 乐谱仓库",
+    "en_us": "Score Database - Genshin Impact \"Repertoire of Myriad Melodies\"",
+    "ja_jp": "原神 幾千のメロディー 譜面保管所",
     "de_de": "Notenarchiv - Genshin Impact „Melodien-Repertoire“",
     "fr_fr": "Archive des partitions - Genshin Impact « Répertoire aux mille mélodies »"
   },

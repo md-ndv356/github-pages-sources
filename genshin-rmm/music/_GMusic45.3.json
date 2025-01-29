@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Hustle and Bustle of Ormos",
-    "ja_jp": "賑やかな港",
     "zh_cn": "喧繁之港",
+    "zh_tw": "喧繁之港",
+    "en_us": "Hustle and Bustle of Ormos",
+    "ko_kr": "Hustle and Bustle of Ormos",
+    "ja_jp": "賑やかな港",
+    "es_es": "Hustle and Bustle of Ormos",
+    "fr_fr": "Hustle and Bustle of Ormos",
+    "ru_ru": "Hustle and Bustle of Ormos",
+    "th_th": "Hustle and Bustle of Ormos",
+    "vi_vn": "Hustle and Bustle of Ormos",
     "de_de": "Hustle and Bustle of Ormos",
-    "fr_fr": "Hustle and Bustle of Ormos"
+    "id_id": "Hustle and Bustle of Ormos",
+    "pt_pt": "Hustle and Bustle of Ormos"
   },
   "country": {
-    "en_us": "Sumeru",
-    "ja_jp": "スメール",
     "zh_cn": "须弥",
+    "zh_tw": "須彌",
+    "en_us": "Sumeru",
+    "ko_kr": "수메르",
+    "ja_jp": "スメール",
+    "es_es": "Sumeru",
+    "fr_fr": "Sumeru",
+    "ru_ru": "Сумеру",
+    "th_th": "Sumeru",
+    "vi_vn": "Sumeru",
     "de_de": "Sumeru",
-    "fr_fr": "Sumeru"
+    "id_id": "Sumeru",
+    "pt_pt": "Sumeru",
+    "tr_tr": "Sumeru",
+    "it_it": "Sumeru"
   },
   "album": {
+    "zh_cn": "智妙明论之林",
+    "zh_tw": "智妙明論之林",
     "en_us": "Forest of Jnana and Vidya",
     "ja_jp": "ジュニャーナとヴィディヤーの森",
-    "zh_cn": "智妙明论之林",
+    "ko_kr": "지혜와 지식의 숲",
+    "es_es": "Bosque de Jnana y Vidya",
+    "fr_fr": "Forest of Jnana and Vidya",
+    "ru_ru": "Forest of Jnana and Vidya",
+    "th_th": "Forest of Jnana and Vidya",
+    "vi_vn": "Forest of Jnana and Vidya",
     "de_de": "Forest of Jnana and Vidya",
-    "fr_fr": "Forest of Jnana and Vidya"
+    "id_id": "Forest of Jnana and Vidya",
+    "pt_pt": "Forest of Jnana and Vidya",
+    "tr_tr": "Forest of Jnana and Vidya",
+    "it_it": "Forest of Jnana and Vidya"
   },
   "link_ytmusic": "",
   "duration": 108,
   "bpm": 95,
   "level": 7,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

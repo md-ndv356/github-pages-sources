@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Devotion of the Keeper",
-    "ja_jp": "忠魂義胆",
     "zh_cn": "赤胆昭忠",
+    "zh_tw": "赤膽昭忠",
+    "en_us": "Devotion of the Keeper",
+    "ko_kr": "Devotion of the Keeper",
+    "ja_jp": "忠魂義胆",
+    "es_es": "Devotion of the Keeper",
+    "fr_fr": "Devotion of the Keeper",
+    "ru_ru": "Devotion of the Keeper",
+    "th_th": "Devotion of the Keeper",
+    "vi_vn": "Devotion of the Keeper",
     "de_de": "Devotion of the Keeper",
-    "fr_fr": "Devotion of the Keeper"
+    "id_id": "Devotion of the Keeper",
+    "pt_pt": "Devotion of the Keeper"
   },
   "country": {
-    "en_us": "Inazuma",
-    "ja_jp": "稲妻",
     "zh_cn": "稻妻",
+    "zh_tw": "稻妻",
+    "en_us": "Inazuma",
+    "ko_kr": "이나즈마",
+    "ja_jp": "稲妻",
+    "es_es": "Inazuma",
+    "fr_fr": "Inazuma",
+    "ru_ru": "Инадзума",
+    "th_th": "Inazuma",
+    "vi_vn": "Inazuma",
     "de_de": "Inazuma",
-    "fr_fr": "Inazuma"
+    "id_id": "Inazuma",
+    "pt_pt": "Inazuma",
+    "tr_tr": "Inazuma",
+    "it_it": "Inazuma"
   },
   "album": {
-    "en_us": "The Stellar Moments Vol. 2 (Thoma)",
-    "ja_jp": "輝く星々Vol.2（トーマ）",
     "zh_cn": "闪耀的群星2（托马）",
+    "zh_tw": "閃耀的群星2（托馬）",
+    "en_us": "The Stellar Moments Vol. 2 (Thoma)",
+    "ko_kr": "빛나는 뭇별2（토마）",
+    "ja_jp": "輝く星々Vol.2（トーマ）",
+    "es_es": "Los momentos estelares 2 (Thoma)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Thoma )",
+    "ru_ru": "The Stellar Moments Vol. 2 (Тома)",
+    "th_th": "The Stellar Moments Vol. 2 (Thoma)",
+    "vi_vn": "The Stellar Moments Vol. 2 (Thoma)",
     "de_de": "The Stellar Moments Vol. 2 (Thoma)",
-    "fr_fr": "The Stellar Moments Vol. 2 ( Thoma )"
+    "id_id": "The Stellar Moments Vol. 2 (Thoma)",
+    "pt_pt": "The Stellar Moments Vol. 2 (Thoma)",
+    "tr_tr": "The Stellar Moments Vol. 2 (Thoma)",
+    "it_it": "The Stellar Moments Vol. 2 (Thoma)"
   },
   "link_ytmusic": "",
   "duration": 64,
   "bpm": 143,
   "level": 7,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

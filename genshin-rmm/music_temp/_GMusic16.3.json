@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Surasthana Fantasia",
+    "ja_jp": "スラサタンナ幻想曲",
+    "zh_cn": "净善的遐歌",
+    "de_de": "Surasthana Fantasia",
+    "fr_fr": "Surasthana Fantasia"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Nahida)",
+    "ja_jp": "輝く星々Vol.3（ナヒーダ）",
+    "zh_cn": "闪耀的群星3（纳西妲）",
+    "de_de": "The Stellar Moments Vol. 3 (Nahida)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Nahida )"
+  },
+  "link_ytmusic": "",
+  "duration": 95,
+  "bpm": 168,
+  "level": 6,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

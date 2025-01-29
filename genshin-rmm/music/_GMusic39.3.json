@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Nothing but Trickery",
-    "ja_jp": "天狐の幻術",
     "zh_cn": "天狐外道",
+    "zh_tw": "天狐外道",
+    "en_us": "Nothing but Trickery",
+    "ko_kr": "Nothing but Trickery",
+    "ja_jp": "天狐の幻術",
+    "es_es": "Nothing but Trickery",
+    "fr_fr": "Nothing but Trickery",
+    "ru_ru": "Nothing but Trickery",
+    "th_th": "Nothing but Trickery",
+    "vi_vn": "Nothing but Trickery",
     "de_de": "Nothing but Trickery",
-    "fr_fr": "Nothing but Trickery"
+    "id_id": "Nothing but Trickery",
+    "pt_pt": "Nothing but Trickery"
   },
   "country": {
-    "en_us": "Inazuma",
-    "ja_jp": "稲妻",
     "zh_cn": "稻妻",
+    "zh_tw": "稻妻",
+    "en_us": "Inazuma",
+    "ko_kr": "이나즈마",
+    "ja_jp": "稲妻",
+    "es_es": "Inazuma",
+    "fr_fr": "Inazuma",
+    "ru_ru": "Инадзума",
+    "th_th": "Inazuma",
+    "vi_vn": "Inazuma",
     "de_de": "Inazuma",
-    "fr_fr": "Inazuma"
+    "id_id": "Inazuma",
+    "pt_pt": "Inazuma",
+    "tr_tr": "Inazuma",
+    "it_it": "Inazuma"
   },
   "album": {
-    "en_us": "The Stellar Moments Vol. 3 (Yae Miko)",
-    "ja_jp": "輝く星々Vol.3（八重神子）",
     "zh_cn": "闪耀的群星3（八重神子）",
+    "zh_tw": "閃耀的群星3（八重神子）",
+    "en_us": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "ko_kr": "빛나는 뭇별3（야에 미코）",
+    "ja_jp": "輝く星々Vol.3（八重神子）",
+    "es_es": "Los momentos estelares 3 (Yae Miko)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Yae Miko )",
+    "ru_ru": "The Stellar Moments Vol. 3 (Яэ Мико)",
+    "th_th": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "vi_vn": "The Stellar Moments Vol. 3 (Yae Miko)",
     "de_de": "The Stellar Moments Vol. 3 (Yae Miko)",
-    "fr_fr": "The Stellar Moments Vol. 3 ( Yae Miko )"
+    "id_id": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "pt_pt": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "tr_tr": "The Stellar Moments Vol. 3 (Yae Miko)",
+    "it_it": "The Stellar Moments Vol. 3 (Yae Miko)"
   },
   "link_ytmusic": "",
   "duration": 164,
   "bpm": 136,
   "level": 6,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

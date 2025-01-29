@@ -1,0 +1,34 @@
+{
+  "title": {
+    "en_us": "Drifter's Destiny",
+    "ja_jp": "荒波に漂う紅葉",
+    "zh_cn": "荒波椛叶",
+    "de_de": "Drifter's Destiny",
+    "fr_fr": "Drifter's Destiny"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 2 (Kaedehara Kazuha)",
+    "ja_jp": "輝く星々Vol.2（楓原萬葉）",
+    "zh_cn": "闪耀的群星2（枫原万叶）",
+    "de_de": "The Stellar Moments Vol. 2 (Kaedehara Kazuha)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Kaedehara Kazuha )"
+  },
+  "link_ytmusic": "",
+  "duration": 88,
+  "bpm": 168,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {},
+  "bpm_act": {
+    "0": 168,
+    "0-1": 170
+  }
+}

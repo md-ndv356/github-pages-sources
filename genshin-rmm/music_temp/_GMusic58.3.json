@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Absolutio Absoluta Absolutissime",
+    "ja_jp": "終末の赦祷式",
+    "zh_cn": "终末的赦祷颂",
+    "de_de": "Absolutio Absoluta Absolutissime",
+    "fr_fr": "Absolutio Absoluta Absolutissime"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "Cantus Aeternus",
+    "ja_jp": "永遠のシンフォニー",
+    "zh_cn": "金律永谐",
+    "de_de": "Cantus Aeternus",
+    "fr_fr": "Cantus Aeternus"
+  },
+  "link_ytmusic": "",
+  "duration": 165,
+  "bpm": 140,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

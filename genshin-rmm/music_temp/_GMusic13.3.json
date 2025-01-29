@@ -1,0 +1,33 @@
+{
+  "title": {
+    "en_us": "Winding Through Avidya",
+    "ja_jp": "アビディアを巡る風",
+    "zh_cn": "绰巡林风",
+    "de_de": "Winding Through Avidya",
+    "fr_fr": "Winding Through Avidya"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Tighnari)",
+    "ja_jp": "輝く星々Vol.3（ティナリ）",
+    "zh_cn": "闪耀的群星3（提纳里）",
+    "de_de": "The Stellar Moments Vol. 3 (Tighnari)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Tighnari )"
+  },
+  "link_ytmusic": "",
+  "duration": 131,
+  "bpm": 103,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {},
+  "bpm_act": {
+    "0": "静かめになってからBPMが不安定すぎる"
+  }
+}

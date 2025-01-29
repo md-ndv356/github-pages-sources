@@ -17,17 +17,17 @@
     "title": {
       "zh_cn": "硝华流焰",
       "zh_tw": "硝華流焰",
-      "de_de": "Blossoms of Summer Night",
       "en_us": "Blossoms of Summer Night",
+      "ko_kr": "Blossoms of Summer Night",
+      "ja_jp": "満開の焔硝",
       "es_es": "Blossoms of Summer Night",
       "fr_fr": "Blossoms of Summer Night",
-      "id_id": "Blossoms of Summer Night",
-      "ja_jp": "満開の焔硝",
-      "ko_kr": "Blossoms of Summer Night",
-      "pt_pt": "Blossoms of Summer Night",
       "ru_ru": "Blossoms of Summer Night",
       "th_th": "Blossoms of Summer Night",
-      "vi_vn": "Blossoms of Summer Night"
+      "vi_vn": "Blossoms of Summer Night",
+      "de_de": "Blossoms of Summer Night",
+      "id_id": "Blossoms of Summer Night",
+      "pt_pt": "Blossoms of Summer Night"
     }
   },
   "_GMusic2": {
@@ -48,17 +48,17 @@
     "title": {
       "zh_cn": "高光时刻",
       "zh_tw": "焦點時刻",
-      "de_de": "Time to Shine",
       "en_us": "Time to Shine",
+      "ko_kr": "Time to Shine",
+      "ja_jp": "腕の見せ所",
       "es_es": "Time to Shine",
       "fr_fr": "Time to Shine",
-      "id_id": "Time to Shine",
-      "ja_jp": "腕の見せ所",
-      "ko_kr": "Time to Shine",
-      "pt_pt": "Time to Shine",
       "ru_ru": "Time to Shine",
       "th_th": "Time to Shine",
-      "vi_vn": "Time to Shine"
+      "vi_vn": "Time to Shine",
+      "de_de": "Time to Shine",
+      "id_id": "Time to Shine",
+      "pt_pt": "Time to Shine"
     }
   },
   "_GMusic3": {
@@ -79,17 +79,17 @@
     "title": {
       "zh_cn": "荒波椛叶",
       "zh_tw": "荒波椛葉",
-      "de_de": "Drifter’s Destiny",
       "en_us": "Drifter's Destiny",
+      "ko_kr": "Drifter's Destiny",
+      "ja_jp": "荒波に漂う紅葉",
       "es_es": "Drifter's Destiny",
       "fr_fr": "Drifter's Destiny",
-      "id_id": "Drifter's Destiny",
-      "ja_jp": "荒波に漂う紅葉",
-      "ko_kr": "Drifter's Destiny",
-      "pt_pt": "Drifter's Destiny",
       "ru_ru": "Drifter's Destiny",
       "th_th": "Drifter's Destiny",
-      "vi_vn": "Drifter's Destiny"
+      "vi_vn": "Drifter's Destiny",
+      "de_de": "Drifter’s Destiny",
+      "id_id": "Drifter's Destiny",
+      "pt_pt": "Drifter's Destiny"
     }
   },
   "_GMusic4": {
@@ -110,17 +110,17 @@
     "title": {
       "zh_cn": "赤胆昭忠",
       "zh_tw": "赤膽昭忠",
-      "de_de": "Devotion of the Keeper",
       "en_us": "Devotion of the Keeper",
+      "ko_kr": "Devotion of the Keeper",
+      "ja_jp": "忠魂義胆",
       "es_es": "Devotion of the Keeper",
       "fr_fr": "Devotion of the Keeper",
-      "id_id": "Devotion of the Keeper",
-      "ja_jp": "忠魂義胆",
-      "ko_kr": "Devotion of the Keeper",
-      "pt_pt": "Devotion of the Keeper",
       "ru_ru": "Devotion of the Keeper",
       "th_th": "Devotion of the Keeper",
-      "vi_vn": "Devotion of the Keeper"
+      "vi_vn": "Devotion of the Keeper",
+      "de_de": "Devotion of the Keeper",
+      "id_id": "Devotion of the Keeper",
+      "pt_pt": "Devotion of the Keeper"
     }
   },
   "_GMusic5": {
@@ -141,17 +141,19 @@
     "title": {
       "zh_cn": "真红骑士，出发！",
       "zh_tw": "真紅騎士，出發！",
-      "de_de": "Let’s Go, Crimson Knight!",
       "en_us": "Let's Go, Crimson Knight!",
+      "ko_kr": "Let's Go, Crimson Knight!",
+      "ja_jp": "真紅の騎士、出発！",
       "es_es": "Let's Go, Crimson Knight!",
       "fr_fr": "Let's Go, Crimson Knight!",
-      "id_id": "Let's Go, Crimson Knight!",
-      "ja_jp": "真紅の騎士、出発！",
-      "ko_kr": "Let's Go, Crimson Knight!",
-      "pt_pt": "Let's Go, Crimson Knight!",
       "ru_ru": "Let's Go, Crimson Knight!",
       "th_th": "Let's Go, Crimson Knight!",
-      "vi_vn": "Let's Go, Crimson Knight!"
+      "vi_vn": "Let's Go, Crimson Knight!",
+      "de_de": "Let’s Go, Crimson Knight!",
+      "id_id": "Let's Go, Crimson Knight!",
+      "pt_pt": "Let's Go, Crimson Knight!",
+      "tr_tr": "Let's Go, Crimson Knight!",
+      "it_it": "Let's Go, Crimson Knight!"
     }
   },
   "_GMusic6": {
@@ -172,17 +174,17 @@
     "title": {
       "zh_cn": "岩壑之崩",
       "zh_tw": "岩壑之崩",
-      "de_de": "Rage Beneath the Mountains",
       "en_us": "Rage Beneath the Mountains",
+      "ko_kr": "Rage Beneath the Mountains",
+      "ja_jp": "山岳は崩れ",
       "es_es": "Rage Beneath the Mountains",
       "fr_fr": "Rage Beneath the Mountains",
-      "id_id": "Rage Beneath the Mountains",
-      "ja_jp": "山岳は崩れ",
-      "ko_kr": "Rage Beneath the Mountains",
-      "pt_pt": "Rage Beneath the Mountains",
       "ru_ru": "Rage Beneath the Mountains",
       "th_th": "Rage Beneath the Mountains",
-      "vi_vn": "Rage Beneath the Mountains"
+      "vi_vn": "Rage Beneath the Mountains",
+      "de_de": "Rage Beneath the Mountains",
+      "id_id": "Rage Beneath the Mountains",
+      "pt_pt": "Rage Beneath the Mountains"
     }
   },
   "_GMusic7": {
@@ -203,17 +205,17 @@
     "title": {
       "zh_cn": "何妄何执",
       "zh_tw": "何妄何執",
-      "de_de": "Termination of Desires",
       "en_us": "Termination of Desires",
+      "ko_kr": "Termination of Desires",
+      "ja_jp": "妄念と執念",
       "es_es": "Termination of Desires",
       "fr_fr": "Termination of Desires",
-      "id_id": "Termination of Desires",
-      "ja_jp": "妄念と執念",
-      "ko_kr": "Termination of Desires",
-      "pt_pt": "Termination of Desires",
       "ru_ru": "Termination of Desires",
       "th_th": "Termination of Desires",
-      "vi_vn": "Termination of Desires"
+      "vi_vn": "Termination of Desires",
+      "de_de": "Termination of Desires",
+      "id_id": "Termination of Desires",
+      "pt_pt": "Termination of Desires"
     }
   },
   "_GMusic8": {
@@ -234,17 +236,19 @@
     "title": {
       "zh_cn": "风花的邀约",
       "zh_tw": "風花的邀約",
-      "de_de": "Invitation of Windblume",
       "en_us": "Invitation of Windblume",
+      "ko_kr": "Invitation of Windblume",
+      "ja_jp": "風花の招待",
       "es_es": "Invitation of Windblume",
       "fr_fr": "Invitation of Windblume",
-      "id_id": "Invitation of Windblume",
-      "ja_jp": "風花の招待",
-      "ko_kr": "Invitation of Windblume",
-      "pt_pt": "Invitation of Windblume",
       "ru_ru": "Invitation of Windblume",
       "th_th": "Invitation of Windblume",
-      "vi_vn": "Invitation of Windblume"
+      "vi_vn": "Invitation of Windblume",
+      "de_de": "Invitation of Windblume",
+      "id_id": "Invitation of Windblume",
+      "pt_pt": "Invitation of Windblume",
+      "tr_tr": "Invitation of Windblume",
+      "it_it": "Invitation of Windblume"
     }
   },
   "_GMusic9": {
@@ -265,17 +269,19 @@
     "title": {
       "zh_cn": "白皑中的冥想",
       "zh_tw": "白皚中的冥想",
-      "de_de": "Contemplation in Snow",
       "en_us": "Contemplation in Snow",
+      "ko_kr": "Contemplation in Snow",
+      "ja_jp": "純白での瞑想",
       "es_es": "Contemplation in Snow",
       "fr_fr": "Contemplation in Snow",
-      "id_id": "Contemplation in Snow",
-      "ja_jp": "純白での瞑想",
-      "ko_kr": "Contemplation in Snow",
-      "pt_pt": "Contemplation in Snow",
       "ru_ru": "Contemplation in Snow",
       "th_th": "Contemplation in Snow",
-      "vi_vn": "Contemplation in Snow"
+      "vi_vn": "Contemplation in Snow",
+      "de_de": "Contemplation in Snow",
+      "id_id": "Contemplation in Snow",
+      "pt_pt": "Contemplation in Snow",
+      "tr_tr": "Contemplation in Snow",
+      "it_it": "Contemplation in Snow"
     }
   },
   "_GMusic10": {
@@ -296,17 +302,19 @@
     "title": {
       "zh_cn": "浪沫起舞",
       "zh_tw": "浪沫起舞",
-      "de_de": "Dance of Aphros",
       "en_us": "Dance of Aphros",
+      "ko_kr": "Dance of Aphros",
+      "ja_jp": "波沫の舞",
       "es_es": "Dance of Aphros",
       "fr_fr": "Dance of Aphros",
-      "id_id": "Dance of Aphros",
-      "ja_jp": "波沫の舞",
-      "ko_kr": "Dance of Aphros",
-      "pt_pt": "Dance of Aphros",
       "ru_ru": "Dance of Aphros",
       "th_th": "Dance of Aphros",
-      "vi_vn": "Dance of Aphros"
+      "vi_vn": "Dance of Aphros",
+      "de_de": "Dance of Aphros",
+      "id_id": "Dance of Aphros",
+      "pt_pt": "Dance of Aphros",
+      "tr_tr": "Dance of Aphros",
+      "it_it": "Dance of Aphros"
     }
   },
   "_GMusic11": {
@@ -327,17 +335,19 @@
     "title": {
       "zh_cn": "终天的闭幕曲",
       "zh_tw": "終天的閉幕曲",
-      "de_de": "Caelestinum Finale Termini",
       "en_us": "Caelestinum Finale Termini",
+      "ko_kr": "Caelestinum Finale Termini",
+      "ja_jp": "終焉のフィナーレ",
       "es_es": "Caelestinum Finale Termini",
       "fr_fr": "Caelestinum Finale Termini",
-      "id_id": "Caelestinum Finale Termini",
-      "ja_jp": "終焉のフィナーレ",
-      "ko_kr": "Caelestinum Finale Termini",
-      "pt_pt": "Caelestinum Finale Termini",
       "ru_ru": "Caelestinum Finale Termini",
       "th_th": "Caelestinum Finale Termini",
-      "vi_vn": "Caelestinum Finale Termini"
+      "vi_vn": "Caelestinum Finale Termini",
+      "de_de": "Caelestinum Finale Termini",
+      "id_id": "Caelestinum Finale Termini",
+      "pt_pt": "Caelestinum Finale Termini",
+      "tr_tr": "Caelestinum Finale Termini",
+      "it_it": "Caelestinum Finale Termini"
     }
   },
   "_GMusic12": {
@@ -358,17 +368,17 @@
     "title": {
       "zh_cn": "撷萃漫想",
       "zh_tw": "擷萃漫想",
-      "de_de": "Caprice of the Leaves",
       "en_us": "Caprice of the Leaves",
+      "ko_kr": "Caprice of the Leaves",
+      "ja_jp": "移り気な葉っぱたち",
       "es_es": "Caprice of the Leaves",
       "fr_fr": "Caprice of the Leaves",
-      "id_id": "Caprice of the Leaves",
-      "ja_jp": "移り気な葉っぱたち",
-      "ko_kr": "Caprice of the Leaves",
-      "pt_pt": "Caprice of the Leaves",
       "ru_ru": "Caprice of the Leaves",
       "th_th": "Caprice of the Leaves",
-      "vi_vn": "Caprice of the Leaves"
+      "vi_vn": "Caprice of the Leaves",
+      "de_de": "Caprice of the Leaves",
+      "id_id": "Caprice of the Leaves",
+      "pt_pt": "Caprice of the Leaves"
     }
   },
   "_GMusic13": {
@@ -389,17 +399,17 @@
     "title": {
       "zh_cn": "绰巡林风",
       "zh_tw": "綽巡林風",
-      "de_de": "Winding Through Avidya",
       "en_us": "Winding Through Avidya",
+      "ko_kr": "Winding Through Avidya",
+      "ja_jp": "アビディアを巡る風",
       "es_es": "Winding Through Avidya",
       "fr_fr": "Winding Through Avidya",
-      "id_id": "Winding Through Avidya",
-      "ja_jp": "アビディアを巡る風",
-      "ko_kr": "Winding Through Avidya",
-      "pt_pt": "Winding Through Avidya",
       "ru_ru": "Winding Through Avidya",
       "th_th": "Winding Through Avidya",
-      "vi_vn": "Winding Through Avidya"
+      "vi_vn": "Winding Through Avidya",
+      "de_de": "Winding Through Avidya",
+      "id_id": "Winding Through Avidya",
+      "pt_pt": "Winding Through Avidya"
     }
   },
   "_GMusic14": {
@@ -420,17 +430,19 @@
     "title": {
       "zh_cn": "诗人的工作",
       "zh_tw": "詩人的工作",
-      "de_de": "Bard’s Adventure",
       "en_us": "Bard's Adventure",
+      "ko_kr": "Bard's Adventure",
+      "ja_jp": "詩人の仕事",
       "es_es": "Bard's Adventure",
       "fr_fr": "Bard's Adventure",
-      "id_id": "Bard's Adventure",
-      "ja_jp": "詩人の仕事",
-      "ko_kr": "Bard's Adventure",
-      "pt_pt": "Bard's Adventure",
       "ru_ru": "Bard's Adventure",
       "th_th": "Bard's Adventure",
-      "vi_vn": "Bard's Adventure"
+      "vi_vn": "Bard's Adventure",
+      "de_de": "Bard’s Adventure",
+      "id_id": "Bard's Adventure",
+      "pt_pt": "Bard's Adventure",
+      "tr_tr": "Bard's Adventure",
+      "it_it": "Bard's Adventure"
     }
   },
   "_GMusic15": {
@@ -451,17 +463,17 @@
     "title": {
       "zh_cn": "幻光漫戏",
       "zh_tw": "幻光漫戲",
-      "de_de": "Lustrous Trick",
       "en_us": "Lustrous Trick",
+      "ko_kr": "Lustrous Trick",
+      "ja_jp": "幻光のトリック",
       "es_es": "Lustrous Trick",
       "fr_fr": "Lustrous Trick",
-      "id_id": "Lustrous Trick",
-      "ja_jp": "幻光のトリック",
-      "ko_kr": "Lustrous Trick",
-      "pt_pt": "Lustrous Trick",
       "ru_ru": "Lustrous Trick",
       "th_th": "Lustrous Trick",
-      "vi_vn": "Lustrous Trick"
+      "vi_vn": "Lustrous Trick",
+      "de_de": "Lustrous Trick",
+      "id_id": "Lustrous Trick",
+      "pt_pt": "Lustrous Trick"
     }
   },
   "_GMusic16": {
@@ -482,17 +494,17 @@
     "title": {
       "zh_cn": "净善的遐歌",
       "zh_tw": "淨善的遐歌",
-      "de_de": "Surasthana Fantasia",
       "en_us": "Surasthana Fantasia",
+      "ko_kr": "Surasthana Fantasia",
+      "ja_jp": "スラサタンナ幻想曲",
       "es_es": "Surasthana Fantasia",
       "fr_fr": "Surasthana Fantasia",
-      "id_id": "Surasthana Fantasia",
-      "ja_jp": "スラサタンナ幻想曲",
-      "ko_kr": "Surasthana Fantasia",
-      "pt_pt": "Surasthana Fantasia",
       "ru_ru": "Surasthana Fantasia",
       "th_th": "Surasthana Fantasia",
-      "vi_vn": "Surasthana Fantasia"
+      "vi_vn": "Surasthana Fantasia",
+      "de_de": "Surasthana Fantasia",
+      "id_id": "Surasthana Fantasia",
+      "pt_pt": "Surasthana Fantasia"
     }
   },
   "_GMusic17": {
@@ -513,17 +525,17 @@
     "title": {
       "zh_cn": "尘世闲游",
       "zh_tw": "塵世閒遊",
-      "de_de": "Rex Incognito",
       "en_us": "Rex Incognito",
+      "ko_kr": "Rex Incognito",
+      "ja_jp": "浮世閑歩",
       "es_es": "Rex Incognito",
       "fr_fr": "Rex Incognito",
-      "id_id": "Rex Incognito",
-      "ja_jp": "浮世閑歩",
-      "ko_kr": "Rex Incognito",
-      "pt_pt": "Rex Incognito",
       "ru_ru": "Rex Incognito",
       "th_th": "Rex Incognito",
-      "vi_vn": "Rex Incognito"
+      "vi_vn": "Rex Incognito",
+      "de_de": "Rex Incognito",
+      "id_id": "Rex Incognito",
+      "pt_pt": "Rex Incognito"
     }
   },
   "_GMusic18": {
@@ -544,17 +556,17 @@
     "title": {
       "zh_cn": "尽在吾辈",
       "zh_tw": "盡在吾輩",
-      "de_de": "Any Last Words?",
       "en_us": "Any Last Words?",
+      "ko_kr": "Any Last Words?",
+      "ja_jp": "理が集いし処",
       "es_es": "Any Last Words?",
       "fr_fr": "Any Last Words?",
-      "id_id": "Any Last Words?",
-      "ja_jp": "理が集いし処",
-      "ko_kr": "Any Last Words?",
-      "pt_pt": "Any Last Words?",
       "ru_ru": "Any Last Words?",
       "th_th": "Any Last Words?",
-      "vi_vn": "Any Last Words?"
+      "vi_vn": "Any Last Words?",
+      "de_de": "Any Last Words?",
+      "id_id": "Any Last Words?",
+      "pt_pt": "Any Last Words?"
     }
   },
   "_GMusic19": {
@@ -575,17 +587,17 @@
     "title": {
       "zh_cn": "古海复涌之时",
       "zh_tw": "古海復湧之時",
-      "de_de": "Parousia Diluvi",
       "en_us": "Parousia Diluvi",
+      "ko_kr": "Parousia Diluvi",
+      "ja_jp": "古海が再び湧き上がる時",
       "es_es": "Parousia Diluvi",
       "fr_fr": "Parousia Diluvi",
-      "id_id": "Parousia Diluvi",
-      "ja_jp": "古海が再び湧き上がる時",
-      "ko_kr": "Parousia Diluvi",
-      "pt_pt": "Parousia Diluvi",
       "ru_ru": "Parousia Diluvi",
       "th_th": "Parousia Diluvi",
-      "vi_vn": "Parousia Diluvi"
+      "vi_vn": "Parousia Diluvi",
+      "de_de": "Parousia Diluvi",
+      "id_id": "Parousia Diluvi",
+      "pt_pt": "Parousia Diluvi"
     }
   },
   "_GMusic20": {
@@ -606,17 +618,17 @@
     "title": {
       "zh_cn": "邀欢同游",
       "zh_tw": "邀歡同遊",
-      "de_de": "Se mettre sur son trente-et-un!",
       "en_us": "Se mettre sur son trente-et-un !",
+      "ko_kr": "Se mettre sur son trente-et-un !",
+      "ja_jp": "旅への誘い",
       "es_es": "Se mettre sur son trente-et-un !",
       "fr_fr": "Se mettre sur son trente-et-un !",
-      "id_id": "Se mettre sur son trente-et-un!",
-      "ja_jp": "旅への誘い",
-      "ko_kr": "Se mettre sur son trente-et-un !",
-      "pt_pt": "Se mettre sur son trente-et-un !",
       "ru_ru": "Se mettre sur son trente-et-un !",
       "th_th": "Se mettre sur son trente-et-un !",
-      "vi_vn": "Se mettre sur son trente-et-un !"
+      "vi_vn": "Se mettre sur son trente-et-un !",
+      "de_de": "Se mettre sur son trente-et-un!",
+      "id_id": "Se mettre sur son trente-et-un!",
+      "pt_pt": "Se mettre sur son trente-et-un !"
     }
   },
   "_GMusic21": {
@@ -637,17 +649,17 @@
     "title": {
       "zh_cn": "霜烈竞逐",
       "zh_tw": "霜烈競逐",
-      "de_de": "Nippy Bout",
       "en_us": "Nippy Bout",
+      "ko_kr": "Nippy Bout",
+      "ja_jp": "霜烈の競争",
       "es_es": "Nippy Bout",
       "fr_fr": "Nippy Bout",
-      "id_id": "Nippy Bout",
-      "ja_jp": "霜烈の競争",
-      "ko_kr": "Nippy Bout",
-      "pt_pt": "Nippy Bout",
       "ru_ru": "Nippy Bout",
       "th_th": "Nippy Bout",
-      "vi_vn": "Nippy Bout"
+      "vi_vn": "Nippy Bout",
+      "de_de": "Nippy Bout",
+      "id_id": "Nippy Bout",
+      "pt_pt": "Nippy Bout"
     }
   },
   "_GMusic22": {
@@ -668,17 +680,19 @@
     "title": {
       "zh_cn": "蒙德城繁忙的午后",
       "zh_tw": "蒙德城繁忙的午後",
-      "de_de": "Bustling Afternoon in Mondstadt",
       "en_us": "Bustling Afternoon in Mondstadt",
+      "ko_kr": "Bustling Afternoon of Mondstadt",
+      "ja_jp": "繁忙なモンドの午後",
       "es_es": "Bustling Afternoon in Mondstadt",
       "fr_fr": "Bustling Afternoon in Mondstadt",
-      "id_id": "Bustling Afternoon of Mondstadt",
-      "ja_jp": "繁忙なモンドの午後",
-      "ko_kr": "Bustling Afternoon of Mondstadt",
-      "pt_pt": "Bustling Afternoon in Mondstadt",
       "ru_ru": "Bustling Afternoon of Mondstadt",
       "th_th": "Bustling Afternoon in Mondstadt",
-      "vi_vn": "Bustling Afternoon in Mondstadt"
+      "vi_vn": "Bustling Afternoon in Mondstadt",
+      "de_de": "Bustling Afternoon in Mondstadt",
+      "id_id": "Bustling Afternoon of Mondstadt",
+      "pt_pt": "Bustling Afternoon in Mondstadt",
+      "tr_tr": "Bustling Afternoon in Mondstadt",
+      "it_it": "Bustling Afternoon in Mondstadt"
     }
   },
   "_GMusic23": {
@@ -699,17 +713,19 @@
     "title": {
       "zh_cn": "夏宫灵囿",
       "zh_tw": "夏宮靈囿",
-      "de_de": "Sieh an, mein Sommernachtgarten!",
       "en_us": "Sieh an, mein Sommernachtgarten!",
+      "ko_kr": "Sieh an, mein Sommernachtgarten!",
+      "ja_jp": "夏夜のガーデン",
       "es_es": "Sieh an, mein Sommernachtgarten!",
       "fr_fr": "Sieh an, mein Sommernachtgarten!",
-      "id_id": "Sieh an, mein Sommernachtgarten!",
-      "ja_jp": "夏夜のガーデン",
-      "ko_kr": "Sieh an, mein Sommernachtgarten!",
-      "pt_pt": "Sieh an, mein Sommernachtgarten!",
       "ru_ru": "Sieh an, mein Sommernachtgarten!",
       "th_th": "Sieh an, mein Sommernachtgarten!",
-      "vi_vn": "Sieh an, mein Sommernachtgarten!"
+      "vi_vn": "Sieh an, mein Sommernachtgarten!",
+      "de_de": "Sieh an, mein Sommernachtgarten!",
+      "id_id": "Sieh an, mein Sommernachtgarten!",
+      "pt_pt": "Sieh an, mein Sommernachtgarten!",
+      "tr_tr": "Sieh an, mein Sommernachtgarten!",
+      "it_it": "Sieh an, mein Sommernachtgarten!"
     }
   },
   "_GMusic24": {
@@ -730,17 +746,19 @@
     "title": {
       "zh_cn": "独家特调",
       "zh_tw": "獨家特調",
-      "de_de": "Exclusive Specialty",
       "en_us": "Exclusive Specialty",
+      "ko_kr": "Exclusive Specialty",
+      "ja_jp": "スペシャルドリンク",
       "es_es": "Exclusive Specialty",
       "fr_fr": "Exclusive Specialty",
-      "id_id": "Exclusive Specialty",
-      "ja_jp": "スペシャルドリンク",
-      "ko_kr": "Exclusive Specialty",
-      "pt_pt": "Exclusive Specialty",
       "ru_ru": "Exclusive Specialty",
       "th_th": "Exclusive Specialty",
-      "vi_vn": "Exclusive Specialty"
+      "vi_vn": "Exclusive Specialty",
+      "de_de": "Exclusive Specialty",
+      "id_id": "Exclusive Specialty",
+      "pt_pt": "Exclusive Specialty",
+      "tr_tr": "Exclusive Specialty",
+      "it_it": "Exclusive Specialty"
     }
   },
   "_GMusic25": {
@@ -761,17 +779,19 @@
     "title": {
       "zh_cn": "冰封交响曲",
       "zh_tw": "冰封交響曲",
-      "de_de": "Symphony of Boreal Wind",
       "en_us": "Symphony of Boreal Wind",
+      "ko_kr": "Symphony of Boreal Wind",
+      "ja_jp": "氷封のシンフォニー",
       "es_es": "Symphony of Boreal Wind",
       "fr_fr": "Symphony of Boreal Wind",
-      "id_id": "Symphony of Boreal Wind",
-      "ja_jp": "氷封のシンフォニー",
-      "ko_kr": "Symphony of Boreal Wind",
-      "pt_pt": "Symphony of Boreal Wind",
       "ru_ru": "Symphony of Boreal Wind",
       "th_th": "Symphony of Boreal Wind",
-      "vi_vn": "Symphony of Boreal Wind"
+      "vi_vn": "Symphony of Boreal Wind",
+      "de_de": "Symphony of Boreal Wind",
+      "id_id": "Symphony of Boreal Wind",
+      "pt_pt": "Symphony of Boreal Wind",
+      "tr_tr": "Symphony of Boreal Wind",
+      "it_it": "Symphony of Boreal Wind"
     }
   },
   "_GMusic26": {
@@ -792,17 +812,19 @@
     "title": {
       "zh_cn": "有趣的挑战",
       "zh_tw": "有趣的挑戰",
-      "de_de": "An Interesting Labour",
       "en_us": "An Interesting Labour",
+      "ko_kr": "An Interesting Labour",
+      "ja_jp": "愉快な挑戦",
       "es_es": "An Interesting Labour",
       "fr_fr": "An Interesting Labour",
-      "id_id": "An Interesting Labour",
-      "ja_jp": "愉快な挑戦",
-      "ko_kr": "An Interesting Labour",
-      "pt_pt": "An Interesting Labour",
       "ru_ru": "An Interesting Labour",
       "th_th": "An Interesting Labour",
-      "vi_vn": "An Interesting Labour"
+      "vi_vn": "An Interesting Labour",
+      "de_de": "An Interesting Labour",
+      "id_id": "An Interesting Labour",
+      "pt_pt": "An Interesting Labour",
+      "tr_tr": "An Interesting Labour",
+      "it_it": "An Interesting Labour"
     }
   },
   "_GMusic27": {
@@ -823,17 +845,19 @@
     "title": {
       "zh_cn": "光辉的涨落",
       "zh_tw": "光輝的漲落",
-      "de_de": "Photon of Fluctuation",
       "en_us": "Photon of Fluctuation",
+      "ko_kr": "Photon of Fluctuation",
+      "ja_jp": "彷徨する輝き",
       "es_es": "Photon of Fluctuation",
       "fr_fr": "Photon of Fluctuation",
-      "id_id": "Photon of Fluctuation",
-      "ja_jp": "彷徨する輝き",
-      "ko_kr": "Photon of Fluctuation",
-      "pt_pt": "Photon of Fluctuation",
       "ru_ru": "Photon of Fluctuation",
       "th_th": "Photon of Fluctuation",
-      "vi_vn": "Photon of Fluctuation"
+      "vi_vn": "Photon of Fluctuation",
+      "de_de": "Photon of Fluctuation",
+      "id_id": "Photon of Fluctuation",
+      "pt_pt": "Photon of Fluctuation",
+      "tr_tr": "Photon of Fluctuation",
+      "it_it": "Photon of Fluctuation"
     }
   },
   "_GMusic28": {
@@ -854,17 +878,17 @@
     "title": {
       "zh_cn": "璃月",
       "zh_tw": "璃月",
-      "de_de": "Liyue",
       "en_us": "Liyue",
+      "ko_kr": "Liyue",
+      "ja_jp": "璃月",
       "es_es": "Liyue",
       "fr_fr": "Liyue",
-      "id_id": "Liyue",
-      "ja_jp": "璃月",
-      "ko_kr": "Liyue",
-      "pt_pt": "Liyue",
       "ru_ru": "Liyue",
       "th_th": "Liyue",
-      "vi_vn": "Liyue"
+      "vi_vn": "Liyue",
+      "de_de": "Liyue",
+      "id_id": "Liyue",
+      "pt_pt": "Liyue"
     }
   },
   "_GMusic29": {
@@ -885,17 +909,17 @@
     "title": {
       "zh_cn": "杯中明月",
       "zh_tw": "杯中明月",
-      "de_de": "Moon in One’s Cup",
       "en_us": "Moon in One's Cup",
+      "ko_kr": "Moon in One's Cup",
+      "ja_jp": "明月、盃にあり",
       "es_es": "Moon in One's Cup",
       "fr_fr": "Moon in One's Cup",
-      "id_id": "Moon in a Cup",
-      "ja_jp": "明月、盃にあり",
-      "ko_kr": "Moon in One's Cup",
-      "pt_pt": "Moon in One's Cup",
       "ru_ru": "Moon in One's Cup",
       "th_th": "Moon in One's Cup",
-      "vi_vn": "Moon in One's Cup"
+      "vi_vn": "Moon in One's Cup",
+      "de_de": "Moon in One’s Cup",
+      "id_id": "Moon in a Cup",
+      "pt_pt": "Moon in One's Cup"
     }
   },
   "_GMusic30": {
@@ -916,17 +940,17 @@
     "title": {
       "zh_cn": "疾如猛火",
       "zh_tw": "疾如猛火",
-      "de_de": "Rapid as Wildfires",
       "en_us": "Rapid as Wildfires",
+      "ko_kr": "Rapid as Wildfires",
+      "ja_jp": "烈火の如く",
       "es_es": "Rapid as Wildfires",
       "fr_fr": "Rapid as Wildfires",
-      "id_id": "Rapid as Wildfires",
-      "ja_jp": "烈火の如く",
-      "ko_kr": "Rapid as Wildfires",
-      "pt_pt": "Rapid as Wildfires",
       "ru_ru": "Rapid as Wildfires",
       "th_th": "Rapid as Wildfires",
-      "vi_vn": "Rapid as Wildfires"
+      "vi_vn": "Rapid as Wildfires",
+      "de_de": "Rapid as Wildfires",
+      "id_id": "Rapid as Wildfires",
+      "pt_pt": "Rapid as Wildfires"
     }
   },
   "_GMusic31": {
@@ -947,17 +971,17 @@
     "title": {
       "zh_cn": "捷疾之业",
       "zh_tw": "捷疾之業",
-      "de_de": "Path of Yaksha",
       "en_us": "Path of Yaksha",
+      "ko_kr": "Path of Yaksha",
+      "ja_jp": "捷疾の業",
       "es_es": "Path of Yaksha",
       "fr_fr": "Path of Yaksha",
-      "id_id": "Path of Yaksha",
-      "ja_jp": "捷疾の業",
-      "ko_kr": "Path of Yaksha",
-      "pt_pt": "Path of Yaksha",
       "ru_ru": "Path of Yaksha",
       "th_th": "Path of Yaksha",
-      "vi_vn": "Path of Yaksha"
+      "vi_vn": "Path of Yaksha",
+      "de_de": "Path of Yaksha",
+      "id_id": "Path of Yaksha",
+      "pt_pt": "Path of Yaksha"
     }
   },
   "_GMusic32": {
@@ -978,17 +1002,17 @@
     "title": {
       "zh_cn": "麟跃幽岩",
       "zh_tw": "麟躍幽岩",
-      "de_de": "Qilin’s Prance",
       "en_us": "Qilin's Prance",
+      "ko_kr": "Qilin's Prance",
+      "ja_jp": "麟躍幽岩",
       "es_es": "Qilin's Prance",
       "fr_fr": "Qilin's Prance",
-      "id_id": "Qilin's Prance",
-      "ja_jp": "麟躍幽岩",
-      "ko_kr": "Qilin's Prance",
-      "pt_pt": "Qilin's Prance",
       "ru_ru": "Qilin's Prance",
       "th_th": "Qilin's Prance",
-      "vi_vn": "Qilin's Prance"
+      "vi_vn": "Qilin's Prance",
+      "de_de": "Qilin’s Prance",
+      "id_id": "Qilin's Prance",
+      "pt_pt": "Qilin's Prance"
     }
   },
   "_GMusic33": {
@@ -1009,17 +1033,17 @@
     "title": {
       "zh_cn": "快意新词",
       "zh_tw": "快意新詞",
-      "de_de": "Chapter of a New Era",
       "en_us": "Chapter of a New Era",
+      "ko_kr": "Chapter of a New Era",
+      "ja_jp": "快意なる新章",
       "es_es": "Chapter of a New Era",
       "fr_fr": "Chapter of a New Era",
-      "id_id": "Chapter of a New Era",
-      "ja_jp": "快意なる新章",
-      "ko_kr": "Chapter of a New Era",
-      "pt_pt": "Chapter of a New Era",
       "ru_ru": "Chapter of a New Era",
       "th_th": "Chapter of a New Era",
-      "vi_vn": "Chapter of a New Era"
+      "vi_vn": "Chapter of a New Era",
+      "de_de": "Chapter of a New Era",
+      "id_id": "Chapter of a New Era",
+      "pt_pt": "Chapter of a New Era"
     }
   },
   "_GMusic34": {
@@ -1040,17 +1064,17 @@
     "title": {
       "zh_cn": "鹤鸣清唳",
       "zh_tw": "鶴鳴清唳",
-      "de_de": "The Crane Cries",
       "en_us": "The Crane Cries",
+      "ko_kr": "The Crane Cries",
+      "ja_jp": "清唳の響き",
       "es_es": "The Crane Cries",
       "fr_fr": "The Crane Cries",
-      "id_id": "The Crane Cries",
-      "ja_jp": "清唳の響き",
-      "ko_kr": "The Crane Cries",
-      "pt_pt": "The Crane Cries",
       "ru_ru": "The Crane Cries",
       "th_th": "The Crane Cries",
-      "vi_vn": "The Crane Cries"
+      "vi_vn": "The Crane Cries",
+      "de_de": "The Crane Cries",
+      "id_id": "The Crane Cries",
+      "pt_pt": "The Crane Cries"
     }
   },
   "_GMusic35": {
@@ -1071,17 +1095,17 @@
     "title": {
       "zh_cn": "斩破风暴的魔鲸",
       "zh_tw": "斬破風暴的魔鯨",
-      "de_de": "Wrath of Monoceros Caeli",
       "en_us": "Wrath of Monoceros Caeli",
+      "ko_kr": "Wrath of Monoceros Caeli",
+      "ja_jp": "嵐を切り裂く魔鯨",
       "es_es": "Wrath of Monoceros Caeli",
       "fr_fr": "Wrath of Monoceros Caeli",
-      "id_id": "Wrath of Monoceros Caeli",
-      "ja_jp": "嵐を切り裂く魔鯨",
-      "ko_kr": "Wrath of Monoceros Caeli",
-      "pt_pt": "Wrath of Monoceros Caeli",
       "ru_ru": "Wrath of Monoceros Caeli",
       "th_th": "Wrath of Monoceros Caeli",
-      "vi_vn": "Wrath of Monoceros Caeli"
+      "vi_vn": "Wrath of Monoceros Caeli",
+      "de_de": "Wrath of Monoceros Caeli",
+      "id_id": "Wrath of Monoceros Caeli",
+      "pt_pt": "Wrath of Monoceros Caeli"
     }
   },
   "_GMusic36": {
@@ -1102,17 +1126,17 @@
     "title": {
       "zh_cn": "神女劈观·唤情",
       "zh_tw": "神女劈觀·喚情",
-      "de_de": "Devastation and Redemption",
       "en_us": "Devastation and Redemption",
+      "ko_kr": "Devastation and Redemption",
+      "ja_jp": "神女劈観・喚情",
       "es_es": "Devastation and Redemption",
       "fr_fr": "Devastation and Redemption",
-      "id_id": "Devastation and Redemption",
-      "ja_jp": "神女劈観・喚情",
-      "ko_kr": "Devastation and Redemption",
-      "pt_pt": "Devastation and Redemption",
       "ru_ru": "Devastation and Redemption",
       "th_th": "Devastation and Redemption",
-      "vi_vn": "Devastation and Redemption"
+      "vi_vn": "Devastation and Redemption",
+      "de_de": "Devastation and Redemption",
+      "id_id": "Devastation and Redemption",
+      "pt_pt": "Devastation and Redemption"
     }
   },
   "_GMusic37": {
@@ -1133,17 +1157,17 @@
     "title": {
       "zh_cn": "稻妻",
       "zh_tw": "稻妻",
-      "de_de": "Inazuma",
       "en_us": "Inazuma",
+      "ko_kr": "Inazuma",
+      "ja_jp": "稲妻",
       "es_es": "Inazuma",
       "fr_fr": "Inazuma",
-      "id_id": "Inazuma",
-      "ja_jp": "稲妻",
-      "ko_kr": "Inazuma",
-      "pt_pt": "Inazuma",
       "ru_ru": "Inazuma",
       "th_th": "Inazuma",
-      "vi_vn": "Inazuma"
+      "vi_vn": "Inazuma",
+      "de_de": "Inazuma",
+      "id_id": "Inazuma",
+      "pt_pt": "Inazuma"
     }
   },
   "_GMusic38": {
@@ -1164,17 +1188,17 @@
     "title": {
       "zh_cn": "斩雾破竹",
       "zh_tw": "斬霧破竹",
-      "de_de": "Duel in the Mist",
       "en_us": "Duel in the Mist",
+      "ko_kr": "Duel in the Mist",
+      "ja_jp": "斬霧破竹",
       "es_es": "Duel in the Mist",
       "fr_fr": "Duel in the Mist",
-      "id_id": "Duel in the Mist",
-      "ja_jp": "斬霧破竹",
-      "ko_kr": "Duel in the Mist",
-      "pt_pt": "Duel in the Mist",
       "ru_ru": "Duel in the Mist",
       "th_th": "Duel in the Mist",
-      "vi_vn": "Duel in the Mist"
+      "vi_vn": "Duel in the Mist",
+      "de_de": "Duel in the Mist",
+      "id_id": "Duel in the Mist",
+      "pt_pt": "Duel in the Mist"
     }
   },
   "_GMusic39": {
@@ -1195,17 +1219,17 @@
     "title": {
       "zh_cn": "天狐外道",
       "zh_tw": "天狐外道",
-      "de_de": "Nothing but Trickery",
       "en_us": "Nothing but Trickery",
+      "ko_kr": "Nothing but Trickery",
+      "ja_jp": "天狐の幻術",
       "es_es": "Nothing but Trickery",
       "fr_fr": "Nothing but Trickery",
-      "id_id": "Nothing but Trickery",
-      "ja_jp": "天狐の幻術",
-      "ko_kr": "Nothing but Trickery",
-      "pt_pt": "Nothing but Trickery",
       "ru_ru": "Nothing but Trickery",
       "th_th": "Nothing but Trickery",
-      "vi_vn": "Nothing but Trickery"
+      "vi_vn": "Nothing but Trickery",
+      "de_de": "Nothing but Trickery",
+      "id_id": "Nothing but Trickery",
+      "pt_pt": "Nothing but Trickery"
     }
   },
   "_GMusic40": {
@@ -1226,17 +1250,17 @@
     "title": {
       "zh_cn": "蹑风捕迹",
       "zh_tw": "躡風捕跡",
-      "de_de": "Storm Chaser",
       "en_us": "Storm Chaser",
+      "ko_kr": "Storm Chaser",
+      "ja_jp": "疾風追跡",
       "es_es": "Storm Chaser",
       "fr_fr": "Storm Chaser",
-      "id_id": "Storm Chaser",
-      "ja_jp": "疾風追跡",
-      "ko_kr": "Storm Chaser",
-      "pt_pt": "Storm Chaser",
       "ru_ru": "Storm Chaser",
       "th_th": "Storm Chaser",
-      "vi_vn": "Storm Chaser"
+      "vi_vn": "Storm Chaser",
+      "de_de": "Storm Chaser",
+      "id_id": "Storm Chaser",
+      "pt_pt": "Storm Chaser"
     }
   },
   "_GMusic41": {
@@ -1257,17 +1281,17 @@
     "title": {
       "zh_cn": "背水一战",
       "zh_tw": "背水一戰",
-      "de_de": "No Turning Back",
       "en_us": "No Turning Back",
+      "ko_kr": "No Turning Back",
+      "ja_jp": "背水の陣",
       "es_es": "No Turning Back",
       "fr_fr": "No Turning Back",
-      "id_id": "No Turning Back",
-      "ja_jp": "背水の陣",
-      "ko_kr": "No Turning Back",
-      "pt_pt": "No Turning Back",
       "ru_ru": "No Turning Back",
       "th_th": "No Turning Back",
-      "vi_vn": "No Turning Back"
+      "vi_vn": "No Turning Back",
+      "de_de": "No Turning Back",
+      "id_id": "No Turning Back",
+      "pt_pt": "No Turning Back"
     }
   },
   "_GMusic42": {
@@ -1288,17 +1312,17 @@
     "title": {
       "zh_cn": "燃烬之舞",
       "zh_tw": "燃燼之舞",
-      "de_de": "Saltatio Favillae",
       "en_us": "Saltatio Favillae",
+      "ko_kr": "Saltatio Favillae",
+      "ja_jp": "燼滅の舞",
       "es_es": "Saltatio Favillae",
       "fr_fr": "Saltatio Favillae",
-      "id_id": "Saltatio Favillae",
-      "ja_jp": "燼滅の舞",
-      "ko_kr": "Saltatio Favillae",
-      "pt_pt": "Saltatio Favillae",
       "ru_ru": "Saltatio Favillae",
       "th_th": "Saltatio Favillae",
-      "vi_vn": "Saltatio Favillae"
+      "vi_vn": "Saltatio Favillae",
+      "de_de": "Saltatio Favillae",
+      "id_id": "Saltatio Favillae",
+      "pt_pt": "Saltatio Favillae"
     }
   },
   "_GMusic43": {
@@ -1319,17 +1343,17 @@
     "title": {
       "zh_cn": "稻光神鸣",
       "zh_tw": "稻光神鳴",
-      "de_de": "The Almighty Violet Thunder",
       "en_us": "The Almighty Violet Thunder",
+      "ko_kr": "The Almighty Violet Thunder",
+      "ja_jp": "稲光神鳴",
       "es_es": "The Almighty Violet Thunder",
       "fr_fr": "The Almighty Violet Thunder",
-      "id_id": "The Almighty Violet Thunder",
-      "ja_jp": "稲光神鳴",
-      "ko_kr": "The Almighty Violet Thunder",
-      "pt_pt": "The Almighty Violet Thunder",
       "ru_ru": "The Almighty Violet Thunder",
       "th_th": "The Almighty Violet Thunder",
-      "vi_vn": "The Almighty Violet Thunder"
+      "vi_vn": "The Almighty Violet Thunder",
+      "de_de": "The Almighty Violet Thunder",
+      "id_id": "The Almighty Violet Thunder",
+      "pt_pt": "The Almighty Violet Thunder"
     }
   },
   "_GMusic44": {
@@ -1350,17 +1374,17 @@
     "title": {
       "zh_cn": "须弥",
       "zh_tw": "須彌",
-      "de_de": "Sumeru",
       "en_us": "Sumeru",
+      "ko_kr": "Sumeru",
+      "ja_jp": "スメール",
       "es_es": "Sumeru",
       "fr_fr": "Sumeru",
-      "id_id": "Sumeru",
-      "ja_jp": "スメール",
-      "ko_kr": "Sumeru",
-      "pt_pt": "Sumeru",
       "ru_ru": "Sumeru",
       "th_th": "Sumeru",
-      "vi_vn": "Sumeru"
+      "vi_vn": "Sumeru",
+      "de_de": "Sumeru",
+      "id_id": "Sumeru",
+      "pt_pt": "Sumeru"
     }
   },
   "_GMusic45": {
@@ -1381,17 +1405,17 @@
     "title": {
       "zh_cn": "喧繁之港",
       "zh_tw": "喧繁之港",
-      "de_de": "Hustle and Bustle of Ormos",
       "en_us": "Hustle and Bustle of Ormos",
+      "ko_kr": "Hustle and Bustle of Ormos",
+      "ja_jp": "賑やかな港",
       "es_es": "Hustle and Bustle of Ormos",
       "fr_fr": "Hustle and Bustle of Ormos",
-      "id_id": "Hustle and Bustle of Ormos",
-      "ja_jp": "賑やかな港",
-      "ko_kr": "Hustle and Bustle of Ormos",
-      "pt_pt": "Hustle and Bustle of Ormos",
       "ru_ru": "Hustle and Bustle of Ormos",
       "th_th": "Hustle and Bustle of Ormos",
-      "vi_vn": "Hustle and Bustle of Ormos"
+      "vi_vn": "Hustle and Bustle of Ormos",
+      "de_de": "Hustle and Bustle of Ormos",
+      "id_id": "Hustle and Bustle of Ormos",
+      "pt_pt": "Hustle and Bustle of Ormos"
     }
   },
   "_GMusic46": {
@@ -1412,17 +1436,17 @@
     "title": {
       "zh_cn": "流金疾驰",
       "zh_tw": "流金疾馳",
-      "de_de": "Gilded Runner",
       "en_us": "Gilded Runner",
+      "ko_kr": "Gilded Runner",
+      "ja_jp": "疾駆流金",
       "es_es": "Gilded Runner",
       "fr_fr": "Gilded Runner",
-      "id_id": "Gilded Runner",
-      "ja_jp": "疾駆流金",
-      "ko_kr": "Gilded Runner",
-      "pt_pt": "Gilded Runner",
       "ru_ru": "Gilded Runner",
       "th_th": "Gilded Runner",
-      "vi_vn": "Gilded Runner"
+      "vi_vn": "Gilded Runner",
+      "de_de": "Gilded Runner",
+      "id_id": "Gilded Runner",
+      "pt_pt": "Gilded Runner"
     }
   },
   "_GMusic47": {
@@ -1443,17 +1467,17 @@
     "title": {
       "zh_cn": "绿野纤绵的曲调",
       "zh_tw": "綠野纖綿的曲調",
-      "de_de": "Melody of Distant Green Fields",
       "en_us": "Melody of Distant Green Fields",
+      "ko_kr": "Melody of Distant Green Fields",
+      "ja_jp": "広がる緑地のメロディー",
       "es_es": "Melody of Distant Green Fields",
       "fr_fr": "Melody of Distant Green Fields",
-      "id_id": "Melody of Distant Green Fields",
-      "ja_jp": "広がる緑地のメロディー",
-      "ko_kr": "Melody of Distant Green Fields",
-      "pt_pt": "Melody of Distant Green Fields",
       "ru_ru": "Melody of Distant Green Fields",
       "th_th": "Melody of Distant Green Fields",
-      "vi_vn": "Melody of Distant Green Fields"
+      "vi_vn": "Melody of Distant Green Fields",
+      "de_de": "Melody of Distant Green Fields",
+      "id_id": "Melody of Distant Green Fields",
+      "pt_pt": "Melody of Distant Green Fields"
     }
   },
   "_GMusic48": {
@@ -1474,17 +1498,17 @@
     "title": {
       "zh_cn": "思接千载",
       "zh_tw": "思接千載",
-      "de_de": "Cogitation of Epochs",
       "en_us": "Cogitation of Epochs",
+      "ko_kr": "Cogitation of Epochs",
+      "ja_jp": "千載の時を継ぐ想い",
       "es_es": "Cogitation of Epochs",
       "fr_fr": "Cogitation of Epochs",
-      "id_id": "Cogitation of Epochs",
-      "ja_jp": "千載の時を継ぐ想い",
-      "ko_kr": "Cogitation of Epochs",
-      "pt_pt": "Cogitation of Epochs",
       "ru_ru": "Cogitation of Epochs",
       "th_th": "Cogitation of Epochs",
-      "vi_vn": "Cogitation of Epochs"
+      "vi_vn": "Cogitation of Epochs",
+      "de_de": "Cogitation of Epochs",
+      "id_id": "Cogitation of Epochs",
+      "pt_pt": "Cogitation of Epochs"
     }
   },
   "_GMusic49": {
@@ -1505,17 +1529,17 @@
     "title": {
       "zh_cn": "缄秘的行律",
       "zh_tw": "緘秘的行律",
-      "de_de": "Order of Silence",
       "en_us": "Order of Silence",
+      "ko_kr": "Order of Silence",
+      "ja_jp": "緘秘の戒律",
       "es_es": "Order of Silence",
       "fr_fr": "Order of Silence",
-      "id_id": "Order of Silence",
-      "ja_jp": "緘秘の戒律",
-      "ko_kr": "Order of Silence",
-      "pt_pt": "Order of Silence",
       "ru_ru": "Order of Silence",
       "th_th": "Order of Silence",
-      "vi_vn": "Order of Silence"
+      "vi_vn": "Order of Silence",
+      "de_de": "Order of Silence",
+      "id_id": "Order of Silence",
+      "pt_pt": "Order of Silence"
     }
   },
   "_GMusic50": {
@@ -1536,17 +1560,17 @@
     "title": {
       "zh_cn": "旋蓝之舞",
       "zh_tw": "旋藍之舞",
-      "de_de": "Whirling of Vairambhaka",
       "en_us": "Whirling of Vairambhaka",
+      "ko_kr": "Whirling of Vairambhaka",
+      "ja_jp": "旋藍の舞",
       "es_es": "Whirling of Vairambhaka",
       "fr_fr": "Whirling of Vairambhaka",
-      "id_id": "Whirling of Vairambhaka",
-      "ja_jp": "旋藍の舞",
-      "ko_kr": "Whirling of Vairambhaka",
-      "pt_pt": "Whirling of Vairambhaka",
       "ru_ru": "Whirling of Vairambhaka",
       "th_th": "Whirling of Vairambhaka",
-      "vi_vn": "Whirling of Vairambhaka"
+      "vi_vn": "Whirling of Vairambhaka",
+      "de_de": "Whirling of Vairambhaka",
+      "id_id": "Whirling of Vairambhaka",
+      "pt_pt": "Whirling of Vairambhaka"
     }
   },
   "_GMusic51": {
@@ -1567,17 +1591,17 @@
     "title": {
       "zh_cn": "三千娑世御咏歌",
       "zh_tw": "三千娑世御詠歌",
-      "de_de": "Polumnia Omnia",
       "en_us": "Polumnia Omnia",
+      "ko_kr": "Polumnia Omnia",
+      "ja_jp": "三千娑界の御詠歌",
       "es_es": "Polumnia Omnia",
       "fr_fr": "Polumnia Omnia",
-      "id_id": "Polumnia Omnia",
-      "ja_jp": "三千娑界の御詠歌",
-      "ko_kr": "Polumnia Omnia",
-      "pt_pt": "Polumnia Omnia",
       "ru_ru": "Polumnia Omnia",
       "th_th": "Polumnia Omnia",
-      "vi_vn": "Polumnia Omnia"
+      "vi_vn": "Polumnia Omnia",
+      "de_de": "Polumnia Omnia",
+      "id_id": "Polumnia Omnia",
+      "pt_pt": "Polumnia Omnia"
     }
   },
   "_GMusic52": {
@@ -1598,17 +1622,17 @@
     "title": {
       "zh_cn": "噬神巨蛇的狂舞",
       "zh_tw": "噬神巨蛇的狂舞",
-      "de_de": "God-Devouring Mania",
       "en_us": "God-Devouring Mania",
+      "ko_kr": "God-Devouring Mania",
+      "ja_jp": "神喰らう巨蛇の乱舞",
       "es_es": "God-Devouring Mania",
       "fr_fr": "God-Devouring Mania",
-      "id_id": "God-Devouring Mania",
-      "ja_jp": "神喰らう巨蛇の乱舞",
-      "ko_kr": "God-Devouring Mania",
-      "pt_pt": "God-Devouring Mania",
       "ru_ru": "God-Devouring Mania",
       "th_th": "God-Devouring Mania",
-      "vi_vn": "God-Devouring Mania"
+      "vi_vn": "God-Devouring Mania",
+      "de_de": "God-Devouring Mania",
+      "id_id": "God-Devouring Mania",
+      "pt_pt": "God-Devouring Mania"
     }
   },
   "_GMusic53": {
@@ -1629,17 +1653,17 @@
     "title": {
       "zh_cn": "枫丹",
       "zh_tw": "楓丹",
-      "de_de": "Fontaine",
       "en_us": "Fontaine",
+      "ko_kr": "Fontaine",
+      "ja_jp": "フォンテーヌ",
       "es_es": "Fontaine",
       "fr_fr": "Fontaine",
-      "id_id": "Fontaine",
-      "ja_jp": "フォンテーヌ",
-      "ko_kr": "Fontaine",
-      "pt_pt": "Fontaine",
       "ru_ru": "Fontaine",
       "th_th": "Fontaine",
-      "vi_vn": "Fontaine"
+      "vi_vn": "Fontaine",
+      "de_de": "Fontaine",
+      "id_id": "Fontaine",
+      "pt_pt": "Fontaine"
     }
   },
   "_GMusic54": {
@@ -1660,17 +1684,17 @@
     "title": {
       "zh_cn": "花与剑的轮舞",
       "zh_tw": "花與劍的輪舞",
-      "de_de": "Rondeau des fleurs et des rapières",
       "en_us": "Rondeau des fleurs et des rapieres",
+      "ko_kr": "Rondeau des fleurs et des rapieres",
+      "ja_jp": "花と剣の輪舞",
       "es_es": "Rondeau des fleurs et des rapieres",
       "fr_fr": "Rondeau des fleurs et des rapières",
-      "id_id": "Rondeau des fleurs et des rapieres",
-      "ja_jp": "花と剣の輪舞",
-      "ko_kr": "Rondeau des fleurs et des rapieres",
-      "pt_pt": "Rondeau des fleurs et des rapieres",
       "ru_ru": "Rondeau des fleurs et des rapieres",
       "th_th": "Rondeau des fleurs et des rapieres",
-      "vi_vn": "Rondeau des fleurs et des rapieres"
+      "vi_vn": "Rondeau des fleurs et des rapieres",
+      "de_de": "Rondeau des fleurs et des rapières",
+      "id_id": "Rondeau des fleurs et des rapieres",
+      "pt_pt": "Rondeau des fleurs et des rapieres"
     }
   },
   "_GMusic55": {
@@ -1691,17 +1715,17 @@
     "title": {
       "zh_cn": "咏歌与凯旋",
       "zh_tw": "詠歌與凱旋",
-      "de_de": "Lamentation et Triomphe",
       "en_us": "Lamentation et Triomphe",
+      "ko_kr": "Lamentation et Triomphe",
+      "ja_jp": "嘆きと凱旋",
       "es_es": "Lamentation et Triomphe",
       "fr_fr": "Lamentation et triomphe",
-      "id_id": "Lamentation et Triomphe",
-      "ja_jp": "嘆きと凱旋",
-      "ko_kr": "Lamentation et Triomphe",
-      "pt_pt": "Lamentation et Triomphe",
       "ru_ru": "Lamentation et Triomphe",
       "th_th": "Lamentation et Triomphe",
-      "vi_vn": "Lamentation et Triomphe"
+      "vi_vn": "Lamentation et Triomphe",
+      "de_de": "Lamentation et Triomphe",
+      "id_id": "Lamentation et Triomphe",
+      "pt_pt": "Lamentation et Triomphe"
     }
   },
   "_GMusic56": {
@@ -1722,17 +1746,17 @@
     "title": {
       "zh_cn": "未始的供献颂",
       "zh_tw": "未始的供獻頌",
-      "de_de": "Offertorium of Fortuitum",
       "en_us": "Offertorium of Fortuitum",
+      "ko_kr": "Offertorium of Fortuitum",
+      "ja_jp": "未だ響かぬ奉献唱",
       "es_es": "Offertorium of Fortuitum",
       "fr_fr": "Offertorium of Fortuitum",
-      "id_id": "Offertorium of Fortuitum",
-      "ja_jp": "未だ響かぬ奉献唱",
-      "ko_kr": "Offertorium of Fortuitum",
-      "pt_pt": "Offertorium of Fortuitum",
       "ru_ru": "Offertorium of Fortuitum",
       "th_th": "Offertorium of Fortuitum",
-      "vi_vn": "Offertorium of Fortuitum"
+      "vi_vn": "Offertorium of Fortuitum",
+      "de_de": "Offertorium of Fortuitum",
+      "id_id": "Offertorium of Fortuitum",
+      "pt_pt": "Offertorium of Fortuitum"
     }
   },
   "_GMusic57": {
@@ -1753,17 +1777,17 @@
     "title": {
       "zh_cn": "船明伞彩",
       "zh_tw": "船明傘彩",
-      "de_de": "Largo alla donzella",
       "en_us": "Largo alla donzella",
+      "ko_kr": "Largo alla donzella",
+      "ja_jp": "お嬢様のお出まし",
       "es_es": "Largo alla donzella",
       "fr_fr": "Largo alla donzella",
-      "id_id": "Largo alla donzella",
-      "ja_jp": "お嬢様のお出まし",
-      "ko_kr": "Largo alla donzella",
-      "pt_pt": "Largo alla donzella",
       "ru_ru": "Largo alla donzella",
       "th_th": "Largo alla donzella",
-      "vi_vn": "Largo alla donzella"
+      "vi_vn": "Largo alla donzella",
+      "de_de": "Largo alla donzella",
+      "id_id": "Largo alla donzella",
+      "pt_pt": "Largo alla donzella"
     }
   },
   "_GMusic58": {
@@ -1784,17 +1808,17 @@
     "title": {
       "zh_cn": "终末的赦祷颂",
       "zh_tw": "終末的赦禱頌",
-      "de_de": "Absolutio Absoluta Absolutissime",
       "en_us": "Absolutio Absoluta Absolutissime",
+      "ko_kr": "Absolutio Absoluta Absolutissime",
+      "ja_jp": "終末の赦祷式",
       "es_es": "Absolutio Absoluta Absolutissime",
       "fr_fr": "Absolutio Absoluta Absolutissime",
-      "id_id": "Absolutio Absoluta Absolutissime",
-      "ja_jp": "終末の赦祷式",
-      "ko_kr": "Absolutio Absoluta Absolutissime",
-      "pt_pt": "Absolutio Absoluta Absolutissime",
       "ru_ru": "Absolutio Absoluta Absolutissime",
       "th_th": "Absolutio Absoluta Absolutissime",
-      "vi_vn": "Absolutio Absoluta Absolutissime"
+      "vi_vn": "Absolutio Absoluta Absolutissime",
+      "de_de": "Absolutio Absoluta Absolutissime",
+      "id_id": "Absolutio Absoluta Absolutissime",
+      "pt_pt": "Absolutio Absoluta Absolutissime"
     }
   },
   "_GMusic59": {
@@ -1815,17 +1839,17 @@
     "title": {
       "zh_cn": "灾蚀的痕影",
       "zh_tw": "災蝕的痕影",
-      "de_de": "Silhouette of Catastrophe",
       "en_us": "Silhouette of Catastrophe",
+      "ko_kr": "Silhouette of Catastrophe",
+      "ja_jp": "カタストロフの残影",
       "es_es": "Silhouette of Catastrophe",
       "fr_fr": "Silhouette of Catastrophe",
-      "id_id": "Silhouette of Catastrophe",
-      "ja_jp": "カタストロフの残影",
-      "ko_kr": "Silhouette of Catastrophe",
-      "pt_pt": "Silhouette of Catastrophe",
       "ru_ru": "Silhouette of Catastrophe",
       "th_th": "Silhouette of Catastrophe",
-      "vi_vn": "Silhouette of Catastrophe"
+      "vi_vn": "Silhouette of Catastrophe",
+      "de_de": "Silhouette of Catastrophe",
+      "id_id": "Silhouette of Catastrophe",
+      "pt_pt": "Silhouette of Catastrophe"
     }
   },
   "_GMusic60": {
@@ -1846,17 +1870,17 @@
     "title": {
       "zh_cn": "轻涟",
       "zh_tw": "輕漣",
-      "de_de": "La vaguelette",
       "en_us": "La vaguelette",
+      "ko_kr": "La vaguelette",
+      "ja_jp": "さざ波",
       "es_es": "La vaguelette",
       "fr_fr": "La vaguelette",
-      "id_id": "La vaguelette",
-      "ja_jp": "さざ波",
-      "ko_kr": "La vaguelette",
-      "pt_pt": "La vaguelette",
       "ru_ru": "La vaguelette",
       "th_th": "La vaguelette",
-      "vi_vn": "La vaguelette"
+      "vi_vn": "La vaguelette",
+      "de_de": "La vaguelette",
+      "id_id": "La vaguelette",
+      "pt_pt": "La vaguelette"
     }
   }
 }

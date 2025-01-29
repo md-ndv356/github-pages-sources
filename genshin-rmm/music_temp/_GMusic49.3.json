@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Order of Silence",
+    "ja_jp": "緘秘の戒律",
+    "zh_cn": "缄秘的行律",
+    "de_de": "Order of Silence",
+    "fr_fr": "Order of Silence"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Cyno)",
+    "ja_jp": "輝く星々Vol.3（セノ）",
+    "zh_cn": "闪耀的群星3（赛诺）",
+    "de_de": "The Stellar Moments Vol. 3 (Cyno)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Cyno )"
+  },
+  "link_ytmusic": "",
+  "duration": 124,
+  "bpm": 120,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

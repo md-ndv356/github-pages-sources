@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Caprice of the Leaves",
+    "ja_jp": "移り気な葉っぱたち",
+    "zh_cn": "撷翠漫想",
+    "de_de": "Caprice of the Leaves",
+    "fr_fr": "Caprice of the Leaves"
+  },
+  "country": {
+    "en_us": "Sumeru",
+    "ja_jp": "スメール",
+    "zh_cn": "须弥",
+    "de_de": "Sumeru",
+    "fr_fr": "Sumeru"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 3 (Collei)",
+    "ja_jp": "輝く星々Vol.3（コレイ）",
+    "zh_cn": "闪耀的群星3（柯莱）",
+    "de_de": "The Stellar Moments Vol. 3 (Collei)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Collei )"
+  },
+  "link_ytmusic": "",
+  "duration": 71,
+  "bpm": 97,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

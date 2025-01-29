@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Order of Silence",
-    "ja_jp": "緘秘の戒律",
     "zh_cn": "缄秘的行律",
+    "zh_tw": "緘秘的行律",
+    "en_us": "Order of Silence",
+    "ko_kr": "Order of Silence",
+    "ja_jp": "緘秘の戒律",
+    "es_es": "Order of Silence",
+    "fr_fr": "Order of Silence",
+    "ru_ru": "Order of Silence",
+    "th_th": "Order of Silence",
+    "vi_vn": "Order of Silence",
     "de_de": "Order of Silence",
-    "fr_fr": "Order of Silence"
+    "id_id": "Order of Silence",
+    "pt_pt": "Order of Silence"
   },
   "country": {
-    "en_us": "Sumeru",
-    "ja_jp": "スメール",
     "zh_cn": "须弥",
+    "zh_tw": "須彌",
+    "en_us": "Sumeru",
+    "ko_kr": "수메르",
+    "ja_jp": "スメール",
+    "es_es": "Sumeru",
+    "fr_fr": "Sumeru",
+    "ru_ru": "Сумеру",
+    "th_th": "Sumeru",
+    "vi_vn": "Sumeru",
     "de_de": "Sumeru",
-    "fr_fr": "Sumeru"
+    "id_id": "Sumeru",
+    "pt_pt": "Sumeru",
+    "tr_tr": "Sumeru",
+    "it_it": "Sumeru"
   },
   "album": {
-    "en_us": "The Stellar Moments Vol. 3 (Cyno)",
-    "ja_jp": "輝く星々Vol.3（セノ）",
     "zh_cn": "闪耀的群星3（赛诺）",
+    "zh_tw": "閃耀的群星3（賽諾）",
+    "en_us": "The Stellar Moments Vol. 3 (Cyno)",
+    "ko_kr": "빛나는 뭇별3（사이노）",
+    "ja_jp": "輝く星々Vol.3（セノ）",
+    "es_es": "Los momentos estelares 3 (Cyno)",
+    "fr_fr": "The Stellar Moments Vol. 3 ( Cyno )",
+    "ru_ru": "The Stellar Moments Vol. 3 (Сайно)",
+    "th_th": "The Stellar Moments Vol. 3 (Cyno)",
+    "vi_vn": "The Stellar Moments Vol. 3 (Cyno)",
     "de_de": "The Stellar Moments Vol. 3 (Cyno)",
-    "fr_fr": "The Stellar Moments Vol. 3 ( Cyno )"
+    "id_id": "The Stellar Moments Vol. 3 (Cyno)",
+    "pt_pt": "The Stellar Moments Vol. 3 (Cyno)",
+    "tr_tr": "The Stellar Moments Vol. 3 (Cyno)",
+    "it_it": "The Stellar Moments Vol. 3 (Cyno)"
   },
   "link_ytmusic": "",
   "duration": 124,
   "bpm": 120,
   "level": 7,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }

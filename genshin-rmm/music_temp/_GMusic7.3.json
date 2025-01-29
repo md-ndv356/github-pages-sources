@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Termination of Desires",
+    "ja_jp": "妄念と執念",
+    "zh_cn": "何妄何执",
+    "de_de": "Termination of Desires",
+    "fr_fr": "Termination of Desires"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 2 (Raiden Shogun)",
+    "ja_jp": "輝く星々Vol.2（雷電將軍）",
+    "zh_cn": "闪耀的群星2（雷电将军）",
+    "de_de": "The Stellar Moments Vol. 2 (Raiden Shogun)",
+    "fr_fr": "The Stellar Moments Vol. 2 ( Raiden Shogun )"
+  },
+  "link_ytmusic": "",
+  "duration": 83,
+  "bpm": 144,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

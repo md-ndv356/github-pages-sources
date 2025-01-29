@@ -23,6 +23,18 @@
   src: url(./Noto_Serif_SC-700.woff2);
 }
 @font-face {
+  font-family: "Noto Serif TC";
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Noto_Serif_TC-400.woff2);
+}
+@font-face {
+  font-family: "Noto Serif TC";
+  font-weight: 700;
+  font-display: swap;
+  src: url(./Noto_Serif_TC-700.woff2);
+}
+@font-face {
   font-family: "Micro 5";
   font-weight: 400;
   font-display: block;

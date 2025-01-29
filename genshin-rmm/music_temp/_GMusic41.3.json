@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "No Turning Back",
+    "ja_jp": "背水の陣",
+    "zh_cn": "背水一战",
+    "de_de": "No Turning Back",
+    "fr_fr": "No Turning Back"
+  },
+  "country": {
+    "en_us": "Inazuma",
+    "ja_jp": "稲妻",
+    "zh_cn": "稻妻",
+    "de_de": "Inazuma",
+    "fr_fr": "Inazuma"
+  },
+  "album": {
+    "en_us": "Islands of the Lost and Forgotten",
+    "ja_jp": "遺失と忘却の島",
+    "zh_cn": "佚落迁忘之岛",
+    "de_de": "Islands of the Lost and Forgotten",
+    "fr_fr": "Islands of the Lost and Forgotten"
+  },
+  "link_ytmusic": "",
+  "duration": 145,
+  "bpm": 178,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

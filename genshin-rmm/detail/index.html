@@ -31,8 +31,11 @@
     .lang-en_us, .lang-ja_jp, .lang-fr_fr, .lang-de_de {
       font-family: "Noto Serif JP";
     }
-    .lang-zh_cn, .lang-zh_tw {
+    .lang-zh_cn {
       font-family: "Noto Serif SC";
+    }
+    .lang-zh_tw {
+      font-family: "Noto Serif TC";
     }
     header {
       z-index: 999;
@@ -132,25 +135,24 @@
       color: #b9ebfa;
       text-decoration: none;
     }
-    .table-centering {
+    #title-multi {
       display: flex;
       justify-content: center;
-    }
-    #title-multi {
-      vertical-align: middle;
+      flex-direction: column;
       border-collapse: collapse;
     }
-    #title-multi tr, #title-multi td {
-      margin: 0;
+    #title-multi > div {
+      line-height: 1.25;
+      margin: 1px 0;
     }
     .titlesublang {
       padding: 0 6px 0 0;
       font-size: 13px;
       color: #ddd;
-      text-align: end;
+      text-align: start;
     }
     .titlesub {
-      padding: 0;
+      padding: 0 0 0 0;
       font-size: 15px;
       text-align: start;
     }
@@ -212,7 +214,7 @@
   <div class="information">
     <div id="album">Loading...</div>
     <div id="title">Loading...</div>
-    <div class="table-centering"><table id="title-multi"></table></div>
+    <div class="table-centering" id="title-multi"></div>
     <div class="difficulty">
       <div id="level-0" i18n="level-0" style="display: none;">イージー</div>
       <div id="level-1" i18n="level-1" style="display: none;">ノーマル</div>
@@ -256,18 +258,6 @@ const speed = 200;
 function init ([i18n, musicData]){
   document.title = musicData.title[langText] + " - " + i18n.pagetitle[langText];
 
-  // Internationalization
-  for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
-    const id = item.getAttribute("i18n");
-    const text = i18n[id]?.[langText];
-    if (text) item.innerText = text;
-  }
-  for (const id in i18n.__attr_title__){
-    const element = document.getElementById(id);
-    if (!element) continue;
-    element.title = i18n.__attr_title__[id][langText];
-  }
-
   // View Music Data
   document.getElementById("album").textContent = musicData.country[langText] + " - " + musicData.album[langText];
   if (musicData.link_ytmusic){
@@ -282,15 +272,23 @@ function init ([i18n, musicData]){
   }
   const langDict = {};
   const titleMulti = document.getElementById("title-multi");
-  for (const c of ["ja_jp", "zh_cn", "en_us", "fr_fr", "de_de"]){
+  const langItem = {
+    "ja_jp": "JA",
+    "zh_cn": "CN",
+    "zh_tw": "TW",
+    "en_us": "EN",
+    "fr_fr": "FR",
+    "de_de": "DE"
+  };
+  for (const c of Object.keys(langItem)){
     if (c === langText) continue;
-    const key = musicData.title[c] + ("cn" === c ? "\u200c" : "");
+    const key = musicData.title[c] + ("zh_cn" === c ? "\u200c" : "") + ("zh_tw" === c ? "\u200c\u200c" : "");
     if (!langDict[key]) langDict[key] = [];
     langDict[key].push(c);
   }
   for (const item of Object.entries(langDict)){
-    const langList = item[1].map(c => "[" + c.slice(0, 2).toUpperCase() + "]").join("");
-    titleMulti.insertAdjacentHTML("beforeend", `<tr><td class="titlesublang">${langList}</td><td class="titlesub lang-${item[1][0]}">${item[0]}</td></tr>`);
+    const langList = item[1].map(c => "[" + langItem[c] + "]").join("");
+    titleMulti.insertAdjacentHTML("beforeend", `<div><span class="titlesublang">${langList}</span><br><span class="titlesub lang-${item[1][0]}">${item[0]}</span></div>`);
   }
   document.getElementById("bpm").textContent = musicData.bpm;
   if (musicData.bpm_act){
@@ -370,9 +368,19 @@ function init ([i18n, musicData]){
 <div class="longedge" style="top: ${holdEnd}px; left: ${lanePos}px;"></div>`);
     }
   }
-  play.bpm = musicData.bpm_est ?? musicData.bpm;
+  play.bpm = musicData.bpm;
 
-  // debugger;
+  // Internationalization
+  for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
+    const id = item.getAttribute("i18n");
+    const text = i18n[id]?.[langText];
+    if (text) item.innerText = text;
+  }
+  for (const id in i18n.__attr_title__){
+    const element = document.getElementById(id);
+    if (!element) continue;
+    element.title = i18n.__attr_title__[id][langText];
+  }
 }
 
 // for debug purpose

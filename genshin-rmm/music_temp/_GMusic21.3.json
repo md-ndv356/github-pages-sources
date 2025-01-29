@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en_us": "Nippy Bout",
+    "ja_jp": "霜烈の競争",
+    "zh_cn": "霜烈竞逐",
+    "de_de": "Nippy Bout",
+    "fr_fr": "Nippy Bout"
+  },
+  "country": {
+    "en_us": "Fontaine",
+    "ja_jp": "フォンテーヌ",
+    "zh_cn": "枫丹",
+    "de_de": "Fontaine",
+    "fr_fr": "Fontaine"
+  },
+  "album": {
+    "en_us": "The Stellar Moments Vol. 4 (Wriothesley)",
+    "ja_jp": "輝く星々Vol.4（リオセスリ）",
+    "zh_cn": "闪耀的群星4（莱欧斯利）",
+    "de_de": "The Stellar Moments Vol. 4 (Wriothesley)",
+    "fr_fr": "The Stellar Moments Vol. 4 ( Wriothesley )"
+  },
+  "link_ytmusic": "",
+  "duration": 133,
+  "bpm": 128,
+  "level": 7,
+  "base": 0.020,
+  "score": [],
+  "measure": {}
+}

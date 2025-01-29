@@ -1,30 +1,58 @@
 {
   "title": {
-    "en_us": "Rondeau des fleurs et des rapieres",
-    "ja_jp": "花と剣の輪舞",
     "zh_cn": "花与剑的轮舞",
+    "zh_tw": "花與劍的輪舞",
+    "en_us": "Rondeau des fleurs et des rapieres",
+    "ko_kr": "Rondeau des fleurs et des rapieres",
+    "ja_jp": "花と剣の輪舞",
+    "es_es": "Rondeau des fleurs et des rapieres",
+    "fr_fr": "Rondeau des fleurs et des rapières",
+    "ru_ru": "Rondeau des fleurs et des rapieres",
+    "th_th": "Rondeau des fleurs et des rapieres",
+    "vi_vn": "Rondeau des fleurs et des rapieres",
     "de_de": "Rondeau des fleurs et des rapières",
-    "fr_fr": "Rondeau des fleurs et des rapières"
+    "id_id": "Rondeau des fleurs et des rapieres",
+    "pt_pt": "Rondeau des fleurs et des rapieres"
   },
   "country": {
-    "en_us": "Fontaine",
-    "ja_jp": "フォンテーヌ",
     "zh_cn": "枫丹",
+    "zh_tw": "楓丹",
+    "en_us": "Fontaine",
+    "ko_kr": "폰타인",
+    "ja_jp": "フォンテーヌ",
+    "es_es": "Fontaine",
+    "fr_fr": "Fontaine",
+    "ru_ru": "Фонтейн",
+    "th_th": "Fontaine",
+    "vi_vn": "Fontaine",
     "de_de": "Fontaine",
-    "fr_fr": "Fontaine"
+    "id_id": "Fontaine",
+    "pt_pt": "Fontaine",
+    "tr_tr": "Fontaine",
+    "it_it": "Fontaine"
   },
   "album": {
-    "en_us": "Fountain of Belleau",
-    "ja_jp": "白露澄明の泉",
     "zh_cn": "白露澈明之泉",
+    "zh_tw": "白露澈明之泉",
+    "en_us": "Fountain of Belleau",
+    "ko_kr": "흰 이슬의 맑은 샘",
+    "ja_jp": "白露澄明の泉",
+    "es_es": "Fountain of Belleau",
+    "fr_fr": "Fountain of Belleau",
+    "ru_ru": "Fountain of Belleau",
+    "th_th": "Fountain of Belleau",
+    "vi_vn": "Fountain of Belleau",
     "de_de": "Fountain of Belleau",
-    "fr_fr": "Fountain of Belleau"
+    "id_id": "Fountain of Belleau",
+    "pt_pt": "Fountain of Belleau",
+    "tr_tr": "Fountain of Belleau",
+    "it_it": "Fountain of Belleau"
   },
   "link_ytmusic": "",
   "duration": 186,
   "bpm": 183,
   "level": 7,
-  "base": 0.020,
+  "base": 0.02,
   "score": [],
   "measure": {}
 }
