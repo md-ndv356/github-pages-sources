@@ -85,32 +85,37 @@
     "it_it": "Questo sito è un sito personale non ufficiale e non è in alcun modo affiliato a Genshin Impact ufficiale.\nIl supporto multilingue è fornito utilizzando ChatGPT.\nPubblichiamo ogni giorno una partitura per giochi ritmici, e l'intera collezione sarà pronta tra due mesi!"
   },
   "level-0": {
-    "ja_jp": "イージー",
-    "en_us": "Normal",
     "zh_cn": "普通",
-    "de_de": "Normal",
-    "fr_fr": "Normal"
+    "en_us": "Normal",
+    "ja_jp": "イージー",
+    "es_es": "Normal",
+    "fr_fr": "Normal",
+    "de_de": "Normal"
   },
   "level-1": {
-    "ja_jp": "ノーマル",
+    "zh_cn": "困難",
     "en_us": "Hard",
-    "zh_cn": "困难",
-    "de_de": "Schwierig",
-    "fr_fr": "Difficile"
+    "ja_jp": "ノーマル",
+    "fr_fr": "Difficile",
+    "es_es": "Ardua",
+    "de_de": "Schwierig"
   },
   "level-2": {
-    "ja_jp": "ハード",
+    "zh_cn": "大師",
     "en_us": "Pro",
-    "zh_cn": "大师",
+    "ja_jp": "ハード",
     "de_de": "Experte",
+    "es_es": "Experto",
     "fr_fr": "Pro"
   },
   "level-3": {
-    "ja_jp": "レジェンド",
-    "en_us": "Legendary",
     "zh_cn": "传说",
-    "de_de": "Legende",
-    "fr_fr": "Légende"
+    "zh_tw": "傳說",
+    "en_us": "Legendary",
+    "ja_jp": "レジェンド",
+    "fr_fr": "Légende",
+    "es_es": "Leyenda",
+    "de_de": "Legende"
   },
   "duration": {
     "zh_cn": "时长",
