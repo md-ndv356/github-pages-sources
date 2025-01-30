@@ -7,32 +7,9 @@
   <meta name="description" content="原神の音ゲーの譜面保管所です。作ってみたかったんです。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="./common.css" rel="stylesheet">
   <link href="./fonts/font.css" rel="stylesheet">
   <style>
-    body {
-      background: #3b4252;
-      color: #fff;
-      font-family: "Noto Serif JP";
-      font-size: 16px;
-      text-align: center;
-      margin: 8px;
-      margin-top: 43px;
-    }
-    header {
-      display: flex;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100dvw;
-      box-sizing: border-box;
-      background: #0c0f13;
-      font-size: 15px;
-      padding: 6px 20px;
-      text-align: start;
-    }
-    header a {
-      text-decoration: none;
-      color: #ddd;
-    }
     h1 {
       color: #eee;
       font-size: 24px;
@@ -77,6 +54,10 @@
     main a[href] {
       color: #2c13b7;
     }
+    .history {
+      padding: 8px 0;
+      max-width: 700px;
+    }
   </style>
 </head>
 <body>
@@ -101,7 +82,13 @@
   </select></div>
 </header>
 <h1 i18n="pagetitle">原神 幾千のメロディー 譜面保管所</h1>
-<main id="musiclist"></main>
+<main>
+  <div id="musiclist"></div>
+  <div class="history">
+    <h2 i18n="history-latest">更新履歴</h2>
+    <div id="history-latest"></div>
+  </div>
+</main>
 <footer>
   <p i18n="statement">当サイトは個人による非公式サイトです。原神公式とは一切関係ありません。</p>
 </footer>
@@ -111,7 +98,7 @@ const ct2ln = ({"cn": "zh_cn", "tw": "zh_tw", "de": "de_de", "en": "en_us", "es"
 const param0 = location.search.slice(1).split("/")[0];
 const langText = (ct2ln[param0] ?? param0) || "ja_jp";
 if (param0 !== langText) window.location = "./?" + langText;
-if (["zh_cn", "zh_tw"].includes(langText)) document.body.style.fontFamily = "Noto Serif SC";
+document.body.classList.add("lang-" + langText);
 document.getElementById("headtitle").href = "./?" + langText;
 /** Create Canonical URL */
 const canonicalLink = document.createElement("link");
@@ -126,8 +113,16 @@ langselect.addEventListener("change", event => {
 });
 
 const musiclist = document.getElementById("musiclist");
-function init ([i18n, musicTable, scoreList]){
+function init ([i18n, musicTable, scoreList, history]){
   document.title = i18n.pagetitle[langText];
+
+  // History
+  const historyDate = document.createElement("div");
+  const historyContent = document.createElement("div");
+  historyDate.textContent = history.history[0].postedDate + " (yyyy/mm/dd)";
+  historyDate.style = "color: #ccc; margin: 6px 4px; font-size: 15px;";
+  historyContent.innerText = history.history[0].content[langText];
+  document.getElementById("history-latest").append(historyDate, historyContent);
 
   // Internationalization
   for (const item of Array.from(document.querySelectorAll("*[i18n]"))){
@@ -156,6 +151,7 @@ function init ([i18n, musicTable, scoreList]){
     fetch("./i18n-v2.json").then(res => res.json()),
     fetch("./musictable-v2.json").then(res => res.json()),
     fetch("./scorelist-v2.json").then(res => res.json()),
+    fetch("./history.json").then(res => res.json())
   ]).then(init);
 })();
 

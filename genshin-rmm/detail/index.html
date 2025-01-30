@@ -6,44 +6,9 @@
   <title>原神 幾千のメロディー 譜面保管所 詳細</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="../common.css" rel="stylesheet">
   <link href="../fonts/font.css" rel="stylesheet">
   <style>
-    body {
-      background: #3b4252;
-      color: #fff;
-      font-family: "Noto Serif JP";
-      font-size: 16px;
-      text-align: center;
-      margin: 8px;
-      margin-top: 43px;
-    }
-    header {
-      display: flex;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100dvw;
-      box-sizing: border-box;
-      background: #0c0f13;
-      font-size: 15px;
-      padding: 6px 20px;
-      text-align: start;
-    }
-    .lang-en_us, .lang-ja_jp, .lang-fr_fr, .lang-de_de {
-      font-family: "Noto Serif JP";
-    }
-    .lang-zh_cn {
-      font-family: "Noto Serif SC";
-    }
-    .lang-zh_tw {
-      font-family: "Noto Serif TC";
-    }
-    header {
-      z-index: 999;
-    }
-    header a {
-      text-decoration: none;
-      color: #ddd;
-    }
     #chart {
       position: relative;
       display: inline-block;
@@ -241,9 +206,6 @@
   <p id="bpm-notice" i18n="bpm-notice" style="display: none;">BPM変化を表す緑数字は、<wbr>作者が勝手に推測したものです。</p>
   <div id="chart"></div>
 </main>
-<footer>
-  <p></p>
-</footer>
 </body>
 <script>
 const query = location.search.slice(1).split("/");

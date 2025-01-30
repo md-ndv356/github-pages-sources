@@ -1,4 +1,16 @@
 @font-face {
+  font-family: "Noto Serif";
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Noto_Serif-400.woff2);
+}
+/* @font-face {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-display: swap;
+  src: url(./Noto_Serif-700.woff2);
+} */
+@font-face {
   font-family: "Noto Serif JP";
   font-weight: 400;
   font-display: swap;
@@ -35,8 +47,51 @@
   src: url(./Noto_Serif_TC-700.woff2);
 }
 @font-face {
+  font-family: "Noto Serif KR";
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Noto_Serif_KR-400.woff2);
+}
+@font-face {
+  font-family: "Noto Serif KR";
+  font-weight: 700;
+  font-display: swap;
+  src: url(./Noto_Serif_KR-700.woff2);
+}
+@font-face {
+  font-family: "Noto Serif Thai";
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Noto_Serif_Thai-400.woff2);
+}
+@font-face {
+  font-family: "Noto Serif Thai";
+  font-weight: 700;
+  font-display: swap;
+  src: url(./Noto_Serif_Thai-700.woff2);
+}
+@font-face {
   font-family: "Micro 5";
   font-weight: 400;
   font-display: block;
   src: url(./Micro-5-400.woff2);
+}
+
+.lang-tr_tr {
+  font-family: "Noto Serif", serif;
+}
+.lang-ja_jp, .lang-en_us, .lang-es_es, .lang-fr_fr, .lang-vi_vn, .lang-de_de, .lang-ru_ru, .lang-id_id, .lang-pt_pt, .lang-it_it {
+  font-family: "Noto Serif JP", "Noto Serif", "Noto Serif Thai", serif;
+}
+.lang-zh_cn {
+  font-family: "Noto Serif SC", "Noto Serif JP", serif;
+}
+.lang-zh_tw {
+  font-family: "Noto Serif TC", "Noto Serif JP", serif;
+}
+.lang-ko_kr {
+  font-family: "Noto Serif KR", "Noto Serif JP", serif;
+}
+.lang-th_th {
+  font-family: "Noto Serif Thai", "Noto Serif", "Noto Serif JP", serif;
 }

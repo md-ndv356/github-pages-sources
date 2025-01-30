@@ -1,0 +1,28 @@
+body {
+  background: #3b4252;
+  color: #fff;
+  font-family: "Noto Serif JP", serif;
+  font-size: 16px;
+  text-align: center;
+  margin: 8px;
+  margin-top: 43px;
+}
+header {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100dvw;
+  box-sizing: border-box;
+  background: #0c0f13;
+  font-size: 15px;
+  padding: 6px 20px;
+  text-align: start;
+}
+header a {
+  text-decoration: none;
+  color: #ddd;
+}
+footer {
+  margin-top: 28px;
+  border-top: solid 1px #999;
+}
