@@ -1,0 +1,1 @@
+Object.keys(a).map(item => ["zh_cn", "zh_tw", "en_us", "ko_kr", "ja_jp", "es_es", "fr_fr", "ru_ru", "th_th", "vi_vn", "de_de", "id_id", "pt_pt", "tr_tr", "it_it"].map(lang => `  <url><loc>https://md-ndv356.github.io/genshin-rmm/detail/?${lang}/${item}/3</loc></url>`).join("\n")).join("\n")
