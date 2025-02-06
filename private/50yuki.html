@@ -14,11 +14,17 @@
     <div style="color: #ddd; font-size: 14px; background-color: #111; padding: 4px 12px 4px; border-bottom-right-radius: 10px;" id="loading-time">2025/2/6 15:00</div>
   </div>
   <div style="color: #fff; font-size: 14px; pointer-events: none;">
-    <div style="position: fixed; bottom: 50px; right: 10px; width: 30px; height: 160px; border: solid 2px #fff9; background: linear-gradient(0deg, hsl(225 100% 50%), hsl(180 100% 50%), hsl(135 100% 50%), hsl(90 100% 50%), hsl(45 100% 50%), hsl(0 100% 50%), hsl(315 100% 50%), hsl(270 100% 50%));"></div>
+    <div style="position: fixed; bottom: 50px; right: 10px; width: 30px; height: 160px; border: solid 2px #fff9; background: linear-gradient(0deg, hsl(180 100% 62.5%), hsl(135 100% 62.5%), hsl(90 100% 62.5%), hsl(45 100% 62.5%), hsl(0 100% 62.5%), hsl(315 100% 62.5%), hsl(270 100% 62.5%));"></div>
     <div style="position: fixed; bottom: 42px; right: 50px;">0 %</div>
     <div style="position: fixed; bottom: 95.3px; right: 50px;">50 %</div>
     <div style="position: fixed; bottom: 148.7px; right: 50px;">100 %</div>
     <div style="position: fixed; bottom: 202px; right: 50px;">150 %</div>
+    <div style="position: fixed; bottom: 230px; right: 16px; width: 20px; height: 20px; background-color: hsl(180 100% 62.5%); opacity: 0.9; border-radius: 10px;" title="10px"></div>
+    <div style="position: fixed; bottom: 261px; right: 12px; width: 28px; height: 28px; background-color: hsl(  0 100% 62.5%); opacity: 0.9; border-radius: 14px;" title="14px"></div>
+    <div style="position: fixed; bottom: 295px; right: 11px; width: 30px; height: 30px; background-color: hsl( 63 100% 62.5%); opacity: 0.9; border-radius: 14px;" title="15px"></div>
+    <div style="position: fixed; bottom: 228px; right: 43px;">通常</div>
+    <div style="position: fixed; bottom: 263px; right: 47px;">100% ≦</div>
+    <div style="position: fixed; bottom: 298px; right: 47px;">+2cm / 2h</div>
   </div>
 </body>
 <script>
@@ -74,7 +80,7 @@ const map = new maplibregl.Map({
         source: "snow-radar",
         paint: {
           "circle-color": [ "rgb", ["get", "color_r"], ["get", "color_g"], ["get", "color_b"] ],
-          "circle-radius": 12,
+          "circle-radius": [ "get", "marker_size" ],
           "circle-opacity": 0.9
         }
       },
@@ -110,6 +116,8 @@ const main = async () => {
   document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
   const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
   const ame1h = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
+  latestTime.setHours(latestTime.getHours() - 2);
+  const ame1h_prev2 = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
   const yuki = await fetch("./50yuki.json").then(res => res.json());
   const features = [];
   for (const id in ame1h){
@@ -128,7 +136,8 @@ const main = async () => {
           ratio: ratio,
           color_r: color.r,
           color_g: color.g,
-          color_b: color.b
+          color_b: color.b,
+          marker_size: (!(ame1h_prev2[id].snow?.[1] ?? 1) && ame1h_prev2[id].snow[0] < ame1h[id].snow[0] - 1) ? 15 : ( ratio >= 100 ? 14 : 10)
         }
       });
     }
