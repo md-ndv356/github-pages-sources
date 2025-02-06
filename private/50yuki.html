@@ -26,6 +26,17 @@
     <div style="position: fixed; bottom: 263px; right: 47px;">100% ≦</div>
     <div style="position: fixed; bottom: 298px; right: 47px;">+2cm / 2h</div>
   </div>
+  <style>
+    .maplibregl-popup-tip {
+      border-top-color: #2f373c !important;
+    }
+    .maplibregl-popup-content {
+      pointer-events: none;
+      background: #2f373c;
+      color: #eee;
+      border-radius: 6px;
+    }
+  </style>
 </body>
 <script>
 const map = new maplibregl.Map({
@@ -132,12 +143,13 @@ const main = async () => {
         },
         properties: {
           snow: ame1h[id].snow[0],
-          criteria: yuki[id],
+          criterion: yuki[id],
           ratio: ratio,
           color_r: color.r,
           color_g: color.g,
           color_b: color.b,
-          marker_size: (!(ame1h_prev2[id].snow?.[1] ?? 1) && ame1h_prev2[id].snow[0] < ame1h[id].snow[0] - 1) ? 15 : ( ratio >= 100 ? 14 : 10)
+          marker_size: (!(ame1h_prev2[id].snow?.[1] ?? 1) && ame1h_prev2[id].snow[0] < ame1h[id].snow[0] - 1) ? 15 : ( ratio >= 100 ? 14 : 10),
+          name: amedastable[id].kjName
         }
       });
     }
@@ -145,8 +157,33 @@ const main = async () => {
   features.sort((a, b) => a.properties.ratio - b.properties.ratio);
   map.getSource("snow-radar").setData({ type: "FeatureCollection", features});
 }
-main();
-setInterval(main, 60 * 1000)
+const popup = new maplibregl.Popup({
+  closeButton: false,
+  closeOnClick: false
+});
+map.on("load", async () => {
+  main();
+  setInterval(main, 60 * 1000);
+
+  const mousemove = e => {
+    map.getCanvas().style.cursor = "pointer";
+
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    const name = e.features[0].properties.name;
+    const snow = e.features[0].properties.snow;
+    const criterion = e.features[0].properties.criterion;
+    const ratio = e.features[0].properties.ratio;
+
+    popup.setLngLat(coordinates).setHTML('<div><div style="font-size: 14px;">' + name + '</div><div style="font-size: 16px;">基準: ' + criterion + 'cm</div><div style="font-size: 16px;">観測: ' + snow + 'cm （' + ratio + ' %）</div></div>').addTo(map);
+  };
+  const mouseleave = e => {
+    map.getCanvas().style.cursor = "";
+    popup.remove();
+  };
+
+  map.on("mousemove", "snow-marker", mousemove);
+  map.on("mouseleave", "snow-marker", mouseleave);
+});
 
 // https://qiita.com/hirossyi73/items/46e19ffcad758ab36b66
 function getCurrentTime(target) {
