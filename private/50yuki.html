@@ -9,7 +9,10 @@
 </head>
 <body style="margin: 0; background-color: #444; font-family: sans-serif;">
   <div id="map" style="width: 100dvw; height: 100dvh;"></div>
-  <div style="position: fixed; color: #ddd; font-size: 18px; top: 0; left: 0; background-color: #111; padding: 4px 12px; border-bottom-right-radius: 10px; pointer-events: none;">「50年に一度の積雪深」比<span style="font-size: 15px;">（％）</span></div>
+  <div style="position: fixed; top: 0; left: 0; pointer-events: none;">
+    <div style="color: #ddd; font-size: 18px; background-color: #111; padding: 4px 12px 0px;">「50年に一度の積雪深」比<span style="font-size: 15px;">（％）</span></div>
+    <div style="color: #ddd; font-size: 14px; background-color: #111; padding: 4px 12px 4px; border-bottom-right-radius: 10px;" id="loading-time">2025/2/6 15:00</div>
+  </div>
   <div style="color: #fff; font-size: 14px; pointer-events: none;">
     <div style="position: fixed; bottom: 50px; right: 10px; width: 30px; height: 160px; border: solid 2px #fff9; background: linear-gradient(0deg, hsl(225 100% 50%), hsl(180 100% 50%), hsl(135 100% 50%), hsl(90 100% 50%), hsl(45 100% 50%), hsl(0 100% 50%), hsl(315 100% 50%), hsl(270 100% 50%));"></div>
     <div style="position: fixed; bottom: 42px; right: 50px;">0 %</div>
@@ -94,10 +97,18 @@ const map = new maplibregl.Map({
   }
 });
 
-(async () => {
-  const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
+let lastTime = 0;
+const dateTimeFormatter = new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'medium',
+  timeStyle: 'short'
+});
+const main = async () => {
   const latestTime = new Date(await fetch("https://www.jma.go.jp/bosai/amedas/data/latest_time.txt?" + Date.now()).then(res => res.text()));
   latestTime.setMinutes(0);
+  if (latestTime-0 === lastTime) return;
+  lastTime = latestTime-0;
+  document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
+  const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
   const ame1h = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
   const yuki = await fetch("./50yuki.json").then(res => res.json());
   const features = [];
@@ -124,7 +135,9 @@ const map = new maplibregl.Map({
   }
   features.sort((a, b) => a.properties.ratio - b.properties.ratio);
   map.getSource("snow-radar").setData({ type: "FeatureCollection", features});
-})();
+}
+main();
+setInterval(main, 60 * 1000)
 
 function getCurrentTime(target) {
 	return "" + target.getFullYear() + "" + padZero(target.getMonth() + 1) +
