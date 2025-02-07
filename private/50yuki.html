@@ -25,6 +25,11 @@
     <div style="position: fixed; bottom: 228px; right: 43px;">通常</div>
     <div style="position: fixed; bottom: 263px; right: 47px;">100% ≦</div>
     <div style="position: fixed; bottom: 298px; right: 47px;">+2cm / 2h</div>
+    <div style="position: fixed; bottom: 0; left: 0px; display: flex; gap: 15px; font-size: 12px; color: #fffd; background: #0008; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);  padding: 3px 8px;">
+      <div>50yuki Map v1.1.0</div>
+      <div>「A」で1時間戻る</div>
+      <div>「D」で1時間進む</div>
+    </div>
   </div>
   <style>
     .maplibregl-popup-tip {
@@ -113,10 +118,15 @@ const map = new maplibregl.Map({
         filter: [ ">=", ["zoom"], 6 ]
       }
     ]
-  }
-});
+  },
+  attributionControl: false
+})
+.addControl(new maplibregl.AttributionControl({
+  customAttribution: '気象データ：<a href="https://www.jma.go.jp/">気象庁</a> | 地図データ：<a href="https://www.gsi.go.jp/">国土地理院</a>'
+}), "bottom-right");
 
 let lastCrc = 0;
+let playbackHrs = 0;
 const dateTimeFormatter = new Intl.DateTimeFormat('ja-JP', {
   dateStyle: 'medium',
   timeStyle: 'short'
@@ -125,14 +135,14 @@ const textEncoder = new TextEncoder();
 const main = async () => {
   const latestTime = new Date(await fetch("https://www.jma.go.jp/bosai/amedas/data/latest_time.txt?" + Date.now()).then(res => res.text()));
   latestTime.setMinutes(0);
-  latestTime.setHours(latestTime.getHours() - 0);
+  latestTime.setHours(latestTime.getHours() - playbackHrs);
   document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
   const ame1h_raw = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.text());
   const ame1h = JSON.parse(ame1h_raw);
   const crc = crc16_1021(textEncoder.encode(ame1h_raw));
   if (crc === lastCrc) return;
   lastCrc = crc;
-  document.getElementById("data-crc").textContent = " ( " + crc.toString(16) + " )";
+  document.getElementById("data-crc").textContent = " ( " + crc.toString(16).padStart(4, "0") + " )";
   const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
   latestTime.setHours(latestTime.getHours() - 2);
   const ame1h_prev2 = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
@@ -190,6 +200,20 @@ map.on("load", async () => {
 
   map.on("mousemove", "snow-marker", mousemove);
   map.on("mouseleave", "snow-marker", mouseleave);
+});
+
+window.addEventListener("keydown", event => {
+  const keyCode = (event.ctrlKey ? "Control+" : "") + (event.metaKey ? "Meta+" : "") + (event.altKey ? "Alt+" : "") + (event.shiftKey ? "Shift+" : "") + event.key;
+  if (keyCode === "a"){
+    event.preventDefault();
+    playbackHrs = Math.min(24, playbackHrs + 1);
+    main();
+  } else if (keyCode === "d"){
+    event.preventDefault();
+    playbackHrs = Math.max(0, playbackHrs - 1);
+    main();
+  }
+  document.getElementById("loading-time").style.color = playbackHrs ? "#dee332" : "#ddd";
 });
 
 // https://qiita.com/hirossyi73/items/46e19ffcad758ab36b66
