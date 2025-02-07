@@ -126,7 +126,7 @@ const main = async () => {
   document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
   const ame1h_raw = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.text());
   const ame1h = JSON.parse(ame1h_raw);
-  const crc = crc16_1021(textEncoder.encode(ame1h));
+  const crc = crc16_1021(textEncoder.encode(ame1h_raw));
   if (crc === lastCrc) return;
   lastCrc = crc;
   document.getElementById("data-crc").textContent = " ( " + crc.toString(16) + " )";
