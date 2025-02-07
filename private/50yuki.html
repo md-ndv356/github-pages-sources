@@ -11,7 +11,7 @@
   <div id="map" style="width: 100dvw; height: 100dvh;"></div>
   <div style="position: fixed; top: 0; left: 0; pointer-events: none;">
     <div style="color: #ddd; font-size: 18px; background-color: #111; padding: 4px 12px 0px;">「50年に一度の積雪深」比<span style="font-size: 15px;">（％）</span></div>
-    <div style="color: #ddd; font-size: 14px; background-color: #111; padding: 4px 12px 4px; border-bottom-right-radius: 10px;" id="loading-time">Loading...</div>
+    <div style="color: #ddd; font-size: 14px; background-color: #111; padding: 4px 12px 4px; border-bottom-right-radius: 10px;"><span id="loading-time">Loading...</span><span id="data-crc" style="margin-left: 8px; font-size: 12px;"></span></div>
   </div>
   <div style="color: #fff; font-size: 14px; pointer-events: none;">
     <div style="position: fixed; bottom: 50px; right: 10px; width: 30px; height: 160px; border: solid 2px #fff9; background: linear-gradient(0deg, hsl(180 100% 62.5%), hsl(135 100% 62.5%), hsl(90 100% 62.5%), hsl(45 100% 62.5%), hsl(0 100% 62.5%), hsl(315 100% 62.5%), hsl(270 100% 62.5%));"></div>
@@ -116,23 +116,27 @@ const map = new maplibregl.Map({
   }
 });
 
-let lastTime = 0;
+let lastCrc = 0;
 const dateTimeFormatter = new Intl.DateTimeFormat('ja-JP', {
   dateStyle: 'medium',
   timeStyle: 'short'
 });
+const textEncoder = new TextEncoder();
 const main = async () => {
   const latestTime = new Date(await fetch("https://www.jma.go.jp/bosai/amedas/data/latest_time.txt?" + Date.now()).then(res => res.text()));
   latestTime.setMinutes(0);
   latestTime.setHours(latestTime.getHours() - 0);
-  if (latestTime-0 === lastTime) return;
-  lastTime = latestTime-0;
   document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
+  const ame1h_raw = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.text());
+  const ame1h = JSON.parse(ame1h_raw);
+  const crc = crc16_1021(textEncoder.encode(ame1h_raw));
+  if (crc === lastCrc) return;
+  lastCrc = crc;
+  document.getElementById("data-crc").textContent = " ( " + crc.toString(16) + " )";
   const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
-  const ame1h = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
   latestTime.setHours(latestTime.getHours() - 2);
   const ame1h_prev2 = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
-  const yuki = await fetch("./50yuki.json").then(res => res.json());
+  const yuki = await fetch("https://md-ndv356.github.io/private/50yuki.json").then(res => res.json());
   const features = [];
   for (const id in ame1h){
     if (!(ame1h[id].snow?.[1] ?? 1) && ame1h[id].snow[0] && yuki[id]){
@@ -220,6 +224,15 @@ function hsv2rgb(h, s, v) {
     hex: `#${(c[0] << 16 | c[1] << 8 | c[2]).toString(16).padStart(6, '0')}`,
     rgb: c, r: c[0], g: c[1], b: c[2],
   };
+}
+// https://gist.github.com/bryc/79d1a62304773285317191f1ae5aa5b8
+function crc16_1021(data, crc = 0, xorout = 0) {
+  for (let i = 0, t; i < data.length; i++, crc &= 0xFFFF) {
+    t = (crc >> 8) ^ data[i];
+    t = (t ^ t >> 4);
+    crc = (crc << 8) ^ (t << 12) ^ (t << 5) ^ (t);
+  }
+  return crc ^ xorout;
 }
 </script>
 </html>
