@@ -13,7 +13,7 @@
     <div style="color: #ddd; font-size: 18px; background-color: #111; padding: 4px 12px 0px;">「50年に一度の積雪深」比<span style="font-size: 15px;">（％）</span></div>
     <div style="color: #ddd; font-size: 14px; background-color: #111; padding: 4px 12px 4px; border-bottom-right-radius: 10px;"><span id="loading-time">Loading...</span><span id="data-crc" style="margin-left: 8px; font-size: 12px;"></span></div>
   </div>
-  <div style="color: #fff; font-size: 14px; pointer-events: none;">
+  <div style="color: #ccc; font-size: 14px; pointer-events: none;">
     <div style="position: fixed; bottom: 50px; right: 10px; width: 30px; height: 160px; border: solid 2px #fff9; background: linear-gradient(0deg, hsl(180 100% 62.5%), hsl(135 100% 62.5%), hsl(90 100% 62.5%), hsl(45 100% 62.5%), hsl(0 100% 62.5%), hsl(315 100% 62.5%), hsl(270 100% 62.5%));"></div>
     <div style="position: fixed; bottom: 42px; right: 50px;">0 %</div>
     <div style="position: fixed; bottom: 95.3px; right: 50px;">50 %</div>
@@ -26,9 +26,10 @@
     <div style="position: fixed; bottom: 263px; right: 47px;">100% ≦</div>
     <div style="position: fixed; bottom: 298px; right: 47px;">+2cm / 2h</div>
     <div style="position: fixed; bottom: 0; left: 0px; display: flex; gap: 15px; font-size: 12px; color: #fffd; background: #0008; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);  padding: 3px 8px;">
-      <div>50yuki Map v1.1.0</div>
+      <div>50yuki Map v1.1.1</div>
       <div>「A」で1時間戻る</div>
       <div>「D」で1時間進む</div>
+      <div>「H」で参考値の表示切替</div>
     </div>
   </div>
   <style>
@@ -128,6 +129,7 @@ const map = new maplibregl.Map({
 
 let lastCrc = 0;
 let playbackHrs = 0;
+let showAll = true;
 const dateTimeFormatter = new Intl.DateTimeFormat('ja-JP', {
   dateStyle: 'medium',
   timeStyle: 'short'
@@ -138,20 +140,22 @@ const main = async () => {
   latestTime.setMinutes(0);
   latestTime.setHours(latestTime.getHours() - playbackHrs);
   document.getElementById("loading-time").textContent = dateTimeFormatter.format(latestTime);
-  const ame1h_raw = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.text());
+  const ame1h_raw = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json?").then(res => res.text());
   const ame1h = JSON.parse(ame1h_raw);
-  const crc = crc16_1021(textEncoder.encode(ame1h_raw));
+
+  const crc = crc16_1021(textEncoder.encode(ame1h_raw + showAll));
   if (crc === lastCrc) return;
   lastCrc = crc;
   document.getElementById("data-crc").textContent = " ( " + crc.toString(16).padStart(4, "0") + " )";
-  const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?" + Date.now()).then(res => res.json());
+
+  const amedastable = await fetch("https://www.jma.go.jp/bosai/amedas/const/amedastable.json?").then(res => res.json());
   latestTime.setHours(latestTime.getHours() - 2);
-  const ame1h_prev2 = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json").then(res => res.json());
-  const yuki = await fetch("https://md-ndv356.github.io/private/50yuki.json").then(res => res.json());
+  const ame1h_prev2 = await fetch("https://www.jma.go.jp/bosai/amedas/data/map/" + getCurrentTime(latestTime) + ".json?").then(res => res.json());
+  const yuki = await fetch("./50yuki.json?" + Date.now()).then(res => res.json());
   const features = [];
   for (const id in ame1h){
-    if (!(ame1h[id].snow?.[1] ?? 1) && ame1h[id].snow[0] && yuki[id]){
-      const ratio = Math.floor(ame1h[id].snow[0] / yuki[id] * 100);
+    if (!(ame1h[id].snow?.[1] ?? 1) && ame1h[id].snow[0] && yuki[id] && yuki[id].criterion && (showAll || !yuki[id].type)){
+      const ratio = Math.floor(ame1h[id].snow[0] / yuki[id].criterion * 100);
       const color = hsv2rgb(Math.max(-90, 180 - ratio * 1.8), 0.75, 1);
       features.push({
         type: "Feature",
@@ -161,13 +165,14 @@ const main = async () => {
         },
         properties: {
           snow: ame1h[id].snow[0],
-          criterion: yuki[id],
+          criterion: yuki[id].criterion,
           ratio: ratio,
           color_r: color.r,
           color_g: color.g,
           color_b: color.b,
           marker_size: (!(ame1h_prev2[id].snow?.[1] ?? 1) && ame1h_prev2[id].snow[0] < ame1h[id].snow[0] - 1) ? 15 : ( ratio >= 100 ? 14 : 10),
-          name: amedastable[id].kjName
+          name: amedastable[id].kjName,
+          type: yuki[id].type
         }
       });
     }
@@ -191,8 +196,9 @@ map.on("load", async () => {
     const snow = e.features[0].properties.snow;
     const criterion = e.features[0].properties.criterion;
     const ratio = e.features[0].properties.ratio;
+    const type = e.features[0].properties.type;
 
-    popup.setLngLat(coordinates).setHTML('<div><div style="font-size: 14px;">' + name + '</div><div style="font-size: 16px;">基準: ' + criterion + 'cm</div><div style="font-size: 16px;">観測: ' + snow + 'cm （' + ratio + ' %）</div></div>').addTo(map);
+    popup.setLngLat(coordinates).setHTML('<div><div style="font-size: 14px;">' + name + '</div><div style="font-size: 16px;">基準: ' + criterion + 'cm' + (type ? " （参考値）" : "") + '</div><div style="font-size: 16px;">観測: ' + snow + 'cm （' + ratio + ' %）</div></div>').addTo(map);
   };
   const mouseleave = e => {
     map.getCanvas().style.cursor = "";
@@ -212,6 +218,10 @@ window.addEventListener("keydown", event => {
   } else if (keyCode === "d"){
     event.preventDefault();
     playbackHrs = Math.max(0, playbackHrs - 1);
+    main();
+  } else if (keyCode === "h"){
+    event.preventDefault();
+    showAll = !showAll;
     main();
   }
   document.getElementById("loading-time").style.color = playbackHrs ? "#dee332" : "#ddd";
