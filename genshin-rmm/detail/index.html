@@ -210,6 +210,7 @@
 <script>
 const query = location.search.slice(1).split("/");
 const langText = query[0] || "ja_jp";
+document.documentElement.lang = langText.split("_")[0] + "-" + langText.split("_")[1].toUpperCase();
 document.body.classList.add("lang-" + langText);
 document.getElementById("headtitle").href = "../?" + langText;
 /** Create Canonical URL */

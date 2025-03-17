@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>原神 幾千のメロディー 譜面保管所</title>
-  <meta name="description" content="原神の音ゲーの譜面保管所です。作ってみたかったんです。">
+  <meta name="description" content="原神のリズムゲーム（音ゲー）「幾千のメロディー」の譜面保管所です。当サイトは個人による非公式サイトであり、原神公式とは一切関係ありません。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="./common.css" rel="stylesheet">
@@ -119,6 +119,7 @@ langselect.addEventListener("change", event => {
 const musiclist = document.getElementById("musiclist");
 function init ([i18n, musicTable, scoreList, history]){
   document.title = i18n.pagetitle[langText];
+  document.querySelector('meta[name="description"]').content = i18n.meta_description[langText];
 
   // History
   const historyDate = document.createElement("div");

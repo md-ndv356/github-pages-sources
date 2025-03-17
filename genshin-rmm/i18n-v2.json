@@ -33,6 +33,23 @@
     "tr_tr": "Sayısız Melodiler Repertuvarı",
     "it_it": "Repertorio delle innumerevoli melodie"
   },
+  "meta_description": {
+    "zh_cn": "这是《原神》节奏游戏「千音雅集」的乐谱仓库。本网站是个人的非官方站点，与《原神》官方没有任何关系。",
+    "zh_tw": "這是《原神》節奏遊戲「千音雅集」的樂譜倉庫。本網站是個人的非官方網站，與《原神》官方沒有任何關係。",
+    "en_us": "This is a score database for Genshin Impact's rhythm game 'Repertoire of Myriad Melodies'. This site is an unofficial, fan-made site and has no affiliation with Genshin Impact's official team.",
+    "ko_kr": "이곳은 원신 리듬 게임 '선율이 흐르는 악보'의 악보 보관소입니다. 본 사이트는 개인이 운영하는 비공식 사이트이며, 원신 공식과는 전혀 관계가 없습니다.",
+    "ja_jp": "原神のリズムゲーム（音ゲー）「幾千のメロディー」の譜面保管所です。当サイトは個人による非公式サイトであり、原神公式とは一切関係ありません。",
+    "es_es": "Este es un archivo de partituras para el juego de ritmo 'Repertorio melodioso' de Genshin Impact. Este sitio es un sitio no oficial creado por fans y no tiene ninguna relación con el equipo oficial de Genshin Impact.",
+    "fr_fr": "Il s'agit d'une archive des partitions du jeu de rythme 'Répertoire aux mille mélodies' de Genshin Impact. Ce site est un site non officiel créé par un fan et n'a aucun lien avec l'équipe officielle de Genshin Impact.",
+    "ru_ru": "Это архив партитур для ритм-игры «Репертуар мириад мелодий» в Genshin Impact. Этот сайт является неофициальным фанатским проектом и не имеет никакого отношения к официальной команде Genshin Impact.",
+    "th_th": "นี่คือคลังโน้ตเพลงสำหรับเกมจังหวะ 'ท่วงทำนองสรรพเสียง' ของ Genshin Impact เว็บไซต์นี้เป็นเว็บไซต์ที่แฟน ๆ สร้างขึ้นโดยไม่มีความเกี่ยวข้องกับทีมงานอย่างเป็นทางการของ Genshin Impact แต่อย่างใด",
+    "vi_vn": "Đây là kho bản nhạc cho trò chơi nhịp điệu 'Thiên Âm Nhã Tập' của Genshin Impact. Trang web này là một trang web không chính thức do người hâm mộ tạo ra và không có liên kết nào với nhóm chính thức của Genshin Impact.",
+    "de_de": "Dies ist ein Notenarchiv für das Rhythmusspiel 'Melodien-Repertoire' von Genshin Impact. Diese Website ist eine inoffizielle, von Fans erstellte Seite und steht in keiner Verbindung zum offiziellen Genshin Impact-Team.",
+    "id_id": "Ini adalah arsip partitur untuk permainan ritme 'Kumpulan Melodi Anggun' dari Genshin Impact. Situs ini adalah situs tidak resmi buatan penggemar dan tidak memiliki hubungan dengan tim resmi Genshin Impact.",
+    "pt_pt": "Este é um arquivo de partituras para o jogo de ritmo 'Repertório de Mil Melodias' de Genshin Impact. Este site é um site não oficial criado por fãs e não tem qualquer relação com a equipe oficial de Genshin Impact.",
+    "tr_tr": "Bu, Genshin Impact'in ritim oyunu 'Sayısız Melodiler Repertuvarı' için bir nota arşividir. Bu site, hayranlar tarafından oluşturulmuş resmi olmayan bir sitedir ve Genshin Impact'in resmi ekibiyle hiçbir bağlantısı yoktur.",
+    "it_it": "Questo è un archivio di spartiti per il gioco di ritmo 'Repertorio delle innumerevoli melodie' di Genshin Impact. Questo sito è un sito non ufficiale creato dai fan e non ha alcuna affiliazione con il team ufficiale di Genshin Impact."
+  },
   "headtitle": {
     "zh_cn": "乐谱仓库",
     "zh_tw": "樂譜倉庫",
@@ -52,7 +69,7 @@
   },
   "pagetitle": {
     "zh_cn": "原神 千音雅集 乐谱仓库",
-    "zh_tw": "原神 韆音雅集 樂譜倉庫",
+    "zh_tw": "原神 千音雅集 樂譜倉庫",
     "en_us": "Score Database - Genshin Impact \"Repertoire of Myriad Melodies\"",
     "ko_kr": "원신 선율이 흐르는 악보 - 악보 보관소",
     "ja_jp": "原神 幾千のメロディー 譜面保管所",
@@ -86,7 +103,7 @@
   },
   "description-content": {
     "zh_cn": "这是对《原神》常驻活动「千音雅集」中可游玩的乐谱的存档。本网站使用的《原神》中的文本、乐谱等版权归COGNOSPHERE PTE. LTD.所有。",
-    "zh_tw": "這是對《原神》常駐活動「韆音雅集」中可遊玩的樂譜的存檔。本網站使用的《原神》中的文本、樂譜等版權歸COGNOSPHERE PTE. LTD.所有。",
+    "zh_tw": "這是對《原神》常駐活動「千音雅集」中可遊玩的樂譜的存檔。本網站使用的《原神》中的文本、樂譜等版權歸COGNOSPHERE PTE. LTD.所有。",
     "en_us": "This is an archive of the scores playable in Genshin Impact's permanent event 'Repertoire of Myriad Melodies'. The copyrights of texts and scores used on this site belong to COGNOSPHERE PTE. LTD.",
     "ko_kr": "이곳은 원신의 상설 이벤트 '선율이 흐르는 악보'에서 플레이할 수 있는 악보를 보관한 아카이브입니다. 본 사이트에서 사용된 '원신' 내의 텍스트 및 악보 등의 저작권은 COGNOSPHERE PTE. LTD.에 귀속됩니다.",
     "ja_jp": "原神の常設イベント「幾千のメロディー」で遊べる譜面をアーカイブしたものです。当サイトおいて使用されている「原神」内の文章・譜面などの著作権は、COGNOSPHERE PTE. LTD.が保有します。",
